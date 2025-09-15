@@ -11,7 +11,8 @@ public class Drive : MonoBehaviour
     [SerializeField] float _maxAngle;
     [SerializeField] float _angle;
     [SerializeField] float _rotationStep;
-    
+
+    [SerializeField] private GroundChecker _groundChecker;    
 
     private Vector3 _direction;   
 
@@ -25,6 +26,12 @@ public class Drive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    /*    if (_groundChecker.IsGrounded(this.transform.position,1.2f)==false)
+        {
+            Debug.Log("Fly");
+            return;
+        }*/
+
         if (Input.GetKey("w"))
         {
             _rigidbody.AddRelativeForce(_direction * _speed);

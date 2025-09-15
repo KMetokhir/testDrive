@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -293,6 +293,7 @@ MonoBehaviour:
   _maxAngle: 0
   _angle: 0
   _rotationStep: 0
+  _groundChecker: {fileID: 0}
 --- !u!1 &624967422
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,11 +460,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 624967424}
   _carBody: {fileID: 1980373510}
-  _speed: 100
+  _speed: 500
   _gravityModyfire: 20
   _maxAngle: 30
   _angle: 45
   _rotationStep: 0.2
+  _groundChecker: {fileID: 1980373512}
 --- !u!114 &624967430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +735,7 @@ GameObject:
   - component: {fileID: 888979456}
   - component: {fileID: 888979455}
   - component: {fileID: 888979454}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,11 +996,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 891882665}
   _carBody: {fileID: 1980373510}
-  _speed: 100
+  _speed: 500
   _gravityModyfire: 20
   _maxAngle: 30
   _angle: 45
   _rotationStep: 0.2
+  _groundChecker: {fileID: 1980373512}
 --- !u!114 &891882671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,7 +1119,7 @@ GameObject:
   - component: {fileID: 1065255115}
   - component: {fileID: 1065255114}
   - component: {fileID: 1065255113}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1708,6 +1711,7 @@ MonoBehaviour:
   _maxAngle: 0
   _angle: 0
   _rotationStep: 0
+  _groundChecker: {fileID: 0}
 --- !u!1 &1924909338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,7 +1724,7 @@ GameObject:
   - component: {fileID: 1924909341}
   - component: {fileID: 1924909340}
   - component: {fileID: 1924909339}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1829,6 +1833,7 @@ GameObject:
   - component: {fileID: 1980373506}
   - component: {fileID: 1980373510}
   - component: {fileID: 1980373511}
+  - component: {fileID: 1980373512}
   m_Layer: 0
   m_Name: car
   m_TagString: Untagged
@@ -1961,7 +1966,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 20
+  _value: 50
+--- !u!114 &1980373512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980373505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb31fd70e81b794682631fd37f8f515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2054022947
 GameObject:
   m_ObjectHideFlags: 0
