@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -290,9 +290,8 @@ MonoBehaviour:
   _carBody: {fileID: 1980373510}
   _speed: 50
   _gravityModyfire: 10
-  _maxAngle: 0
-  _angle: 0
   _rotationStep: 0
+  _rotator: {fileID: 0}
   _groundChecker: {fileID: 0}
 --- !u!1 &624967422
 GameObject:
@@ -310,6 +309,7 @@ GameObject:
   - component: {fileID: 624967423}
   - component: {fileID: 624967429}
   - component: {fileID: 624967430}
+  - component: {fileID: 624967431}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -460,11 +460,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 624967424}
   _carBody: {fileID: 1980373510}
-  _speed: 500
+  _speed: 100
   _gravityModyfire: 20
-  _maxAngle: 30
-  _angle: 45
   _rotationStep: 0.2
+  _rotator: {fileID: 624967431}
   _groundChecker: {fileID: 1980373512}
 --- !u!114 &624967430
 MonoBehaviour:
@@ -478,7 +477,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 10
+  _value: 50
+--- !u!114 &624967431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624967422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a77974e17ae2142a07bf0940da6bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 0.1
+  _maxAngle: 30
+  _ackermannMultiplier: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +860,7 @@ GameObject:
   - component: {fileID: 891882664}
   - component: {fileID: 891882670}
   - component: {fileID: 891882671}
+  - component: {fileID: 891882672}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -996,11 +1011,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 891882665}
   _carBody: {fileID: 1980373510}
-  _speed: 500
+  _speed: 100
   _gravityModyfire: 20
-  _maxAngle: 30
-  _angle: 45
   _rotationStep: 0.2
+  _rotator: {fileID: 891882672}
   _groundChecker: {fileID: 1980373512}
 --- !u!114 &891882671
 MonoBehaviour:
@@ -1014,7 +1028,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 10
+  _value: 50
+--- !u!114 &891882672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891882663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a77974e17ae2142a07bf0940da6bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 0.1
+  _maxAngle: 30
+  _ackermannMultiplier: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,7 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 10
+  _value: 50
 --- !u!1 &1474597376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,7 +1569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 10
+  _value: 50
 --- !u!1 &1500684106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,9 +1737,8 @@ MonoBehaviour:
   _carBody: {fileID: 1980373510}
   _speed: 50
   _gravityModyfire: 10
-  _maxAngle: 0
-  _angle: 0
   _rotationStep: 0
+  _rotator: {fileID: 0}
   _groundChecker: {fileID: 0}
 --- !u!1 &1924909338
 GameObject:
@@ -1966,7 +1994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 50
+  _value: 100
 --- !u!114 &1980373512
 MonoBehaviour:
   m_ObjectHideFlags: 0

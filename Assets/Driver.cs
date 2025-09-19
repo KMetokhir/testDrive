@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Drive : MonoBehaviour
+public class Driver : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Rigidbody _carBody;
     [SerializeField] private float _speed;
     [SerializeField] float _gravityModyfire;
-    [SerializeField] float _maxAngle;
-    [SerializeField] float _angle;
+    
+    
+   // [SerializeField] float _maxAngle;
+   // [SerializeField] float _angle;
     [SerializeField] float _rotationStep;
+
+    [SerializeField] private Rotator _rotator;
 
     [SerializeField] private GroundChecker _groundChecker;    
 
@@ -19,7 +23,7 @@ public class Drive : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _angle = 0;
+       // _angle = 0;
         _direction = _carBody.transform.forward;
     }
 
@@ -45,36 +49,40 @@ public class Drive : MonoBehaviour
 
 
        
-        Debug.Log("sign+ "+ Mathf.Sign(Vector3.Dot(Vector3.up, Vector3.Cross(_carBody.transform.forward, transform.TransformDirection(_direction)))));
+        Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)));
 
             if (Input.GetKey("d"))
         {
-            Quaternion rotation = transform.rotation;
+            /* Quaternion rotation = transform.rotation;
 
-            Debug.Log(Vector3.Angle(_carBody.transform.forward, transform.TransformDirection(_direction)));
+             Debug.Log(Vector3.Angle(_carBody.transform.forward, transform.TransformDirection(_direction)));
 
-            // rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime);
-            //  _direction = (rotation * _direction).normalized; // нужно ли нормализировать
+             // rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime);
+             //  _direction = (rotation * _direction).normalized; // нужно ли нормализировать
 
 
 
-            if (Approximately(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)), _maxAngle,2) == false)
-            {
-               
-                _direction = Quaternion.AngleAxis(_rotationStep, Vector3.up) * _direction;
-              //  Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
-            }
+             if (Approximately(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)), _maxAngle,2) == false)
+             {
+
+                 _direction = Quaternion.AngleAxis(_rotationStep, Vector3.up) * _direction;
+               //  Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
+             }*/
+
+            _direction = _rotator.GetRightWheelDirection(_direction, transform.TransformDirection(_direction), 20, _carBody.transform.forward);
             
         }
 
         if (Input.GetKey("a"))
         {
-            if (Approximately(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)), -_maxAngle, 2) == false)
-            {
-                Debug.Log(Vector3.Angle(_carBody.transform.forward, transform.TransformDirection(_direction)));
-                _direction = Quaternion.AngleAxis(-_rotationStep, Vector3.up) * _direction;
-                Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
-            }
+            /* if (Approximately(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)), -_maxAngle, 2) == false)
+             {
+                 Debug.Log(Vector3.Angle(_carBody.transform.forward, transform.TransformDirection(_direction)));
+                 _direction = Quaternion.AngleAxis(-_rotationStep, Vector3.up) * _direction;
+                 Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
+             }*/
+
+            _direction = _rotator.GetRightWheelDirection(_direction, transform.TransformDirection(_direction), -20, _carBody.transform.forward);
         }
 
 
