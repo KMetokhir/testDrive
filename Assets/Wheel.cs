@@ -2,17 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Wheel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Rigidbody _rigidbody;
+
+    private Vector3 _lookDirection;
+    private WheelRotator _rotation;
+
+    private void Awake()
     {
-        
+        _rigidbody = GetComponent<Rigidbody>();
+        _lookDirection = transform.forward;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ForwardMove(float force)
     {
-        
+        Vector3 direction = _lookDirection;
+        Move(force, direction);
+    }
+
+    public void BackwardMove(float force)
+    {
+        Vector3 direction = -_lookDirection;
+        Move(force, direction);
+
+    }
+
+    private void Move(float force, Vector3 direction)
+    {
+        _rigidbody.AddRelativeForce(direction * force);
     }
 }

@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 624967424}
   _carBody: {fileID: 1980373510}
-  _speed: 100
+  _speed: 50
   _gravityModyfire: 20
   _rotationStep: 0.2
   _rotator: {fileID: 624967431}
@@ -490,9 +490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a77974e17ae2142a07bf0940da6bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 0.1
-  _maxAngle: 30
-  _ackermannMultiplier: 2
+  _rotationSpeed: 1
+  _maxAngle: 50
+  _ackermannMultiplier: 1.2
+  _wheelTransform: {fileID: 624967428}
+  _carBodyTransform: {fileID: 1980373509}
+  _wheelDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +1014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 891882665}
   _carBody: {fileID: 1980373510}
-  _speed: 100
+  _speed: 50
   _gravityModyfire: 20
   _rotationStep: 0.2
   _rotator: {fileID: 891882672}
@@ -1041,9 +1044,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a77974e17ae2142a07bf0940da6bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 0.1
-  _maxAngle: 30
-  _ackermannMultiplier: 1
+  _rotationSpeed: 1
+  _maxAngle: 50
+  _ackermannMultiplier: 1.2
+  _wheelTransform: {fileID: 891882669}
+  _carBodyTransform: {fileID: 1980373509}
+  _wheelDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

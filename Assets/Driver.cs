@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Driver : MonoBehaviour
@@ -14,7 +15,7 @@ public class Driver : MonoBehaviour
    // [SerializeField] float _angle;
     [SerializeField] float _rotationStep;
 
-    [SerializeField] private Rotator _rotator;
+    [SerializeField] private WheelRotator _rotator;
 
     [SerializeField] private GroundChecker _groundChecker;    
 
@@ -24,34 +25,38 @@ public class Driver : MonoBehaviour
     void Start()
     {
        // _angle = 0;
-        _direction = _carBody.transform.forward;
+      //  _direction = _carBody.transform.forward;
     }
 
     // Update is called once per frame
     void Update()
     {
-    /*    if (_groundChecker.IsGrounded(this.transform.position,1.2f)==false)
-        {
-            Debug.Log("Fly");
-            return;
-        }*/
+        /*    if (_groundChecker.IsGrounded(this.transform.position,1.2f)==false)
+            {
+                Debug.Log("Fly");
+                return;
+            }*/
+        _direction = _rotator._wheelDirection;
 
         if (Input.GetKey("w"))
         {
-            _rigidbody.AddRelativeForce(_direction * _speed);
+            _direction = _rotator._wheelDirection;
+
+            _rigidbody.AddRelativeForce(_rotator._wheelDirection * _speed);
 
         }
 
         if (Input.GetKey("s"))
         {
-            _rigidbody.AddRelativeForce(-_direction * _speed);
+            _direction = _rotator._wheelDirection;
+            _rigidbody.AddRelativeForce(-_rotator._wheelDirection * _speed);
         }
 
 
        
-        Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)));
+       // Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)));
 
-            if (Input.GetKey("d"))
+            if (Input.GetKeyDown("d"))
         {
             /* Quaternion rotation = transform.rotation;
 
@@ -68,12 +73,15 @@ public class Driver : MonoBehaviour
                  _direction = Quaternion.AngleAxis(_rotationStep, Vector3.up) * _direction;
                //  Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
              }*/
-
-            _direction = _rotator.GetRightWheelDirection(_direction, transform.TransformDirection(_direction), 20, _carBody.transform.forward);
+            if (_rotator != null)
+            {
+                _direction = _rotator._wheelDirection;
+                _rotator.RotateRightWheel(_direction, 20);
+            }
             
         }
 
-        if (Input.GetKey("a"))
+        if (Input.GetKeyDown("a"))
         {
             /* if (Approximately(CalculateAngleXZPlane(_carBody.transform.forward, transform.TransformDirection(_direction)), -_maxAngle, 2) == false)
              {
@@ -82,7 +90,11 @@ public class Driver : MonoBehaviour
                  Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
              }*/
 
-            _direction = _rotator.GetRightWheelDirection(_direction, transform.TransformDirection(_direction), -20, _carBody.transform.forward);
+            if (_rotator != null)
+            {
+                _direction = _rotator._wheelDirection;
+                _rotator.RotateRightWheel(_direction, -20);
+            }
         }
 
 
