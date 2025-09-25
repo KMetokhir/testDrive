@@ -291,7 +291,6 @@ MonoBehaviour:
   _speed: 50
   _gravityModyfire: 10
   _rotationStep: 0
-  _rotator: {fileID: 0}
   _groundChecker: {fileID: 0}
 --- !u!1 &624967422
 GameObject:
@@ -307,11 +306,12 @@ GameObject:
   - component: {fileID: 624967425}
   - component: {fileID: 624967424}
   - component: {fileID: 624967423}
-  - component: {fileID: 624967429}
   - component: {fileID: 624967430}
+  - component: {fileID: 624967432}
   - component: {fileID: 624967431}
+  - component: {fileID: 624967433}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: RightFrontWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carBody: {fileID: 1980373510}
-  springStrength: 4000
+  springStrength: 50000
   springDamping: 100
   springDistance: 0.3
 --- !u!54 &624967424
@@ -446,25 +446,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &624967429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624967422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a7551410d757b4f9ada33882803b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 624967424}
-  _carBody: {fileID: 1980373510}
-  _speed: 50
-  _gravityModyfire: 20
-  _rotationStep: 0.2
-  _rotator: {fileID: 624967431}
-  _groundChecker: {fileID: 1980373512}
 --- !u!114 &624967430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 50
+  _value: 20
 --- !u!114 &624967431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,15 +468,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 624967422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15a77974e17ae2142a07bf0940da6bc3, type: 3}
+  m_Script: {fileID: 11500000, guid: 03431d96197124a448ef13f6c52b95a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &624967432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624967422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2675ee323779ee4dabb6c36d0615436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &624967433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624967422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97561d4e4d7c8ca4ab5a9b4b9d7e4ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 1
   _maxAngle: 50
-  _ackermannMultiplier: 1.2
+  _ackermannMultiplier: 1.5
   _wheelTransform: {fileID: 624967428}
   _carBodyTransform: {fileID: 1980373509}
-  _wheelDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,11 +865,12 @@ GameObject:
   - component: {fileID: 891882666}
   - component: {fileID: 891882665}
   - component: {fileID: 891882664}
-  - component: {fileID: 891882670}
   - component: {fileID: 891882671}
+  - component: {fileID: 891882673}
   - component: {fileID: 891882672}
+  - component: {fileID: 891882674}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: LeftFrontWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -884,7 +889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carBody: {fileID: 1980373510}
-  springStrength: 4000
+  springStrength: 50000
   springDamping: 100
   springDistance: 0.3
 --- !u!54 &891882665
@@ -1000,25 +1005,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &891882670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891882663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a7551410d757b4f9ada33882803b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 891882665}
-  _carBody: {fileID: 1980373510}
-  _speed: 50
-  _gravityModyfire: 20
-  _rotationStep: 0.2
-  _rotator: {fileID: 891882672}
-  _groundChecker: {fileID: 1980373512}
 --- !u!114 &891882671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,7 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 50
+  _value: 20
 --- !u!114 &891882672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,15 +1027,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 891882663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15a77974e17ae2142a07bf0940da6bc3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b621d1e92b6385479b71ed90456d857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &891882673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891882663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2675ee323779ee4dabb6c36d0615436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &891882674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891882663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8538f253a0b383442908450ff8e7144e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 1
   _maxAngle: 50
-  _ackermannMultiplier: 1.2
+  _ackermannMultiplier: 1.5
   _wheelTransform: {fileID: 891882669}
   _carBodyTransform: {fileID: 1980373509}
-  _wheelDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,8 +1272,10 @@ GameObject:
   - component: {fileID: 1430388809}
   - component: {fileID: 1430388808}
   - component: {fileID: 1430388814}
+  - component: {fileID: 1430388816}
+  - component: {fileID: 1430388815}
   m_Layer: 0
-  m_Name: Sphere (3)
+  m_Name: RightBackWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1283,7 +1294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carBody: {fileID: 1980373510}
-  springStrength: 4000
+  springStrength: 50000
   springDamping: 100
   springDistance: 0.3
 --- !u!54 &1430388809
@@ -1411,7 +1422,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 50
+  _value: 20
+--- !u!114 &1430388815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430388807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159e3caf067634a4d81e3a20be3990a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1430388816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430388807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2675ee323779ee4dabb6c36d0615436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1474597376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,8 +1462,10 @@ GameObject:
   - component: {fileID: 1474597378}
   - component: {fileID: 1474597377}
   - component: {fileID: 1474597383}
+  - component: {fileID: 1474597385}
+  - component: {fileID: 1474597384}
   m_Layer: 0
-  m_Name: Sphere (2)
+  m_Name: LeftBackWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1447,7 +1484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carBody: {fileID: 1980373510}
-  springStrength: 4000
+  springStrength: 50000
   springDamping: 100
   springDistance: 0.3
 --- !u!54 &1474597378
@@ -1575,7 +1612,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c9bcd2fef61fb49ba68aeccf0664ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 50
+  _value: 20
+--- !u!114 &1474597384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474597376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159e3caf067634a4d81e3a20be3990a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1474597385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474597376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2675ee323779ee4dabb6c36d0615436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1500684106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,7 +1805,6 @@ MonoBehaviour:
   _speed: 50
   _gravityModyfire: 10
   _rotationStep: 0
-  _rotator: {fileID: 0}
   _groundChecker: {fileID: 0}
 --- !u!1 &1924909338
 GameObject:
@@ -1868,6 +1928,7 @@ GameObject:
   - component: {fileID: 1980373510}
   - component: {fileID: 1980373511}
   - component: {fileID: 1980373512}
+  - component: {fileID: 1980373513}
   m_Layer: 0
   m_Name: car
   m_TagString: Untagged
@@ -2016,6 +2077,24 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &1980373513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980373505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e75cd3ad4e7af43b288bfbcabac83f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rightRotaryWheel: {fileID: 624967431}
+  _leftRotaryWheel: {fileID: 891882672}
+  _rotaryWheels:
+  - {fileID: 624967431}
+  - {fileID: 891882672}
+  _moveForce: 100
 --- !u!1 &2054022947
 GameObject:
   m_ObjectHideFlags: 0

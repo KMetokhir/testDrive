@@ -15,7 +15,7 @@ public class Driver : MonoBehaviour
    // [SerializeField] float _angle;
     [SerializeField] float _rotationStep;
 
-    [SerializeField] private WheelRotator _rotator;
+   // [SerializeField] private WheelRotator _rotator;
 
     [SerializeField] private GroundChecker _groundChecker;    
 
@@ -36,20 +36,20 @@ public class Driver : MonoBehaviour
                 Debug.Log("Fly");
                 return;
             }*/
-        _direction = _rotator._wheelDirection;
+       //_direction = _rotator._wheelDirection;
 
         if (Input.GetKey("w"))
         {
-            _direction = _rotator._wheelDirection;
+         //  _direction = _rotator._wheelDirection;
 
-            _rigidbody.AddRelativeForce(_rotator._wheelDirection * _speed);
+           // _rigidbody.AddRelativeForce(_rotator._wheelDirection * _speed);
 
         }
 
         if (Input.GetKey("s"))
         {
-            _direction = _rotator._wheelDirection;
-            _rigidbody.AddRelativeForce(-_rotator._wheelDirection * _speed);
+         //   _direction = _rotator._wheelDirection;
+         //   _rigidbody.AddRelativeForce(-_rotator._wheelDirection * _speed);
         }
 
 
@@ -73,11 +73,11 @@ public class Driver : MonoBehaviour
                  _direction = Quaternion.AngleAxis(_rotationStep, Vector3.up) * _direction;
                //  Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
              }*/
-            if (_rotator != null)
+           /* if (_rotator != null)
             {
-                _direction = _rotator._wheelDirection;
-                _rotator.RotateRightWheel(_direction, 20);
-            }
+               // _direction = _rotator._wheelDirection;
+                _rotator.RotateWheel(_direction, 40);
+            }*/
             
         }
 
@@ -90,11 +90,11 @@ public class Driver : MonoBehaviour
                  Debug.Log(CalculateAngleXZPlane(_carBody.transform.forward, _direction));
              }*/
 
-            if (_rotator != null)
+          /*  if (_rotator != null)
             {
-                _direction = _rotator._wheelDirection;
-                _rotator.RotateRightWheel(_direction, -20);
-            }
+              //  _direction = _rotator._wheelDirection;
+                _rotator.RotateWheel(_direction, -40);
+            }*/
         }
 
 
