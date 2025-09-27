@@ -44,6 +44,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
        // Debug.Log("Cursor Exiting " + name + " GameObject");
 
         _isPointerUnderPanel = false;
+        MouseUp?.Invoke();
     }
 
    
@@ -91,7 +92,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     AngleChanged?.Invoke(newAngle);
                 }
 
-                Debug.Log(CalculateAngle(upDirection, tapDirection));
+               // Debug.Log(CalculateAngle(upDirection, tapDirection));
 
             }
 

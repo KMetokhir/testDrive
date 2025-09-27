@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.U2D;
 
+
+// add check method and use rotation onli in fixedUpdate
 public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 {
     [SerializeField] float _rotationSpeed;
@@ -24,12 +26,14 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         _targetAngle = 0;
     }
 
-    public void RotateWheel(Vector3 wheelDirection, float angle)
+    public void Rotate(Vector3 wheelDirection, float angle)
     {
         Vector3 wheelWorldDirection = _wheelTransform.TransformDirection(wheelDirection);
         Vector3 carForwardDirection = _carBodyTransform.forward;
 
-        float currentRotationAngle = CalculateAngleXZPlane(carForwardDirection, wheelWorldDirection);
+        float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, _carBodyTransform.up);
+
+        Debug.Log(currentRotationAngle);
 
         float multiplier = GetMultiplier(currentRotationAngle, _ackermannMultiplier);
         int clockRotation = (int)Mathf.Sign(angle * multiplier - currentRotationAngle);
@@ -51,7 +55,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             _wheelDirection = wheelDirection;
             _targetAngle = angle;
 
-            _wheelDirection = Quaternion.AngleAxis(_rotationSpeed * multiplier * clockRotation, Vector3.up) * _wheelDirection;
+            _wheelDirection = Quaternion.AngleAxis(_rotationSpeed * multiplier * clockRotation,Vector3.up) * _wheelDirection;
             DirectionChanged?.Invoke(_wheelDirection);
         }
         else
@@ -71,7 +75,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     {
         if (_isRotating)
         {
-            RotateWheel(_wheelDirection, _targetAngle);
+            Rotate(_wheelDirection, _targetAngle);
         }
     }
 
@@ -81,13 +85,13 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         return Mathf.Abs(a - b) <= Mathf.Abs(equalFactor);
     }
 
-    private float CalculateAngleXZPlane(Vector3 vectorA, Vector3 vectorB)
+    private float CalculateAngle(Vector3 vectorA, Vector3 vectorB, Vector3 normal)
     {
         float y = 0;
         vectorA = new Vector3(vectorA.x, y, vectorA.z);
         vectorB = new Vector3(vectorB.x, y, vectorB.z);
 
-        float sign = Mathf.Sign(Vector3.Dot(Vector3.up, Vector3.Cross(vectorA, vectorB)));
+        float sign = Mathf.Sign(Vector3.Dot(normal, Vector3.Cross(vectorA, vectorB)));
 
         return Vector3.Angle(vectorA, vectorB) * sign;
     }

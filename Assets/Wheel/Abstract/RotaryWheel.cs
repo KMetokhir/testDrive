@@ -9,7 +9,7 @@ public abstract class RotaryWheel : DrivingWheel
 
     public void RotateWheel(float angle)
     {
-        _rotator.RotateWheel(LookDirection, angle);
+        _rotator.Rotate(LookDirection, angle);
     }
 
     public void StopRotation()

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(WheelMover), typeof(SphereCollider))]
-public class DrivingWheel : MonoBehaviour,ISphereShape
+public class DrivingWheel : MonoBehaviour, ISphereShape
 {
     private WheelMover _wheelMover;
     private Rigidbody _rigidbody;
-    private IDirectionChanger _directionChanger;    
+    private IDirectionChanger _directionChanger;
 
     public float Radius { get; private set; }
     public Transform Transform => transform;
@@ -52,7 +52,7 @@ public class DrivingWheel : MonoBehaviour,ISphereShape
 
     protected virtual void UseInAwake()
     {
-        Radius = GetComponent<SphereCollider>().radius*transform.localScale.y;
+        Radius = GetComponent<SphereCollider>().radius * transform.localScale.y;
 
         _rigidbody = GetComponent<Rigidbody>();
         _wheelMover = GetComponent<WheelMover>();
@@ -67,9 +67,9 @@ public class DrivingWheel : MonoBehaviour,ISphereShape
     }
 
     private void OnDrawGizmos()
-    {      
+    {
         Gizmos.color = Color.yellow;
-      
+
         Gizmos.DrawLine(transform.position, transform.position + transform.TransformDirection(LookDirection) * 20);
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CarDriver : MonoBehaviour
 {
@@ -26,7 +27,16 @@ public class CarDriver : MonoBehaviour
 
     private void OnMouseEventUp()
     {
-        //throw new NotImplementedException();
+        foreach (DrivingWheel wheel in _drivingWheels)
+        {
+            wheel.StopMoving();
+
+        }
+
+        foreach (RotaryWheel wheel in _rotaryWheels)
+        {
+            wheel.StopRotation();
+        }
     }
 
     private void OnAngleChanged(float angle)
@@ -38,6 +48,11 @@ public class CarDriver : MonoBehaviour
                 wheel.ForwardMove(_moveForce);
 
             }
+
+            foreach (RotaryWheel wheel in _rotaryWheels)
+            {
+                wheel.RotateWheel(angle);
+            }
         }
         else
         {
@@ -47,7 +62,16 @@ public class CarDriver : MonoBehaviour
 
             }
 
+            float sign = Mathf.Sign(angle);
+
+            foreach (RotaryWheel wheel in _rotaryWheels)
+            {
+                wheel.RotateWheel(sign * (180 - Mathf.Abs( angle)));
+            }
+
         }
+
+       
     }
 
     private void Start()
