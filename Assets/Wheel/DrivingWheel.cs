@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
-public class DrivingWheel : MonoBehaviour, IMovableWheel
+[RequireComponent(typeof(Rigidbody), typeof(WheelMover), typeof(SphereCollider))]
+public class DrivingWheel : MonoBehaviour,ISphereShape
 {
     private WheelMover _wheelMover;
     private Rigidbody _rigidbody;
-    private IDirectionChanger _directionChanger;
-    //ADD CAR BODY FOR TRANSFORM Forward direction
+    private IDirectionChanger _directionChanger;    
 
+    public float Radius { get; private set; }
+    public Transform Transform => transform;
     protected Vector3 LookDirection { get; private set; }
 
     private void Awake()
@@ -44,8 +45,15 @@ public class DrivingWheel : MonoBehaviour, IMovableWheel
         _wheelMover.BackwardMove(force, _rigidbody, LookDirection);
     }
 
+    public void StopMoving()
+    {
+        _wheelMover.StopMoving();
+    }
+
     protected virtual void UseInAwake()
     {
+        Radius = GetComponent<SphereCollider>().radius*transform.localScale.y;
+
         _rigidbody = GetComponent<Rigidbody>();
         _wheelMover = GetComponent<WheelMover>();
         LookDirection = transform.forward;
@@ -55,13 +63,13 @@ public class DrivingWheel : MonoBehaviour, IMovableWheel
     private void OnDirectionChanged(Vector3 direction)
     {
         LookDirection = direction;
+        _wheelMover.SetDirection(direction);
     }
 
     private void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
+    {      
         Gizmos.color = Color.yellow;
-
+      
         Gizmos.DrawLine(transform.position, transform.position + transform.TransformDirection(LookDirection) * 20);
     }
 }

@@ -67,7 +67,6 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
     public abstract float GetMultiplier(float currentRotationAngle, float ackermanMultiplier);
 
-
     private void FixedUpdate()
     {
         if (_isRotating)
