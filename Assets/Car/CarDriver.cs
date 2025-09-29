@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CarDriver : MonoBehaviour
 {
@@ -17,7 +12,6 @@ public class CarDriver : MonoBehaviour
     [SerializeField] private List<DrivingWheel> _drivingWheels;
 
     [SerializeField] private float _moveForce;
-
 
     private void OnEnable()
     {
@@ -41,7 +35,7 @@ public class CarDriver : MonoBehaviour
 
     private void OnAngleChanged(float angle)
     {
-        if(Mathf.Abs(angle) <= 90)
+        if (Mathf.Abs(angle) <= 90)
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
@@ -66,24 +60,16 @@ public class CarDriver : MonoBehaviour
 
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(sign * (180 - Mathf.Abs( angle)));
+                wheel.RotateWheel(sign * (180 - Mathf.Abs(angle)));
             }
-
         }
-
-       
-    }
-
-    private void Start()
-    {
-       /* _drivingWheels = new List<DrivingWheel>();
-        _drivingWheels.Add(_leftRotaryWheel);
-        _drivingWheels.Add(_rightRotaryWheel);*/
     }
 
     private void Update()
     {
-       /* if (Input.GetKeyDown("w"))
+
+        #region "TestInput"
+        if (Input.GetKeyDown("w"))
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
@@ -116,13 +102,10 @@ public class CarDriver : MonoBehaviour
             {
                 wheel.StopMoving();
             }
-        }*/
+        }
 
         if (Input.GetKeyDown("d"))
         {
-            /* _rightRotaryWheel.RotateWheel(30);
-             _leftRotaryWheel.RotateWheel(30);*/
-
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
                 wheel.RotateWheel(30);
@@ -137,11 +120,8 @@ public class CarDriver : MonoBehaviour
             }
         }
 
-
         if (Input.GetKeyDown("a"))
         {
-            /*_rightRotaryWheel.RotateWheel(-30);
-            _leftRotaryWheel.RotateWheel(-30);*/
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
                 wheel.RotateWheel(-30);
@@ -155,5 +135,7 @@ public class CarDriver : MonoBehaviour
                 wheel.StopRotation();
             }
         }
+        #endregion
+
     }
 }

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class WheelMover : MonoBehaviour
 {
-    [SerializeField] private GroundChecker _groundChecker;
-    [SerializeField] private float _maxSpeed;
-
     private const int ForwardDirection = 1;
     private const int BackwardDirection = -1;
+
+    [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private float _maxSpeed;
 
     private bool _isMoving;
 
@@ -78,6 +78,5 @@ public class WheelMover : MonoBehaviour
         {
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, _maxSpeed);
         }
-
     }
 }

@@ -1,21 +1,18 @@
 using System;
 using UnityEngine;
-using UnityEngine.U2D;
 
-
-// add check method and use rotation onli in fixedUpdate
 public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 {
-    [SerializeField] float _rotationSpeed;
-    [SerializeField] float _maxAngle;
-    [SerializeField] float _ackermannMultiplier;
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _maxAngle;
+    [SerializeField] private float _ackermannMultiplier;
 
-    [SerializeField] Transform _wheelTransform;
-    [SerializeField] Transform _carBodyTransform;
+    [SerializeField] private Transform _wheelTransform;
+    [SerializeField] private Transform _carBodyTransform;
 
     private bool _isRotating;
     private float _targetAngle;
-    private Vector3 _wheelDirection; /////////   
+    private Vector3 _wheelDirection;
 
     public event Action<Vector3> DirectionChanged;
 
@@ -26,6 +23,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         _targetAngle = 0;
     }
 
+    // add check method and use rotation method only in fixedUpdate
     public void Rotate(Vector3 wheelDirection, float angle)
     {
         Vector3 wheelWorldDirection = _wheelTransform.TransformDirection(wheelDirection);
@@ -55,7 +53,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             _wheelDirection = wheelDirection;
             _targetAngle = angle;
 
-            _wheelDirection = Quaternion.AngleAxis(_rotationSpeed * multiplier * clockRotation,Vector3.up) * _wheelDirection;
+            _wheelDirection = Quaternion.AngleAxis(_rotationSpeed * multiplier * clockRotation, Vector3.up) * _wheelDirection;
             DirectionChanged?.Invoke(_wheelDirection);
         }
         else
@@ -78,7 +76,6 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             Rotate(_wheelDirection, _targetAngle);
         }
     }
-
 
     private bool Approximately(float a, float b, float equalFactor)
     {

@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Spring : MonoBehaviour
+public class Suspension : MonoBehaviour
 {
-    [SerializeField] public Rigidbody carBody;
-    [SerializeField] public float springStrength = 50000f;
-    [SerializeField] public float springDamping = 100f;
-    [SerializeField] public float springDistance = 0.3f;
+    [SerializeField] private Rigidbody _carBodyRb;// add interface
+    [SerializeField] private float _springStrength = 50000f;
+    [SerializeField] private float _springDamping = 100f;
+    [SerializeField] private float _springDistance = 0.3f;
 
     private Rigidbody _wheelRb;
-
     private ConfigurableJoint _joint;
 
     private void Awake()
@@ -21,36 +18,29 @@ public class Spring : MonoBehaviour
 
     void Start()
     {
-        // Add ConfigurableJoint to the wheel
         _joint = _wheelRb.gameObject.AddComponent<ConfigurableJoint>();
-        _joint.connectedBody = carBody;
+        _joint.connectedBody = _carBodyRb;
 
-        // Set joint to act like a spring
         _joint.xMotion = ConfigurableJointMotion.Locked;
         _joint.yMotion = ConfigurableJointMotion.Limited;
         _joint.zMotion = ConfigurableJointMotion.Locked;
 
-        // Configure linear limit to simulate spring
         SoftJointLimitSpring limitSpring = new SoftJointLimitSpring
         {
-            spring = springStrength,
-            damper = springDamping
-
+            spring = _springStrength,
+            damper = _springDamping
         };
 
         _joint.linearLimitSpring = limitSpring;
 
-        // Set the linear limit distance
         SoftJointLimit limit = new SoftJointLimit
         {
-            limit = springDistance
+            limit = _springDistance
         };
         _joint.linearLimit = limit;
 
-        // Optional: Lock angular motion
         _joint.angularXMotion = ConfigurableJointMotion.Locked;
         _joint.angularYMotion = ConfigurableJointMotion.Locked;
         _joint.angularZMotion = ConfigurableJointMotion.Locked;
-
     }
 }

@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]  //add animation curve/ more speed more down force
 public class Gravity : MonoBehaviour
 {
     [SerializeField] private float _value;

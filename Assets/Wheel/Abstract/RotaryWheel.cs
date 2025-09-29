@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-//reqaure component rptator
 public abstract class RotaryWheel : DrivingWheel
 {
     private WheelRotator _rotator;

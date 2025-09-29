@@ -211,8 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d9d1609ad980f4699888519cce10a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _centrPoint: {x: 0, y: 0}
-  targetRectTransform: {fileID: 0}
 --- !u!1 &557649926
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,10 +331,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 4000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 0}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &557649932
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -382,6 +380,7 @@ MonoBehaviour:
   _gravityModyfire: 10
   _rotationStep: 0
   _groundChecker: {fileID: 0}
+  _direction: {x: 0, y: 0, z: 0}
 --- !u!1 &624967422
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,10 +419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 50000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 1980373510}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &624967424
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1037,10 +1036,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 4000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 0}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &801974687
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1320,10 +1319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 50000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 1980373510}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &891882665
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2062,10 +2061,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 50000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 1980373510}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &1430388809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2273,10 +2272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 50000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 1980373510}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &1474597378
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2567,10 +2566,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 4000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 0}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &1500684112
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2616,6 +2615,7 @@ MonoBehaviour:
   _gravityModyfire: 10
   _rotationStep: 0
   _groundChecker: {fileID: 0}
+  _direction: {x: 0, y: 0, z: 0}
 --- !u!1 &1587541679
 GameObject:
   m_ObjectHideFlags: 0
@@ -3297,10 +3297,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6266e241dabec48b1e7d2cd98eb4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carBody: {fileID: 1980373510}
-  springStrength: 4000
-  springDamping: 100
-  springDistance: 0.3
+  _carBodyRb: {fileID: 0}
+  _springStrength: 50000
+  _springDamping: 100
+  _springDistance: 0.3
 --- !u!54 &2054022953
 Rigidbody:
   m_ObjectHideFlags: 0

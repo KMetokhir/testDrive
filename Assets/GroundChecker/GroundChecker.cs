@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundChecker : MonoBehaviour
@@ -23,7 +21,6 @@ public class GroundChecker : MonoBehaviour
     public bool IsGrounded()
     {
         float rayLength = _owner.Radius + _rayLengthOffset;
-        // Ray ray = new Ray(_owner.Transform.position, -_owner.Transform.up);
 
         List<Ray> rays = GetGroundCheckRays(_owner.Transform.position, _countOfPositiveRays, _rayDegreeOffset);
         _rays = rays;
@@ -38,7 +35,7 @@ public class GroundChecker : MonoBehaviour
             }
         }
 
-        return isGrounded; //Physics.Raycast(position, Vector3.down, out RaycastHit hit, rayLength, _groundLayer);
+        return isGrounded;
     }
 
     private List<Ray> GetGroundCheckRays(Vector3 origin, int positioveRaysCount, int degreeOffset)
@@ -70,7 +67,6 @@ public class GroundChecker : MonoBehaviour
         }
 
         return rays;
-
     }
 
     private void OnDrawGizmos()
@@ -79,20 +75,10 @@ public class GroundChecker : MonoBehaviour
         {
             Gizmos.color = Color.red;
 
-           // List<Ray> rays = GetGroundCheckRays(_owner.Transform.position, 5, 15);
-
             foreach (Ray ray in _rays)
             {
                 Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * (_rayLengthOffset + _owner.Radius));
             }
-
-            // Gizmos.DrawLine(transform.position, transform.position + -_owner.Transform.up * (_rayLengthOffset + _owner.Radius));
         }
-
     }
-
-
-
-    // isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, checkRadius, groundLayer);
-
 }
