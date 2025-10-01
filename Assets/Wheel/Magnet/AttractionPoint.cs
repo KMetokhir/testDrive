@@ -22,7 +22,7 @@ public class AttractionPoint
 
     private void OnPositionChanged(Vector3 position)
     {
-        float toleranceDistance = 0.2f; // to a separate library, same in attractableObj
+        float toleranceDistance = 0.001f; // to a separate library, same in attractableObj
 
         if ((_surfacePoint.WordPosition - position).sqrMagnitude <= toleranceDistance)
         {

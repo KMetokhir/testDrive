@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
@@ -82,18 +83,22 @@ public class MagnetField : MonoBehaviour
             foreach (AttractionPoint point in _attractionPoints)
             {
                 IAttractable attractable = point.AttractableObject;
-              //  attractable.Transform.position = Vector3.MoveTowards(attractable.Transform.position, point.Position, _moveSpeed * Time.fixedDeltaTime);
+                attractable.Transform.position = Vector3.MoveTowards(attractable.Transform.position, point.Position, _moveSpeed * Time.fixedDeltaTime);
 
 
                 // Get current and target Z axes as vectors
                 Vector3 currentZ = attractable.Transform.forward; // Assuming forward is Z axis
-                Vector3 targetZ = point.Normal;
+                Vector3 targetZ = transform.TransformDirection(point.Normal);
 
                 // Calculate the rotation needed to align Z axes
                 Quaternion targetRotation = Quaternion.FromToRotation(currentZ, targetZ) * attractable.Transform.rotation;
 
                 // Smoothly interpolate towards the target rotation
-                attractable.Transform.rotation = Quaternion.Slerp(attractable.Transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
+                  attractable.Transform.rotation = Quaternion.Slerp(attractable.Transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
+
+               // attractable.Transform.rotation = transform.rotation;
+
+
 
 
 
@@ -167,7 +172,22 @@ public class MagnetField : MonoBehaviour
          }
      }*/
 
-    void GenerateSurfacePoints(Vector3 cubeSize)
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        if (_surfacePoints != null)
+        {
+            foreach (SurfacePoint point in _surfacePoints)
+            {
+
+                // Ray ray = new Ray(point.WordPosition, point.Normal);
+                Gizmos.DrawRay(point.WordPosition,  ( transform.TransformDirection( point.Normal)) * 2);
+            }
+        }
+    }
+
+    private void GenerateSurfacePoints(Vector3 cubeSize)
     {
         _surfacePoints.Clear();
 
@@ -180,12 +200,12 @@ public class MagnetField : MonoBehaviour
 
         // Generate points on each face
         // Front and Back faces (Z)
-        for (float x = -halfX; x <= halfX; x += gap)
+        for (float x = -halfX+ gap / 2; x < halfX-gap/2; x += gap)
         {
-            for (float y = -halfY; y <= halfY; y += gap)
+            for (float y = -halfY + gap / 2; y < halfY - gap / 2; y += gap)
             {
-                SurfacePoint pointFront = new SurfacePoint(new Vector3(x, y, halfZ), testNormal, transform);
-                SurfacePoint pointBack = new SurfacePoint(new Vector3(x, y, -halfZ), testNormal, transform);
+                SurfacePoint pointFront = new SurfacePoint(new Vector3(x, y, halfZ), Vector3.forward, transform);
+                SurfacePoint pointBack = new SurfacePoint(new Vector3(x, y, -halfZ), Vector3.back, transform);
 
                 _surfacePoints.Add(pointFront);
                 _surfacePoints.Add(pointBack);
@@ -196,9 +216,9 @@ public class MagnetField : MonoBehaviour
         }
 
         // Left and Right faces (X)
-        for (float y = -halfY; y <= halfY; y += gap)
+        for (float y = -halfY + gap / 2; y <= halfY - gap / 2; y += gap)
         {
-            for (float z = -halfZ; z <= halfZ; z += gap)
+            for (float z = -halfZ + gap / 2; z <= halfZ - gap / 2; z += gap)
             {
                 SurfacePoint pointRight = new SurfacePoint(new Vector3(halfX, y, z), Vector3.right, transform);
                 SurfacePoint pointLeft = new SurfacePoint(new Vector3(-halfX, y, z), Vector3.left, transform);
@@ -212,15 +232,15 @@ public class MagnetField : MonoBehaviour
         }
 
         // Top and Bottom faces (Y)
-        for (float x = -halfX; x <= halfX; x += gap)
+        for (float x = -halfX; x <= halfX - gap / 2; x += gap)
         {
-            for (float z = -halfZ; z <= halfZ; z += gap)
+            for (float z = -halfZ; z <= halfZ - gap / 2; z += gap)
             {
-                SurfacePoint pointTop = new SurfacePoint(new Vector3(x, halfY, z), testNormal, transform);
-                SurfacePoint pointBottom = new SurfacePoint(new Vector3(x, -halfY, z), testNormal, transform);
+                //SurfacePoint pointTop = new SurfacePoint(new Vector3(x, halfY, z), Vector3.up, transform);
+              //  SurfacePoint pointBottom = new SurfacePoint(new Vector3(x, -halfY, z), Vector3.down, transform);
 
-                _surfacePoints.Add(pointTop);
-                _surfacePoints.Add(pointBottom);
+               // _surfacePoints.Add(pointTop);
+              //  _surfacePoints.Add(pointBottom);
 
                 /* _surfacePoints.Add(new Vector3(x, halfY, z)); // Top
                  _surfacePoints.Add(new Vector3(x, -halfY, z)); // Bottom*/
