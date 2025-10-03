@@ -30,7 +30,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         _isPointerUnderPanel = false;
-        MouseUp?.Invoke();
+         MouseUp?.Invoke();
     }
 
     void Update()

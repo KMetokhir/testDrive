@@ -31,7 +31,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
         float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, _carBodyTransform.up);
 
-        Debug.Log(currentRotationAngle);
+      //  Debug.Log(currentRotationAngle);
 
         float multiplier = GetMultiplier(currentRotationAngle, _ackermannMultiplier);
         int clockRotation = (int)Mathf.Sign(angle * multiplier - currentRotationAngle);
