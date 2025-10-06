@@ -12,32 +12,46 @@ public class CarCorrector : MonoBehaviour
     public float correctionForce = 10f; // Force applied to correct flip
     public GroundChecker _wheel;
 
+
+
+
+    private void Awake()
+    {
+
+    }
+
     void FixedUpdate()
     {
         // Get the car's rotation around the Z axis (assuming upright is Y)
         // float angleZ = NormalizeAngle(transform.eulerAngles.z);
         //  float angleX = NormalizeAngle(transform.eulerAngles.x);
 
-       
+
         float angleZ = CalculateAngleXY(transform.up, Vector3.up, transform.forward);
         float angleX = CalculateAngleYZ(transform.up, Vector3.up, transform.right);
 
-        Debug.Log(angleZ);
+        //  Debug.Log(angleZ);
 
         if (Mathf.Abs(angleZ) > maxAngle && _wheel.IsGrounded() == false)
         {
             // Apply torque to correct the flip
             float torqueDirection = angleZ > 0 ? 1 : -1;
-            rb.AddTorque(Vector3.forward * torqueDirection * correctionForce);
-            Debug.Log("Use torq");
+            rb.AddTorque(rb.transform.forward * torqueDirection * correctionForce);
+            // Debug.Log("Use torq");
+
         }
+
 
         if (Mathf.Abs(angleX) > maxAngle && _wheel.IsGrounded() == false)
         {
-            Debug.Log("X");
+
             float torqueDirection = angleX > 0 ? 1 : -1;
-            rb.AddTorque(Vector3.right * torqueDirection * correctionForce);
+            rb.AddTorque(rb.transform.right * torqueDirection * correctionForce);
+
         }
+
+
+
 
         //  var rotation = Quaternion.FromToRotation(new Vector3(0, 0, transform.forward.z), new Vector3(0, transform.forward.y, transform.forward.z));
 
@@ -61,9 +75,9 @@ public class CarCorrector : MonoBehaviour
         return angle;
     }
 
-    private float CalculateAngleYZ(Vector3 vectorA, Vector3 vectorB, Vector3 normal)
+    private float CalculateAngleYZ(Vector3 vectorA, Vector3 vectorB, Vector3 normal)// univertsal methid for angle
     {
-        float y = 0;
+
         vectorA = new Vector3(0, vectorA.y, vectorA.z);
         vectorB = new Vector3(0, vectorB.y, vectorB.z);
 
@@ -74,7 +88,6 @@ public class CarCorrector : MonoBehaviour
 
     private float CalculateAngleXY(Vector3 vectorA, Vector3 vectorB, Vector3 normal)
     {
-        float y = 0;
         vectorA = new Vector3(vectorA.x, vectorA.y, 0);
         vectorB = new Vector3(vectorB.x, vectorB.y, 0);
 
