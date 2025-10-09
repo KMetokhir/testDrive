@@ -12,9 +12,6 @@ public class CarCorrector : MonoBehaviour
     public float correctionForce = 10f; // Force applied to correct flip
     public GroundChecker _wheel;
 
-
-
-
     private void Awake()
     {
 
@@ -41,7 +38,6 @@ public class CarCorrector : MonoBehaviour
 
         }
 
-
         if (Mathf.Abs(angleX) > maxAngle && _wheel.IsGrounded() == false)
         {
 
@@ -49,9 +45,6 @@ public class CarCorrector : MonoBehaviour
             rb.AddTorque(rb.transform.right * torqueDirection * correctionForce);
 
         }
-
-
-
 
         //  var rotation = Quaternion.FromToRotation(new Vector3(0, 0, transform.forward.z), new Vector3(0, transform.forward.y, transform.forward.z));
 

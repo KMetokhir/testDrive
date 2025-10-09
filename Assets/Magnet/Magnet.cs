@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,10 @@ public class Magnet : MonoBehaviour
 {
     [SerializeField] private MagnetAria _magnetAria;
     [SerializeField] private MagnetField _magnetField;
+
+    private bool _isWork;
+
+    public event Action<ICollectable> ObjectInMagnetAria;
 
     public List<IAttractable> _collectedObjects;
 
@@ -23,14 +28,35 @@ public class Magnet : MonoBehaviour
         _magnetAria.AttractableObjectsFound -= OnObjectsFound;
     }
 
+    public void StartWorke()
+    {
+        _isWork = true;
+        _magnetAria.StartDetecting();
+    }
+
+    public void Stop()
+    {
+        _isWork = false;
+        _magnetAria.StopDetecting();
+    }
+
     private void OnObjectsFound(List<IAttractable> list)
     {
-        _magnetField.AddToField(list);
-
-        foreach (IAttractable attractable in list)
+        foreach (IAttractable item in list)
         {
-            attractable.Deactivate();
-            _collectedObjects.Add(attractable);
+            ObjectInMagnetAria?.Invoke(item);
+
+            if (_isWork)
+            {
+                _magnetField.AddToField(item);
+
+                item.Deactivate();
+                _collectedObjects.Add(item);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

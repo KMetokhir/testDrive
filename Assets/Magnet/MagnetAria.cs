@@ -7,7 +7,7 @@ using UnityEngine;
 public class MagnetAria : MonoBehaviour
 {
     [SerializeField] private float _magnetRadius = 0.2f;
-    [SerializeField] private float _detectInterval=0.2f;
+    [SerializeField] private float _detectInterval = 0.2f;
 
     private Coroutine _detectCoroutine;
     private bool _isWork = false;
@@ -24,7 +24,7 @@ public class MagnetAria : MonoBehaviour
         StopDetecting();
     }
 
-    private void StartDetecting()
+    public void StartDetecting()
     {
         if (_isWork || _detectCoroutine != null)
         {
@@ -35,14 +35,16 @@ public class MagnetAria : MonoBehaviour
         _detectCoroutine = StartCoroutine(Detect());
     }
 
-    private void StopDetecting()
+    public void StopDetecting()
     {
         _isWork = false;
 
-        StopCoroutine(_detectCoroutine);
-        _detectCoroutine = null;
+        if (_detectCoroutine != null)
+        {
+            StopCoroutine(_detectCoroutine);
+            _detectCoroutine = null;
+        }
     }
-
 
     private IEnumerator Detect()
     {
@@ -54,9 +56,9 @@ public class MagnetAria : MonoBehaviour
             {
                 attractables = GetActiveObjects(attractables);
 
-                if (attractables != null && attractables.Count>0)
+                if (attractables != null && attractables.Count > 0)
                 {
-                    AttractableObjectsFound?.Invoke(attractables);                    
+                    AttractableObjectsFound?.Invoke(attractables);
                 }
             }
 

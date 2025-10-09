@@ -8,8 +8,6 @@ public class SurfacePoint
     private Vector3 _localPosition;
     private Transform _owner;
 
-    // public Vector3 WordPosition => _position + _owner.position;
-
     public Vector3 WordPosition => _owner.position + _owner.rotation * _localPosition;
 
     public SurfacePoint(Vector3 position, Vector3 normal, Transform owner)

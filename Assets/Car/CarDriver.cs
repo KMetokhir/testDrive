@@ -39,7 +39,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.ForwardMove(_moveForce);
+                wheel.ForwardMove(_moveForce); //rotary wheel max angle< 90, rotate not in angle, but rotateAngle = (maxInput/maxRotation)*inputangle
 
             }
 

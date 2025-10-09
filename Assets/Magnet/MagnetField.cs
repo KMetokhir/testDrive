@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class MagnetField : MonoBehaviour
 {
@@ -13,11 +8,10 @@ public class MagnetField : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
 
     private bool _isMoving;
-    // private List<IAttractable> _objectsToMove;
     private List<IAttractable> _attractedObjects;
     private List<AttractionPoint> _attractionPoints;
 
-    public float gap = 1f; // interval between points
+    public float _gap = 1f; // interval between points    
     public Vector3 _cubeSize;
     public List<SurfacePoint> _surfacePoints;
 
@@ -26,12 +20,18 @@ public class MagnetField : MonoBehaviour
         _cubeSize = transform.localScale;
 
         _isMoving = false;
-        // _objectsToMove = new List<IAttractable>();
         _attractedObjects = new List<IAttractable>();
         _attractionPoints = new List<AttractionPoint>();
         _surfacePoints = new List<SurfacePoint>();
 
         GenerateSurfacePoints(_cubeSize);
+    }
+
+    public void AddToField(IAttractable attractable) // TEMP
+    {
+        List<IAttractable> attractables = new List<IAttractable>();
+        attractables.Add(attractable);
+        AddToField(attractables);
     }
 
     public void AddToField(List<IAttractable> attractables)
@@ -76,7 +76,6 @@ public class MagnetField : MonoBehaviour
         {
             if (_attractionPoints == null || _attractionPoints.Count == 0)
             {
-                Debug.Log("MovingFalse");
                 _isMoving = false;
             }
 
@@ -85,45 +84,15 @@ public class MagnetField : MonoBehaviour
                 IAttractable attractable = point.AttractableObject;
                 attractable.Transform.position = Vector3.MoveTowards(attractable.Transform.position, point.Position, _moveSpeed * Time.fixedDeltaTime);
 
-
-                // Get current and target Z axes as vectors
-                Vector3 currentZ = attractable.Transform.forward; // Assuming forward is Z axis
+                Vector3 currentZ = attractable.Transform.forward;
                 Vector3 targetZ = transform.TransformDirection(point.Normal);
 
-                // Calculate the rotation needed to align Z axes
                 Quaternion targetRotation = Quaternion.FromToRotation(currentZ, targetZ) * attractable.Transform.rotation;
 
-                // Smoothly interpolate towards the target rotation
-                  attractable.Transform.rotation = Quaternion.Slerp(attractable.Transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
-
-               // attractable.Transform.rotation = transform.rotation;
-
-
-
-
-
-                // attractable.Transform.rotation = Quaternion.AngleAxis(_rotationSpeed * Time.fixedDeltaTime, Vector3.up);
-
-                //attractable.Transform.rotation = Quaternion.Euler(10+Time.fixedDeltaTime, 10, 10);
+                attractable.Transform.rotation = Quaternion.Slerp(attractable.Transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
             }
         }
     }
-
-    /*  private void OnTriggerEnter(Collider other)
-      {
-          Debug.Log("enter trigger");
-
-          if (other.TryGetComponent(out IAttractable attractable))
-          {
-              Debug.Log("enter");
-              if (TryGetPoint(attractable, _attractionPoints, out AttractionPoint point))
-              {
-                  _attractionPoints.Remove(point);
-                  _attractedObjects.Add(point.AttractableObject);
-                  point.AttractableObject.Transform.parent = transform;
-              }
-          }
-      }*/
 
     private SurfacePoint GetClosestPoint(Vector3 objectPosition)
     {
@@ -150,28 +119,6 @@ public class MagnetField : MonoBehaviour
         return closestPoint;
     }
 
-    /* private bool TryGetPoint(IAttractable attractable, List<AttractionPoint> points, out AttractionPoint point)
-     {
-         point = points.First(point => point.AttractableObject == attractable);
-
-         return point != null;
-     }*/
-
-    /* private void OnCollisionEnter(Collision collision)
-     {
-         Debug.Log("enter1");
-         if (collision.collider.TryGetComponent(out IAttractable attractable))
-         {
-             Debug.Log("enter");
-             if (_objectsToMove.Contains(attractable))
-             {
-                 _objectsToMove.Remove(attractable);
-                 _attractedObjects.Add(attractable);
-                 attractable.Transform.parent = transform;
-             }
-         }
-     }*/
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -180,9 +127,7 @@ public class MagnetField : MonoBehaviour
         {
             foreach (SurfacePoint point in _surfacePoints)
             {
-
-                // Ray ray = new Ray(point.WordPosition, point.Normal);
-                Gizmos.DrawRay(point.WordPosition,  ( transform.TransformDirection( point.Normal)) * 2);
+                Gizmos.DrawRay(point.WordPosition, (transform.TransformDirection(point.Normal)) * 2);
             }
         }
     }
@@ -193,57 +138,43 @@ public class MagnetField : MonoBehaviour
 
         Vector3 testNormal = Vector3.right;
 
-        // Half sizes for positioning
         float halfX = cubeSize.x / 2f;
         float halfY = cubeSize.y / 2f;
         float halfZ = cubeSize.z / 2f;
 
-        // Generate points on each face
-        // Front and Back faces (Z)
-        for (float x = -halfX+ gap / 2; x < halfX-gap/2; x += gap)
+        float gapFromEdge = _gap / 2;
+
+        for (float x = -halfX + gapFromEdge; x < halfX - gapFromEdge; x += _gap)
         {
-            for (float y = -halfY + gap / 2; y < halfY - gap / 2; y += gap)
+            for (float y = -halfY + gapFromEdge; y < halfY - gapFromEdge; y += _gap)
             {
                 SurfacePoint pointFront = new SurfacePoint(new Vector3(x, y, halfZ), Vector3.forward, transform);
                 SurfacePoint pointBack = new SurfacePoint(new Vector3(x, y, -halfZ), Vector3.back, transform);
 
                 _surfacePoints.Add(pointFront);
                 _surfacePoints.Add(pointBack);
-
-                /*_surfacePoints.Add(new Vector3(x, y, halfZ)); // Front
-                _surfacePoints.Add(new Vector3(x, y, -halfZ)); // Back*/
             }
         }
 
-        // Left and Right faces (X)
-        for (float y = -halfY + gap / 2; y <= halfY - gap / 2; y += gap)
+        for (float y = -halfY + gapFromEdge; y <= halfY - gapFromEdge; y += _gap)
         {
-            for (float z = -halfZ + gap / 2; z <= halfZ - gap / 2; z += gap)
+            for (float z = -halfZ + gapFromEdge; z <= halfZ - gapFromEdge; z += _gap)
             {
                 SurfacePoint pointRight = new SurfacePoint(new Vector3(halfX, y, z), Vector3.right, transform);
                 SurfacePoint pointLeft = new SurfacePoint(new Vector3(-halfX, y, z), Vector3.left, transform);
 
                 _surfacePoints.Add(pointRight);
                 _surfacePoints.Add(pointLeft);
-
-                /* _surfacePoints.Add(new Vector3(halfX, y, z)); // Right
-                 _surfacePoints.Add(new Vector3(-halfX, y, z)); // Left*/
             }
         }
 
-        // Top and Bottom faces (Y)
-        for (float x = -halfX; x <= halfX - gap / 2; x += gap)
+        for (float x = -halfX + gapFromEdge; x <= halfX - gapFromEdge; x += _gap)
         {
-            for (float z = -halfZ; z <= halfZ - gap / 2; z += gap)
+            for (float z = -halfZ + gapFromEdge; z <= halfZ - gapFromEdge; z += _gap)
             {
-                //SurfacePoint pointTop = new SurfacePoint(new Vector3(x, halfY, z), Vector3.up, transform);
-              //  SurfacePoint pointBottom = new SurfacePoint(new Vector3(x, -halfY, z), Vector3.down, transform);
+                SurfacePoint pointBottom = new SurfacePoint(new Vector3(x, -halfY, z), Vector3.down, transform);
 
-               // _surfacePoints.Add(pointTop);
-              //  _surfacePoints.Add(pointBottom);
-
-                /* _surfacePoints.Add(new Vector3(x, halfY, z)); // Top
-                 _surfacePoints.Add(new Vector3(x, -halfY, z)); // Bottom*/
+                _surfacePoints.Add(pointBottom);
             }
         }
     }
