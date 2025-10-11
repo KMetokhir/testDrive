@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour
+public class Car : MonoBehaviour, ISeller
 {
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Trunk _trunk;
@@ -25,6 +26,13 @@ public class Car : MonoBehaviour
         if (_trunk.TryAdd(collectable) == false)
         {
             _magnet.Stop();
-        }        
+        }
+    }
+
+    public List<IAttractable> Buy()
+    {
+        _trunk.GetSum(); //Money + summ
+        _magnet.StartWorke();
+        return _magnet.GetAttractedObjects();        
     }
 }

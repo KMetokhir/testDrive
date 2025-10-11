@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 5
   _rotationSpeed: 5
-  gap: 0.4
+  _gap: 1
   _cubeSize: {x: 0, y: 0, z: 0}
 --- !u!54 &8472130963963280821
 Rigidbody:

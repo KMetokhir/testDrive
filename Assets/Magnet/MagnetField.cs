@@ -1,26 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MagnetField : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
 
-    private bool _isMoving;
+    // private bool _isMoving;
+
+
     private List<IAttractable> _attractedObjects;
     private List<AttractionPoint> _attractionPoints;
 
     public float _gap = 1f; // interval between points    
     public Vector3 _cubeSize;
+    public Transform PhysicCube;
     public List<SurfacePoint> _surfacePoints;
 
     private void Awake()
     {
-        _cubeSize = transform.localScale;
+        _cubeSize = PhysicCube.localScale;
 
-        _isMoving = false;
-        _attractedObjects = new List<IAttractable>();
+        // _isMoving = false;
+        // _attractedObjects = new List<IAttractable>();
         _attractionPoints = new List<AttractionPoint>();
         _surfacePoints = new List<SurfacePoint>();
 
@@ -34,6 +38,20 @@ public class MagnetField : MonoBehaviour
         AddToField(attractables);
     }
 
+    public void Clear()
+    {
+        foreach (AttractionPoint point in _attractionPoints)
+        {
+            point.Clear();
+        }
+
+        _attractionPoints.Clear();
+        _surfacePoints.Clear();
+
+        _cubeSize = PhysicCube.localScale;
+        GenerateSurfacePoints(_cubeSize);
+    }
+
     public void AddToField(List<IAttractable> attractables)
     {
         if (attractables == null || attractables.Count == 0)
@@ -45,52 +63,27 @@ public class MagnetField : MonoBehaviour
         {
             if (_surfacePoints.Count == 0)
             {
-                _cubeSize += new Vector3(0.5f, 0.5f, 0.5f);
+                _cubeSize += new Vector3(0.5f, 0.5f, 0.5f); // add variable gap2
                 GenerateSurfacePoints(_cubeSize);
             }
 
             SurfacePoint surfacePoint = GetClosestPoint(obj.Transform.position);
 
-            AttractionPoint point = new AttractionPoint(surfacePoint, obj);
-            point.ObjectAttracted += OnObjectAttracted;
+            AttractionPoint point = new AttractionPoint(surfacePoint, obj, transform);
+            // point.ObjectAttracted += OnObjectAttracted;
 
             _attractionPoints.Add(point);
             _surfacePoints.Remove(surfacePoint);
         }
 
-        _isMoving = true;
-    }
-
-    private void OnObjectAttracted(AttractionPoint point)
-    {
-        _attractionPoints.Remove(point);
-
-        IAttractable atrractedObject = point.AttractableObject;
-        _attractedObjects.Add(point.AttractableObject);
-        point.AttractableObject.Transform.parent = transform;
+        //  _isMoving = true;
     }
 
     private void FixedUpdate()
     {
-        if (_isMoving)
+        foreach (AttractionPoint point in _attractionPoints)
         {
-            if (_attractionPoints == null || _attractionPoints.Count == 0)
-            {
-                _isMoving = false;
-            }
-
-            foreach (AttractionPoint point in _attractionPoints)
-            {
-                IAttractable attractable = point.AttractableObject;
-                attractable.Transform.position = Vector3.MoveTowards(attractable.Transform.position, point.Position, _moveSpeed * Time.fixedDeltaTime);
-
-                Vector3 currentZ = attractable.Transform.forward;
-                Vector3 targetZ = transform.TransformDirection(point.Normal);
-
-                Quaternion targetRotation = Quaternion.FromToRotation(currentZ, targetZ) * attractable.Transform.rotation;
-
-                attractable.Transform.rotation = Quaternion.Slerp(attractable.Transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
-            }
+            point.Attract(_moveSpeed, _rotationSpeed, Time.fixedDeltaTime);
         }
     }
 
@@ -127,7 +120,7 @@ public class MagnetField : MonoBehaviour
         {
             foreach (SurfacePoint point in _surfacePoints)
             {
-                Gizmos.DrawRay(point.WordPosition, (transform.TransformDirection(point.Normal)) * 2);
+                Gizmos.DrawRay(point.WordPosition, (point.Normal /*transform.TransformDirection(point._localNormal)*/) * 2);
             }
         }
     }

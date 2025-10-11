@@ -30,4 +30,19 @@ public class Trunk : MonoBehaviour
 
         return false;
     }
+
+    public uint GetSum()
+    {
+        uint price = 0;
+
+        foreach (ICollectable item in _collectables)
+        {
+            price += item.Cost;
+        }
+
+        _collectables.Clear();
+        _currentWeight = 0;
+
+        return price;
+    }
 }

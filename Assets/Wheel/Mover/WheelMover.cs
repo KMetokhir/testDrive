@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class WheelMover : MonoBehaviour
+public class WheelMover : MonoBehaviour // from ground checker get the normal to surface and rotate direction in 90 degree to normal
 {
     private const int ForwardDirection = 1;
     private const int BackwardDirection = -1;

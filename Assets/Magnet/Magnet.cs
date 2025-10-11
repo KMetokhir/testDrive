@@ -40,6 +40,15 @@ public class Magnet : MonoBehaviour
         _magnetAria.StopDetecting();
     }
 
+    public List<IAttractable> GetAttractedObjects()
+    {
+        List<IAttractable> obgects = new List<IAttractable> (_collectedObjects);
+        _collectedObjects.Clear();
+        _magnetField.Clear();
+
+        return obgects;
+    }
+
     private void OnObjectsFound(List<IAttractable> list)
     {
         foreach (IAttractable item in list)

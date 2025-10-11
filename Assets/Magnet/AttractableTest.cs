@@ -14,7 +14,7 @@ public class AttractableTest : MonoBehaviour, IAttractable
     public uint Weight => _weight;
     public uint Cost => _cost;
 
-    public event Action<Vector3> PositionChanged;
+    /*public event Action<Vector3> PositionChanged;*/
 
     private void OnValidate()
     {
@@ -40,11 +40,15 @@ public class AttractableTest : MonoBehaviour, IAttractable
         IsActive = false;
     }
 
-    private void FixedUpdate()
+   
+
+  /*  private void FixedUpdate()
     {
         if ((_currentPosition - transform.position).sqrMagnitude >= _toleranceDistance)
         {
             PositionChanged?.Invoke(transform.position);
         }
-    }
+    }*/
+
+
 }
