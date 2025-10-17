@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Upgrader : MonoBehaviour
+public abstract class Upgrader : MonoBehaviour
 {
-
+    public void Upgrade() { }
 }

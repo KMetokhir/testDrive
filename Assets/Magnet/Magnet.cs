@@ -7,7 +7,7 @@ public class Magnet : MonoBehaviour
     [SerializeField] private MagnetAria _magnetAria;
     [SerializeField] private MagnetField _magnetField;
 
-    private bool _isWork;
+    [SerializeField] private bool _isWork;
 
     public event Action<ICollectable> ObjectInMagnetAria;
 
@@ -45,6 +45,8 @@ public class Magnet : MonoBehaviour
         List<IAttractable> obgects = new List<IAttractable> (_collectedObjects);
         _collectedObjects.Clear();
         _magnetField.Clear();
+
+        StartWorke();
 
         return obgects;
     }

@@ -7,10 +7,11 @@ using UnityEngine;
 public class MagnetAria : MonoBehaviour
 {
     [SerializeField] private float _magnetRadius = 0.2f;
-    [SerializeField] private float _detectInterval = 0.2f;
+    [SerializeField] private float _detectInterval = 0.2f;   
 
     private Coroutine _detectCoroutine;
-    private bool _isWork = false;
+     private bool _isWork = false;
+    
 
     public event Action<List<IAttractable>> AttractableObjectsFound;
 
@@ -64,6 +65,8 @@ public class MagnetAria : MonoBehaviour
 
             yield return waitingTime;
         }
+
+        _detectCoroutine = null;
     }
 
     private List<IAttractable> GetActiveObjects(List<IAttractable> attractable)
@@ -94,5 +97,6 @@ public class MagnetAria : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _magnetRadius);
+     
     }
 }

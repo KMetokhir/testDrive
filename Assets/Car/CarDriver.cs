@@ -4,6 +4,7 @@ using UnityEngine;
 public class CarDriver : MonoBehaviour
 {
     [SerializeField] private ScreenInput _screenInput;
+    [SerializeField] private Speed _speed; //ISpeed
 
     [SerializeField] private RightRotaryWheel _rightRotaryWheel;
     [SerializeField] private LeftRotaryWheel _leftRotaryWheel;
@@ -39,7 +40,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.ForwardMove(_moveForce); //rotary wheel max angle< 90, rotate not in angle, but rotateAngle = (maxInput/maxRotation)*inputangle
+                wheel.ForwardMove(_speed); //rotary wheel max angle< 90, rotate not in angle, but rotateAngle = (maxInput/maxRotation)*inputangle
 
             }
 
@@ -52,7 +53,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.BackwardMove(_moveForce);
+                wheel.BackwardMove(_speed);
 
             }
 
@@ -73,7 +74,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.ForwardMove(_moveForce);
+                wheel.ForwardMove(_speed);
 
             }
         }
@@ -91,7 +92,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.BackwardMove(_moveForce);
+                wheel.BackwardMove(_speed);
 
             }
         }

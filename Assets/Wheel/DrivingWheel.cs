@@ -32,14 +32,14 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         }
     }
 
-    public void ForwardMove(float force)
+    public void ForwardMove(ISpeed speed)
     {
-        _wheelMover.ForwardMove(force, _rigidbody, LookDirection);
+        _wheelMover.ForwardMove(speed, _rigidbody, LookDirection);
     }
 
-    public void BackwardMove(float force)
+    public void BackwardMove(ISpeed speed)
     {
-        _wheelMover.BackwardMove(force, _rigidbody, LookDirection);
+        _wheelMover.BackwardMove(speed, _rigidbody, LookDirection);
     }
 
     public void StopMoving()

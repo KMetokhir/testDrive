@@ -1,14 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour, ISeller
+public class Car : MonoBehaviour, ISeller, ICarLevel /*, ILevel*/
 {
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Trunk _trunk;
+    [SerializeField] private Money _money;
 
-    private void Awake()
+    /* private ILevel _level;*/
+    public uint Level { get; private set; }
+   
+
+    private void Start()
     {
         _magnet.StartWorke();
+        Level = 1;
     }
 
     private void OnEnable()
@@ -31,8 +37,9 @@ public class Car : MonoBehaviour, ISeller
 
     public List<IAttractable> Buy()
     {
-        _trunk.GetSum(); //Money + summ
-        _magnet.StartWorke();
-        return _magnet.GetAttractedObjects();        
+        uint money = _trunk.GetSum();
+        _money.Increase(money);        
+
+        return _magnet.GetAttractedObjects();
     }
 }

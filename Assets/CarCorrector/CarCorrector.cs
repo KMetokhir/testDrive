@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 public class CarCorrector : MonoBehaviour
 {
     public Rigidbody rb;
-    public float maxAngle = 30f; // Max angle before correction
-    public float correctionForce = 10f; // Force applied to correct flip
+    public float maxAngle = 30f;
+    public float correctionForce = 10f;
     public GroundChecker _wheel;
 
     private void Awake()
@@ -19,15 +19,10 @@ public class CarCorrector : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Get the car's rotation around the Z axis (assuming upright is Y)
-        // float angleZ = NormalizeAngle(transform.eulerAngles.z);
-        //  float angleX = NormalizeAngle(transform.eulerAngles.x);
-
 
         float angleZ = CalculateAngleXY(transform.up, Vector3.up, transform.forward);
         float angleX = CalculateAngleYZ(transform.up, Vector3.up, transform.right);
 
-        //  Debug.Log(angleZ);
 
         if (Mathf.Abs(angleZ) > maxAngle && _wheel.IsGrounded() == false)
         {
@@ -40,32 +35,9 @@ public class CarCorrector : MonoBehaviour
 
         if (Mathf.Abs(angleX) > maxAngle && _wheel.IsGrounded() == false)
         {
-
             float torqueDirection = angleX > 0 ? 1 : -1;
             rb.AddTorque(rb.transform.right * torqueDirection * correctionForce);
-
         }
-
-        //  var rotation = Quaternion.FromToRotation(new Vector3(0, 0, transform.forward.z), new Vector3(0, transform.forward.y, transform.forward.z));
-
-        //Debug.Log(CalculateAngle(transform.up, Vector3.up, transform.right));
-
-        //  Debug.Log(rotation.eulerAngles);
-        //  Debug.Log("x " + angleX);
-
-        //rigidbody.MoveRotation(Quaternion.FromToRotation(_carTransform.forward, _carTransform.forward + new Vector3(0, -0.01f, 0)) * _carTransform.rotation);
-
-        // rb.AddTorque(Vector3.forward  * correctionForce);
-    }
-
-    // Normalize angle to range [-180, 180]
-    float NormalizeAngle(float angle)
-    {
-        while (angle > 180f)
-            angle -= 360f;
-        while (angle < -180f)
-            angle += 360f;
-        return angle;
     }
 
     private float CalculateAngleYZ(Vector3 vectorA, Vector3 vectorB, Vector3 normal)// univertsal methid for angle

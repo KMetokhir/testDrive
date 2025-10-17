@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266f2362d8fd9064682e218e48666428, type: 3}
   m_Name: Speed!lvl
   m_EditorClassIdentifier: 
-  _carLevel: 0
-  _speedLevel: 0
+  _carLevel: 1
+  _upgradeLevel: 1
   _acceleration: 0
   _maxSpeed: 0
   _upgradeParts:
   - {fileID: 14458056986173372, guid: 13a82336c2eace74ea7f8d209d2954da, type: 3}
-  CarLevel: 0
-  SpeedLevel: 0
-  Acceleration: 0
-  MaxSpeed: 0

@@ -14,7 +14,7 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
     private Vector3 _direction;
     private Rigidbody _rigidbody;
 
-    private float _force;
+    private ISpeed _speed;
 
     private int _lookDirection;
 
@@ -34,19 +34,19 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
 
     }
 
-    public void ForwardMove(float force, Rigidbody rigidbody, Vector3 direction)
+    public void ForwardMove(ISpeed speed, Rigidbody rigidbody, Vector3 direction)
     {
         _lookDirection = ForwardDirection;
 
-        InitializeVAriables(force, rigidbody, direction * _lookDirection);
+        InitializeVAriables(speed, rigidbody, direction * _lookDirection);
     }
 
-    public void BackwardMove(float force, Rigidbody rigidbody, Vector3 direction
+    public void BackwardMove(ISpeed speed, Rigidbody rigidbody, Vector3 direction
         )
     {
         _lookDirection = BackwardDirection;
 
-        InitializeVAriables(force, rigidbody, direction * _lookDirection);
+        InitializeVAriables(speed, rigidbody, direction * _lookDirection);
     }
 
     public void StopMoving()
@@ -54,12 +54,12 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
         _isMoving = false;
     }
 
-    private void InitializeVAriables(float force, Rigidbody rigidbody, Vector3 direction)
+    private void InitializeVAriables(ISpeed speed, Rigidbody rigidbody, Vector3 direction)
     {
         _direction = direction;
         _isMoving = true;
-        _rigidbody = rigidbody;
-        _force = force;
+        _rigidbody = rigidbody ?? throw new NullReferenceException(nameof(rigidbody));
+        _speed = speed ?? throw new NullReferenceException(nameof(speed));
     }
 
     private void Move(float force, Rigidbody rigidbody, Vector3 direction)
@@ -71,7 +71,7 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
     {
         if (_isMoving && _groundChecker.IsGrounded())
         {
-            Move(_force, _rigidbody, _direction);
+            Move(_speed.Value, _rigidbody, _direction);
         }
 
         if (_isMoving && _rigidbody.velocity.z > _maxSpeed)

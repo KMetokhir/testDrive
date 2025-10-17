@@ -7,7 +7,6 @@ public class Shop : MonoBehaviour
    
     private List<IAttractable> _objs;
 
-
     private void Awake()
     {
         _objs = new List<IAttractable>();
