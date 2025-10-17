@@ -37,7 +37,6 @@ public class SpeedUpgrader : MonoBehaviour
         _installedUpgradeParts = _currentUpgrade.Execute(_carBody);
         UpgradeExecuted?.Invoke(_currentUpgrade);
 
-
         //if maxUpgradeLevel != _upgrades.Count throw error
         _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
     }
