@@ -860,13 +860,14 @@ GameObject:
   - component: {fileID: 72902111}
   - component: {fileID: 72902113}
   - component: {fileID: 72902112}
+  - component: {fileID: 72902114}
   m_Layer: 5
   m_Name: UpgradePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &72902111
 RectTransform:
   m_ObjectHideFlags: 0
@@ -925,6 +926,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72902110}
   m_CullTransparentMesh: 1
+--- !u!114 &72902114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72902110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a96c5ce287e1e74280f8ae77bf88f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panel: {fileID: 72902110}
 --- !u!1001 &75162807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4523,7 +4537,7 @@ RectTransform:
   m_Father: {fileID: 16630118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22886,8 +22900,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 642548477267554694}
-  maxAngle: 10
-  correctionForce: 3000
+  _maxAngleXRotation: 10
+  _correctionForceXRotation: 2000
+  _maxAngleZRotation: 10
+  _correctionForceZRotation: 1000
   _wheel: {fileID: 6251816042528959839}
 --- !u!1001 &1827331665
 PrefabInstance:
@@ -29263,6 +29279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9be3bb7509f0d42bf040d77422e9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _upgraderPanel: {fileID: 72902114}
 --- !u!114 &9054130693180715714
 MonoBehaviour:
   m_ObjectHideFlags: 0

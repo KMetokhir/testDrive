@@ -18,9 +18,9 @@ public class UpgraderView : MonoBehaviour
             throw new NullReferenceException(nameof(_slider));
         }
 
-        if (UpgradeButtonClicked != null)
+        if (UpgradeButtonClicked == null)
         {
-            throw new NullReferenceException(nameof(_slider));
+            throw new NullReferenceException(nameof(_upgradeButton));
         }
     }
 

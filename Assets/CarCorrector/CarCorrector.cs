@@ -1,63 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 // wheell ground checker for all 4 wheels, another forse for x fliip and z fleep, method to calculate angle
 public class CarCorrector : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float maxAngle = 30f;
-    public float correctionForce = 10f;
-    public GroundChecker _wheel;
-
-    private void Awake()
-    {
-
-    }
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float _maxAngleXRotation = 10f;
+    [SerializeField] private float _correctionForceXRotation = 10f;
+    [SerializeField] private float _maxAngleZRotation = 10f;
+    [SerializeField] private float _correctionForceZRotation = 10f;
+    [SerializeField] private GroundChecker _wheel;
 
     void FixedUpdate()
     {
+        CorrectZFlip();
+        CorrectXFlip();
+    }
 
-        float angleZ = CalculateAngleXY(transform.up, Vector3.up, transform.forward);
-        float angleX = CalculateAngleYZ(transform.up, Vector3.up, transform.right);
+    private void CorrectZFlip()
+    {
+        float angle = CalculateAngleInPlane(transform.up, Vector3.up, transform.forward);
 
-
-        if (Mathf.Abs(angleZ) > maxAngle && _wheel.IsGrounded() == false)
+        if (Mathf.Abs(angle) > _maxAngleZRotation && _wheel.IsGrounded() == false)
         {
-            // Apply torque to correct the flip
-            float torqueDirection = angleZ > 0 ? 1 : -1;
-            rb.AddTorque(rb.transform.forward * torqueDirection * correctionForce);
-            // Debug.Log("Use torq");
-
-        }
-
-        if (Mathf.Abs(angleX) > maxAngle && _wheel.IsGrounded() == false)
-        {
-            float torqueDirection = angleX > 0 ? 1 : -1;
-            rb.AddTorque(rb.transform.right * torqueDirection * correctionForce);
+            float torqueDirection = angle > 0 ? 1 : -1;
+            rb.AddTorque(rb.transform.forward * torqueDirection * _correctionForceZRotation);
         }
     }
 
-    private float CalculateAngleYZ(Vector3 vectorA, Vector3 vectorB, Vector3 normal)// univertsal methid for angle
+    private void CorrectXFlip()
     {
+        float angle = CalculateAngleInPlane(transform.up, Vector3.up, transform.right);
 
-        vectorA = new Vector3(0, vectorA.y, vectorA.z);
-        vectorB = new Vector3(0, vectorB.y, vectorB.z);
+        if (Mathf.Abs(angle) > _maxAngleXRotation && _wheel.IsGrounded() == false)
+        {
+            float torqueDirection = angle > 0 ? 1 : -1;
+            rb.AddTorque(rb.transform.right * torqueDirection * _correctionForceXRotation);
+        }
+    }
+
+    private float CalculateAngleInPlane(Vector3 vectorA, Vector3 vectorB, Vector3 normal) // to library!!
+    {
+        vectorA = ProjectOntoPlaneNoNormalize(vectorA, normal);
+        vectorB = ProjectOntoPlaneNoNormalize(vectorB, normal);
 
         float sign = Mathf.Sign(Vector3.Dot(normal, Vector3.Cross(vectorA, vectorB)));
 
         return Vector3.Angle(vectorA, vectorB) * sign;
     }
 
-    private float CalculateAngleXY(Vector3 vectorA, Vector3 vectorB, Vector3 normal)
+    public static Vector3 ProjectOntoPlaneNoNormalize(Vector3 v, Vector3 planeNormal)
     {
-        vectorA = new Vector3(vectorA.x, vectorA.y, 0);
-        vectorB = new Vector3(vectorB.x, vectorB.y, 0);
+        float denom = Vector3.Dot(planeNormal, planeNormal);
 
-        float sign = Mathf.Sign(Vector3.Dot(normal, Vector3.Cross(vectorA, vectorB)));
+        if (denom == 0f)
+            return v;
 
-        return Vector3.Angle(vectorA, vectorB) * sign;
+        return v - (Vector3.Dot(v, planeNormal) / denom) * planeNormal;
     }
 }
