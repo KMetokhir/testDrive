@@ -21,25 +21,9 @@ public class SpeedUpgrade : ScriptableObject, ISpeedUpgradeData
     public uint Acceleration => _acceleration;
     public uint MaxSpeed => _maxSpeed;
 
-    /* public List<UpgradePart> GetUpgradeParts()
-     {
-         if (_upgradeParts == null || _upgradeParts.Count == 0)
-         {
-             throw new NullReferenceException(nameof(_upgradeParts));
-         }
-
-         List<UpgradePart> upgradeParts = _upgradeParts.Select(part => part.Clone()).ToList();
-
-         return upgradeParts;
-     }*/
 
     public List<UpgradePart> Execute(Transform parent)
     {
-        /*if (_upgradeParts == null || _upgradeParts.Count == 0)
-        {
-            throw new NullReferenceException(nameof(_upgradeParts));
-        }*/
-
         List<UpgradePart> upgradeParts = new List<UpgradePart>();
 
         foreach (UpgradePart part in _upgradeParts)

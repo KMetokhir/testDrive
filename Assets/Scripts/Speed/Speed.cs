@@ -15,6 +15,11 @@ public class Speed : MonoBehaviour, ISpeed
         _upgrader.UpgradeExecuted += SetNewStats;
     }
 
+    private void OnDisable()
+    {
+        _upgrader.UpgradeExecuted -= SetNewStats;
+    }
+
     private void SetNewStats(ISpeedUpgradeData data)
     {
         _value = data.Acceleration;
