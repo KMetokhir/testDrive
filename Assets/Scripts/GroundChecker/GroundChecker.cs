@@ -13,7 +13,7 @@ public class GroundChecker : MonoBehaviour
 
     private List<Ray> _rays;
 
-    private void Awake()
+    private void Start()
     {
         _owner = GetComponent<ISphereShape>();
     }

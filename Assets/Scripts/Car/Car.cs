@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,11 +21,19 @@ public class Car : MonoBehaviour, ISeller, ICarLevel /*, ILevel*/
     private void OnEnable()
     {
         _magnet.ObjectInMagnetAria += OnObjectInMagnetAria;
-    }
+        _trunk.MaxWeightChanged += OnMaxWeightChanged;
+    }   
+
     private void OnDisable()
     {
         _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
+        _trunk.MaxWeightChanged -= OnMaxWeightChanged;
+    }
 
+    private void OnMaxWeightChanged()
+    {        
+        _magnet.Stop();
+        _magnet.StartWorke();
     }
 
     private void OnObjectInMagnetAria(ICollectable collectable)

@@ -15,7 +15,7 @@ MonoBehaviour:
   _cost: 20
   _carLevel: 1
   _upgradeLevel: 2
+  _upgradeParts:
+  - {fileID: 1984481689384742878, guid: 2533a650d9bbacd4baf8e4c36e08599f, type: 3}
   _acceleration: 1000
   _maxSpeed: 100
-  _upgradeParts:
-  - {fileID: 14458056986173372, guid: 2533a650d9bbacd4baf8e4c36e08599f, type: 3}

@@ -1,13 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(WheelMover), typeof(SphereCollider))]
+[RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
 public class DrivingWheel : MonoBehaviour, ISphereShape
 {
     private WheelMover _wheelMover;
     private Rigidbody _rigidbody;
     private IDirectionChanger _directionChanger;
+    private PhysicWheel _physicWheel;
 
-    public float Radius { get; private set; }
+    public float Radius => _physicWheel.Radius;
     public Transform Transform => transform;
     protected Vector3 LookDirection { get; private set; }
 
@@ -49,7 +50,9 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
 
     protected virtual void UseInAwake()
     {
-        Radius = GetComponent<SphereCollider>().radius * transform.localScale.y;
+        // Radius = GetComponentInChildren<SphereCollider>().radius * transform.localScale.y;
+
+        _physicWheel = GetComponentInChildren<PhysicWheel>();
 
         _rigidbody = GetComponent<Rigidbody>();
         _wheelMover = GetComponent<WheelMover>();

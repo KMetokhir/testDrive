@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 266f2362d8fd9064682e218e48666428, type: 3}
-  m_Name: Speed!lvl
+  m_Script: {fileID: 11500000, guid: 195a600d54e888b4f8c721b5ac7b0334, type: 3}
+  m_Name: PowerUpgrade0
   m_EditorClassIdentifier: 
-  _cost: 10
+  _cost: 0
   _carLevel: 1
-  _upgradeLevel: 1
-  _upgradeParts:
-  - {fileID: -2157837433501854933, guid: 13a82336c2eace74ea7f8d209d2954da, type: 3}
-  _acceleration: 0
-  _maxSpeed: 0
+  _upgradeLevel: 0
+  _maxWeight: 1
+  _upgradeParts: []

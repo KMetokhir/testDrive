@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public interface ISpeedUpgradeData
+public interface ISpeedUpgradeData: IUpgradeData
 {
     public uint UpgradeLevel { get; }
     public uint Acceleration { get; }
