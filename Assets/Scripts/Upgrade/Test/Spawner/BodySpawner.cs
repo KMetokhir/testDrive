@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BodySpawner 
+public class BodySpawner : GenericUpgradeSpawner<BodyPart>
 {
-    
+   
 }

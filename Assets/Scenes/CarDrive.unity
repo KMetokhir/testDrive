@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3220,6 +3220,7 @@ GameObject:
   - component: {fileID: 219436700}
   - component: {fileID: 219436699}
   - component: {fileID: 219436698}
+  - component: {fileID: 219436706}
   m_Layer: 0
   m_Name: RightFW
   m_TagString: Untagged
@@ -3359,6 +3360,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &219436706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219436695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14b60f30483b1447a8684b78dbc66ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 219436696}
 --- !u!1001 &220711789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10748,7 +10762,7 @@ GameObject:
   - component: {fileID: 803215317}
   - component: {fileID: 803215314}
   - component: {fileID: 803215316}
-  - component: {fileID: 803215315}
+  - component: {fileID: 803215322}
   m_Layer: 0
   m_Name: LeftBW
   m_TagString: Untagged
@@ -10768,19 +10782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159e3caf067634a4d81e3a20be3990a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &803215315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803215313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2675ee323779ee4dabb6c36d0615436, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _groundChecker: {fileID: 0}
 --- !u!114 &803215316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10884,6 +10885,19 @@ Transform:
   - {fileID: 6040798247692642943}
   m_Father: {fileID: 871543643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &803215322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803215313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14b60f30483b1447a8684b78dbc66ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 803215321}
 --- !u!4 &803611153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4441795303046922749, guid: 195b0fff902145247a6fc520096ee761, type: 3}
@@ -11870,6 +11884,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 871543643}
+  - component: {fileID: 871543644}
   m_Layer: 0
   m_Name: Wheels
   m_TagString: Untagged
@@ -11896,6 +11911,24 @@ Transform:
   - {fileID: 803215321}
   m_Father: {fileID: 4146091099193605793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &871543644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871543642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5a483de973453418718a99c3683466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 871543643}
+  _wheelSpawners:
+  - {fileID: 219436706}
+  - {fileID: 1898891491}
+  - {fileID: 1606900358}
+  - {fileID: 803215322}
 --- !u!4 &876052827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4441795303046922749, guid: 195b0fff902145247a6fc520096ee761, type: 3}
@@ -20646,6 +20679,7 @@ GameObject:
   - component: {fileID: 1606900353}
   - component: {fileID: 1606900351}
   - component: {fileID: 1606900352}
+  - component: {fileID: 1606900358}
   m_Layer: 0
   m_Name: RightBW
   m_TagString: Untagged
@@ -20768,6 +20802,19 @@ Transform:
   - {fileID: 5007876738239195690}
   m_Father: {fileID: 871543643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1606900358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606900350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14b60f30483b1447a8684b78dbc66ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 1606900357}
 --- !u!4 &1608015732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4441795303046922749, guid: 195b0fff902145247a6fc520096ee761, type: 3}
@@ -24934,6 +24981,7 @@ GameObject:
   - component: {fileID: 1898891484}
   - component: {fileID: 1898891487}
   - component: {fileID: 1898891485}
+  - component: {fileID: 1898891491}
   m_Layer: 0
   m_Name: LeftFW
   m_TagString: Untagged
@@ -25073,6 +25121,19 @@ MonoBehaviour:
   _springStrength: 50000
   _springDamping: 100
   _springDistance: 0.3
+--- !u!114 &1898891491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898891481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14b60f30483b1447a8684b78dbc66ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 1898891482}
 --- !u!1001 &1904681868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29413,6 +29474,7 @@ GameObject:
   - component: {fileID: 8902475010136609398}
   - component: {fileID: 2822663645355623456}
   - component: {fileID: 3646494092297441018}
+  - component: {fileID: 8902475010136609399}
   m_Layer: 0
   m_Name: carBody
   m_TagString: Untagged
@@ -30000,6 +30062,19 @@ MonoBehaviour:
   _maxAngleZRotation: 10
   _correctionForceZRotation: 1000
   _wheel: {fileID: 1606900352}
+--- !u!114 &8902475010136609399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962801178415163106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e410c58b86489e44eb307429a5a4f8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 0}
 --- !u!1001 &8932932603097562383
 PrefabInstance:
   m_ObjectHideFlags: 0

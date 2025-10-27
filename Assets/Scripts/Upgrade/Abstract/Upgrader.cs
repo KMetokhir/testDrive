@@ -11,12 +11,13 @@ public class Upgrader<T, S, M> : MonoBehaviour
     where T : Upgrade, M
 {
     [SerializeField] private List<T> _upgrades;
+    [SerializeField] private List<UpgradePartsSpawner> _spawners; 
 
     [SerializeField] private S _view;
     [SerializeField] private Money _money;
 
-    [SerializeField] private Transform _carBody;
-    [SerializeField] private Transform _crane;
+   /* [SerializeField] private Transform _carBody;
+    [SerializeField] private Transform _crane;*/
 
 
     private ICarLevel _carLevel;
@@ -44,15 +45,26 @@ public class Upgrader<T, S, M> : MonoBehaviour
     private void Start()
     {
         _currentUpgrade = FindUpgrade(1, 0);// tmp
+        
+        List<UpgradePart> newParts = _currentUpgrade.Execute();
 
-        _installedUpgradeParts = _currentUpgrade.Execute();
         foreach (UpgradePart part in _installedUpgradeParts)
         {
-            Transform parent = DetermineParent(part);
+            foreach (UpgradePartsSpawner spawner in _spawners)
+            {
+                if (spawner.TrySpawn(part))
+                {
+                    _installedUpgradeParts.Add(part);
+                    break;
+                }
+            }
+            /*Transform parent = DetermineParent(part);
             part.transform.position = parent.TransformPoint(part.SpawnPosition);
             part.transform.rotation = parent.transform.rotation;
-            part.transform.parent = parent;
+            part.transform.parent = parent;*/
         }
+
+        if(newParts.count)
 
         UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
@@ -104,7 +116,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
         }
     }
 
-    private Transform DetermineParent(UpgradePart part)
+   /* private Transform DetermineParent(UpgradePart part)
     {
         return part switch
         {
@@ -112,7 +124,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
             CranePArt => _crane,
             _ => throw new Exception("Undefined parent ")
         };
-    }
+    }*/
 
     private uint GetMaxUpgradeLevel()
     {
