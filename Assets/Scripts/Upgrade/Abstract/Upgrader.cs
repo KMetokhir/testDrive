@@ -11,13 +11,13 @@ public class Upgrader<T, S, M> : MonoBehaviour
     where T : Upgrade, M
 {
     [SerializeField] private List<T> _upgrades;
-    [SerializeField] private List<UpgradePartsSpawner> _spawners; 
+    [SerializeField] private List<UpgradePartsSpawner> _spawners;
 
     [SerializeField] private S _view;
     [SerializeField] private Money _money;
 
-   /* [SerializeField] private Transform _carBody;
-    [SerializeField] private Transform _crane;*/
+    /* [SerializeField] private Transform _carBody;
+     [SerializeField] private Transform _crane;*/
 
 
     private ICarLevel _carLevel;
@@ -34,21 +34,16 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         _carLevel = FindObjectOfType<Car>();
 
-    }
-
-
-    private void OnEnable()
-    {
-        _view.UpgradeButtonClicked += Upgrade;
-    }
-
-    private void Start()
-    {
         _currentUpgrade = FindUpgrade(1, 0);// tmp
-        
+
+        foreach (UpgradePart upgradePart in _installedUpgradeParts)// find equal upgrades from new and installed
+        {
+            GameObject.Destroy(upgradePart.gameObject);
+        }
+
         List<UpgradePart> newParts = _currentUpgrade.Execute();
 
-        foreach (UpgradePart part in _installedUpgradeParts)
+        foreach (UpgradePart part in newParts)
         {
             foreach (UpgradePartsSpawner spawner in _spawners)
             {
@@ -58,13 +53,24 @@ public class Upgrader<T, S, M> : MonoBehaviour
                     break;
                 }
             }
-            /*Transform parent = DetermineParent(part);
-            part.transform.position = parent.TransformPoint(part.SpawnPosition);
-            part.transform.rotation = parent.transform.rotation;
-            part.transform.parent = parent;*/
         }
+            }
 
-        if(newParts.count)
+
+    private void OnEnable()
+    {
+        _view.UpgradeButtonClicked += Upgrade;
+    }
+
+    private void Start()
+    {
+
+        /*Transform parent = DetermineParent(part);
+        part.transform.position = parent.TransformPoint(part.SpawnPosition);
+        part.transform.rotation = parent.transform.rotation;
+        part.transform.parent = parent;*/
+
+
 
         UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
@@ -99,14 +105,24 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 }
 
                 _currentUpgrade = upgrade;
-                _installedUpgradeParts = _currentUpgrade.Execute();
-
-                foreach (UpgradePart part in _installedUpgradeParts)
+                List<UpgradePart> newParts = _currentUpgrade.Execute();
+                /* _installedUpgradeParts = _currentUpgrade.Execute();
+ */
+                foreach (UpgradePart part in newParts)
                 {
-                    Transform parent = DetermineParent(part);
-                    part.transform.position = parent.TransformPoint(part.SpawnPosition);
-                    part.transform.rotation = parent.transform.rotation;
-                    part.transform.parent = parent;
+                    foreach (UpgradePartsSpawner spawner in _spawners)
+                    {
+                        if (spawner.TrySpawn(part))
+                        {
+                            _installedUpgradeParts.Add(part);
+                            break;
+                        }
+                    }
+                }
+
+                if (_installedUpgradeParts.Count != newParts.Count)
+                {
+                    throw new Exception("Unknown upgrade part, need spawner");
                 }
 
                 UpgradeExecuted?.Invoke((M)_currentUpgrade);
@@ -116,15 +132,15 @@ public class Upgrader<T, S, M> : MonoBehaviour
         }
     }
 
-   /* private Transform DetermineParent(UpgradePart part)
-    {
-        return part switch
-        {
-            BodyPart => _carBody,
-            CranePArt => _crane,
-            _ => throw new Exception("Undefined parent ")
-        };
-    }*/
+    /* private Transform DetermineParent(UpgradePart part)
+     {
+         return part switch
+         {
+             BodyPart => _carBody,
+             CranePArt => _crane,
+             _ => throw new Exception("Undefined parent ")
+         };
+     }*/
 
     private uint GetMaxUpgradeLevel()
     {

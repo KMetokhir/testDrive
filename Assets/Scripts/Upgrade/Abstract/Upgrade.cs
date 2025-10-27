@@ -20,12 +20,11 @@ public abstract class Upgrade  : ScriptableObject
 
         foreach (UpgradePart part in _upgradeParts)
         {
-            UpgradePart item = Instantiate(part);
-            /*item.transform.position = parent.TransformPoint(part.SpawnPosition);
-            item.transform.rotation = parent.transform.rotation;
-            item.transform.parent = parent;*/
-
-            upgradeParts.Add(item);
+            for (int i = 0; i < part.Count; i++)
+            {
+                UpgradePart item = Instantiate(part);
+                upgradeParts.Add(item);
+            }
         }
 
         return upgradeParts;

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public abstract class RotaryWheel : DrivingWheel
 {
     private WheelRotator _rotator;

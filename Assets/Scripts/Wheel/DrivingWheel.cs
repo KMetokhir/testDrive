@@ -12,17 +12,22 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
     public Transform Transform => transform;
     protected Vector3 LookDirection { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
-        UseInAwake();
+        UseInAwake(); // awake in start
+
+        if (_directionChanger != null)
+        {
+            _directionChanger.DirectionChanged += OnDirectionChanged; // subscribe on enable is not work after start abviously
+        }
     }
 
     private void OnEnable()
     {
-        if (_directionChanger != null)
+        /*if (_directionChanger != null)
         {
             _directionChanger.DirectionChanged += OnDirectionChanged;
-        }
+        }*/
     }
 
     private void OnDisable()

@@ -16,6 +16,7 @@ MonoBehaviour:
   _carLevel: 1
   _upgradeLevel: 1
   _upgradeParts:
+  - {fileID: 7910531373026804797, guid: 215a3d20f8acc314db20d1514a007c01, type: 3}
   - {fileID: -2157837433501854933, guid: 13a82336c2eace74ea7f8d209d2954da, type: 3}
   _acceleration: 0
   _maxSpeed: 0

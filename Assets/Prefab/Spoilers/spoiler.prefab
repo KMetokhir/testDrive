@@ -97,4 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnLocalPosition: {x: 0, y: 2.13, z: -0.449}
-  parent: {fileID: 0}
+  _count: 1
