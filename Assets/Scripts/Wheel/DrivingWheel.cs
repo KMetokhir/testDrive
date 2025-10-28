@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
 public class DrivingWheel : MonoBehaviour, ISphereShape
 {
+    [SerializeField] private WheelSpawner _spawner;
+
     private WheelMover _wheelMover;
     private Rigidbody _rigidbody;
     private IDirectionChanger _directionChanger;
@@ -12,7 +15,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
     public Transform Transform => transform;
     protected Vector3 LookDirection { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         UseInAwake(); // awake in start
 
@@ -20,6 +23,8 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         {
             _directionChanger.DirectionChanged += OnDirectionChanged; // subscribe on enable is not work after start abviously
         }
+
+        _spawner.NewWheelSpawned += ChangePhysicWheel;
     }
 
     private void OnEnable()
@@ -28,6 +33,21 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         {
             _directionChanger.DirectionChanged += OnDirectionChanged;
         }*/
+
+
+    }
+
+    private void ChangePhysicWheel(WheelUpgrade upgrade)
+    {
+        Debug.Log("IN Change wheel");
+        if (upgrade is PhysicWheel)
+        {
+            _physicWheel = upgrade as PhysicWheel;
+        }
+        else
+        {
+            throw new Exception(" PhysicWheel does not implement WheelUpgrade");
+        }
     }
 
     private void OnDisable()
@@ -36,6 +56,8 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         {
             _directionChanger.DirectionChanged -= OnDirectionChanged;
         }
+
+        _spawner.NewWheelSpawned -= ChangePhysicWheel;
     }
 
     public void ForwardMove(ISpeed speed)
@@ -57,7 +79,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
     {
         // Radius = GetComponentInChildren<SphereCollider>().radius * transform.localScale.y;
 
-        _physicWheel = GetComponentInChildren<PhysicWheel>();
+       // _physicWheel = GetComponentInChildren<PhysicWheel>();
 
         _rigidbody = GetComponent<Rigidbody>();
         _wheelMover = GetComponent<WheelMover>();

@@ -8,5 +8,4 @@ public abstract class UpgradePart : MonoBehaviour
 
     public Vector3 SpawnPosition => _spawnLocalPosition;
     public uint Count => _count;
-
 }

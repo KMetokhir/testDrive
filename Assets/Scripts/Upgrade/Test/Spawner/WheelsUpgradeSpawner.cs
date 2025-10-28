@@ -1,39 +1,34 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
 public class WheelsUpgradeSpawner : GenericUpgradeSpawner<WheelUpgrade>
 {
-    [SerializeField] private List<WheelSpawner> _wheelSpawners;
+    [SerializeField] private  List<WheelSpawner> _wheelSpawners;  
 
-    private List<WheelSpawner> _bookedSpawners;
+    private WheelSpawner _currentSpawner;
 
     private void OnValidate()
     {
         if (_wheelSpawners.Count <= 0)
         {
             throw new System.Exception("Wheel spawners not found");
-        }
-    }
-
-    private void Awake()
-    {
-        _bookedSpawners = new List<WheelSpawner>();
+        }        
     }
 
     public override bool TrySpawn(UpgradePart part)
     {
-        WheelSpawner spawner = GetNext();
+        _currentSpawner = GetNextSpawner();
 
-        if (spawner.TrySpawn(part) == false)
+        if (_currentSpawner.TrySpawn(part) == false)
         {
             return false;
         }
         else
         {
-            Debug.Log(part.Count + " parts");
-            Debug.Log(_wheelSpawners.Count + _bookedSpawners.Count);
-            if (part.Count != _wheelSpawners.Count + _bookedSpawners.Count)
+            if (part.Count != _wheelSpawners.Count)
             {
                 throw new System.Exception("Wheel spawners not enough");
             }
@@ -42,22 +37,32 @@ public class WheelsUpgradeSpawner : GenericUpgradeSpawner<WheelUpgrade>
         return true;
     }
 
-    private WheelSpawner GetNext()
+    private WheelSpawner GetNextSpawner()
     {
-        WheelSpawner first = _wheelSpawners.FirstOrDefault();
-
-        if (first != null)
+        if (_currentSpawner == null)
         {
-            _wheelSpawners.Remove(first);
-            _bookedSpawners.Add(first);
+            _currentSpawner = _wheelSpawners.FirstOrDefault();
 
-            return first;
-        }
-        else
-        {
-            first = _bookedSpawners.FirstOrDefault();
+            return _currentSpawner;
         }
 
-        return first;
+        int index = _wheelSpawners.IndexOf(_currentSpawner);
+
+        if (index == -1)
+            throw new ArgumentException("Element not found in list");
+
+        int nextIndex = (index + 1) % _wheelSpawners.Count;
+
+        return _wheelSpawners[nextIndex];
     }
+
+   /* public int IndexOf<T>(IReadOnlyList<T> list, T item)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (EqualityComparer<T>.Default.Equals(list[i], item))
+                return i;
+        }
+        return -1;
+    }*/
 }
