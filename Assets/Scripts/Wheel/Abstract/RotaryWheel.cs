@@ -1,12 +1,11 @@
-using UnityEngine;
 
 public abstract class RotaryWheel : DrivingWheel
 {
     private WheelRotator _rotator;
 
-    public void RotateWheel(float angle)
+    public void RotateWheel(float angle, Rotation rotation)
     {
-        _rotator.Rotate(LookDirection, angle);
+        _rotator.Rotate(LookDirection, angle, rotation);
     }
 
     public void StopRotation()

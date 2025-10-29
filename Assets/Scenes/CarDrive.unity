@@ -3273,9 +3273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97561d4e4d7c8ca4ab5a9b4b9d7e4ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 2
-  _maxAngle: 50
-  _ackermannMultiplier: 1.5
   _wheelTransform: {fileID: 219436696}
   _carBodyTransform: {fileID: 8192520086018398297}
 --- !u!114 &219436700
@@ -25074,9 +25071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8538f253a0b383442908450ff8e7144e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 2
-  _maxAngle: 50
-  _ackermannMultiplier: 1.5
   _wheelTransform: {fileID: 1898891482}
   _carBodyTransform: {fileID: 8192520086018398297}
 --- !u!114 &1898891488
@@ -29205,6 +29199,7 @@ GameObject:
   - component: {fileID: 5341896766374573168}
   - component: {fileID: 5692219428183750802}
   - component: {fileID: 6356997410679717254}
+  - component: {fileID: 6356997410679717255}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -29536,6 +29531,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stratValue: 100
   _view: {fileID: 1150279681}
+--- !u!114 &6356997410679717255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768659771267144144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae0a19ee4b89e14faa94a04e1c07fa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 10
+  _maxAngle: 30
+  _ackermannMultiplier: 2
 --- !u!138 &6391042508364331852
 FixedJoint:
   m_ObjectHideFlags: 0
@@ -29651,6 +29661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screenInput: {fileID: 19559181}
   _speed: {fileID: 5692219428183750802}
+  _rotation: {fileID: 6356997410679717255}
   _rightRotaryWheel: {fileID: 219436700}
   _leftRotaryWheel: {fileID: 1898891484}
   _rotaryWheels:

@@ -3,16 +3,16 @@ using UnityEngine;
 
 public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 {
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _maxAngle;
-    [SerializeField] private float _ackermannMultiplier;
-
     [SerializeField] private Transform _wheelTransform;
     [SerializeField] private Transform _carBodyTransform;
+
+    private Rotation _rotation;
 
     private bool _isRotating;
     private float _targetAngle;
     private Vector3 _wheelDirection;
+    private float _multiplier;
+    private int _clockRotation;
 
     public event Action<Vector3> DirectionChanged;
 
@@ -24,19 +24,19 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     }
 
     // add check method and use rotation method only in fixedUpdate
-    public void Rotate(Vector3 wheelDirection, float angle)
+    public void Rotate(Vector3 wheelDirection, float angle, Rotation rotation)
     {
+        _rotation = rotation;
+
         Vector3 wheelWorldDirection = _wheelTransform.TransformDirection(wheelDirection);
         Vector3 carForwardDirection = _carBodyTransform.forward;
 
         float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, _carBodyTransform.up);
 
-      //  Debug.Log(currentRotationAngle);
+        _multiplier = GetMultiplier(currentRotationAngle, _rotation.AckermanMultiplier);
+        _clockRotation = (int)Mathf.Sign(angle * _multiplier - currentRotationAngle);
 
-        float multiplier = GetMultiplier(currentRotationAngle, _ackermannMultiplier);
-        int clockRotation = (int)Mathf.Sign(angle * multiplier - currentRotationAngle);
-
-        if (Approximately(currentRotationAngle, angle * multiplier, _rotationSpeed))
+        if (Approximately(currentRotationAngle, angle * _multiplier, _rotation.RotationSpeed))
         {
             _isRotating = false;
             return;
@@ -46,15 +46,12 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             _isRotating = true;
         }
 
-        if ((Approximately(currentRotationAngle, _maxAngle * multiplier * clockRotation, _rotationSpeed) == false))
+        if ((Approximately(currentRotationAngle, _rotation.MaxAngle * _multiplier * _clockRotation, _rotation.RotationSpeed) == false))
         {
             _isRotating = true;
 
             _wheelDirection = wheelDirection;
             _targetAngle = angle;
-
-            _wheelDirection = Quaternion.AngleAxis(_rotationSpeed * multiplier * clockRotation, Vector3.up) * _wheelDirection;
-            DirectionChanged?.Invoke(_wheelDirection);
         }
         else
         {
@@ -73,8 +70,15 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     {
         if (_isRotating)
         {
-            Rotate(_wheelDirection, _targetAngle);
+            RotateWheelDirection();
+            Rotate(_wheelDirection, _targetAngle, _rotation);
         }
+    }
+
+    private void RotateWheelDirection()
+    {
+        _wheelDirection = Quaternion.AngleAxis(_rotation.RotationSpeed * _multiplier * _clockRotation, Vector3.up) * _wheelDirection;
+        DirectionChanged?.Invoke(_wheelDirection);
     }
 
     private bool Approximately(float a, float b, float equalFactor)

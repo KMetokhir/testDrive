@@ -5,6 +5,7 @@ public class CarDriver : MonoBehaviour
 {
     [SerializeField] private ScreenInput _screenInput;
     [SerializeField] private Speed _speed; //ISpeed
+    [SerializeField] private Rotation _rotation;
 
     [SerializeField] private RightRotaryWheel _rightRotaryWheel;
     [SerializeField] private LeftRotaryWheel _leftRotaryWheel;
@@ -36,32 +37,40 @@ public class CarDriver : MonoBehaviour
 
     private void OnAngleChanged(float angle)
     {
+        float maxInputAngle = 90;
+
         if (Mathf.Abs(angle) <= 90)
         {
+            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotation.MaxAngle);
+
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.ForwardMove(_speed); //rotary wheel max angle< 90, rotate not in angle, but rotateAngle = (maxInput/maxRotation)*inputangle
+                wheel.ForwardMove(_speed);
 
             }
 
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(angle);
+                wheel.RotateWheel(angle, _rotation);
             }
         }
         else
         {
+
+            float sign = Mathf.Sign(angle);
+            angle = sign * (180 - Mathf.Abs(angle));
+
+            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotation.MaxAngle);
+
             foreach (DrivingWheel wheel in _drivingWheels)
             {
                 wheel.BackwardMove(_speed);
 
             }
 
-            float sign = Mathf.Sign(angle);
-
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(sign * (180 - Mathf.Abs(angle)));
+                wheel.RotateWheel(sign * (180 - Mathf.Abs(angle)), _rotation);
             }
         }
     }
@@ -109,7 +118,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(30);
+                wheel.RotateWheel(30, _rotation);
             }
         }
 
@@ -125,7 +134,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(-30);
+                wheel.RotateWheel(-30, _rotation);
             }
         }
 
