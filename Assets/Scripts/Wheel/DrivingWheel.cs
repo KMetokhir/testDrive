@@ -33,8 +33,6 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         {
             _directionChanger.DirectionChanged += OnDirectionChanged;
         }*/
-
-
     }
 
     private void ChangePhysicWheel(WheelUpgrade upgrade)
@@ -77,10 +75,6 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
 
     protected virtual void UseInAwake()
     {
-        // Radius = GetComponentInChildren<SphereCollider>().radius * transform.localScale.y;
-
-       // _physicWheel = GetComponentInChildren<PhysicWheel>();
-
         _rigidbody = GetComponent<Rigidbody>();
         _wheelMover = GetComponent<WheelMover>();
         LookDirection = transform.forward;

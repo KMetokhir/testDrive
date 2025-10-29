@@ -16,4 +16,3 @@ public class WheelSpawner : GenericUpgradeSpawner<WheelUpgrade>
         return false;
     }
 }
-

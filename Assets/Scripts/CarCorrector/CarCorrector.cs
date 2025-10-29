@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 // wheell ground checker for all 4 wheels, another forse for x fliip and z fleep, method to calculate angle
 
-ENABLED!!!!!
+/*ENABLED!!!!! need state machine to enable corrector in upgrade state*/
 public class CarCorrector : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;

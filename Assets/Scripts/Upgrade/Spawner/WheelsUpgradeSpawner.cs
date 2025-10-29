@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
 public class WheelsUpgradeSpawner : GenericUpgradeSpawner<WheelUpgrade>
 {
-    [SerializeField] private  List<WheelSpawner> _wheelSpawners;  
+    [SerializeField] private List<WheelSpawner> _wheelSpawners;
 
     private WheelSpawner _currentSpawner;
 
@@ -15,7 +14,7 @@ public class WheelsUpgradeSpawner : GenericUpgradeSpawner<WheelUpgrade>
         if (_wheelSpawners.Count <= 0)
         {
             throw new System.Exception("Wheel spawners not found");
-        }        
+        }
     }
 
     public override bool TrySpawn(UpgradePart part)
@@ -55,14 +54,4 @@ public class WheelsUpgradeSpawner : GenericUpgradeSpawner<WheelUpgrade>
 
         return _wheelSpawners[nextIndex];
     }
-
-   /* public int IndexOf<T>(IReadOnlyList<T> list, T item)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (EqualityComparer<T>.Default.Equals(list[i], item))
-                return i;
-        }
-        return -1;
-    }*/
 }
