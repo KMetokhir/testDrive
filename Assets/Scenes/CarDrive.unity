@@ -29473,7 +29473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upgrader: {fileID: 1029710968945701251}
-  _value: 1000
+  _value: 0
   _maxSpeed: 0
 --- !u!23 &5798475815713447165
 MeshRenderer:
@@ -29543,7 +29543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae0a19ee4b89e14faa94a04e1c07fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 10
+  _rotationSpeed: 1
   _maxAngle: 30
   _ackermannMultiplier: 2
 --- !u!138 &6391042508364331852

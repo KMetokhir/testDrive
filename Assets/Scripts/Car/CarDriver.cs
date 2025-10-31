@@ -39,7 +39,7 @@ public class CarDriver : MonoBehaviour
     {
         float maxInputAngle = 90;
 
-        if (Mathf.Abs(angle) <= 90)
+        if (Mathf.Abs(angle) <= maxInputAngle)
         {
             angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotation.MaxAngle);
 
@@ -56,7 +56,6 @@ public class CarDriver : MonoBehaviour
         }
         else
         {
-
             float sign = Mathf.Sign(angle);
             angle = sign * (180 - Mathf.Abs(angle));
 
@@ -70,7 +69,7 @@ public class CarDriver : MonoBehaviour
 
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(sign * (180 - Mathf.Abs(angle)), _rotation);
+                wheel.RotateWheel(angle, _rotation);
             }
         }
     }
@@ -118,7 +117,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(30, _rotation);
+                wheel.RotateWheel(90, _rotation);
             }
         }
 
@@ -134,7 +133,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(-30, _rotation);
+                wheel.RotateWheel(-90, _rotation);
             }
         }
 

@@ -37,7 +37,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
 
     private void ChangePhysicWheel(WheelUpgrade upgrade)
     {
-        Debug.Log("IN Change wheel");
+
         if (upgrade is PhysicWheel)
         {
             _physicWheel = upgrade as PhysicWheel;
@@ -84,6 +84,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
     private void OnDirectionChanged(Vector3 direction)
     {
         LookDirection = direction;
+        
         _wheelMover.SetDirection(direction);
     }
 

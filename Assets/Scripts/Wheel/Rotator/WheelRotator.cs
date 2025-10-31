@@ -21,9 +21,11 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         _isRotating = false;
         _wheelDirection = _carBodyTransform.forward;
         _targetAngle = 0;
+
+        DirectionChanged?.Invoke(_wheelDirection);
     }
 
-    // add check method and use rotation method only in fixedUpdate
+    // rotate - incorrrect naming
     public void Rotate(Vector3 wheelDirection, float angle, Rotation rotation)
     {
         _rotation = rotation;
@@ -33,10 +35,16 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
         float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, _carBodyTransform.up);
 
+       // Debug.Log(angle + " angle in "/* + currentRotationAngle + " " + gameObject.name*/);
+
         _multiplier = GetMultiplier(currentRotationAngle, _rotation.AckermanMultiplier);
+
         _clockRotation = (int)Mathf.Sign(angle * _multiplier - currentRotationAngle);
 
-        if (Approximately(currentRotationAngle, angle * _multiplier, _rotation.RotationSpeed))
+        _wheelDirection = wheelDirection;
+        _targetAngle = angle;
+
+        if (Approximately(currentRotationAngle, angle * _multiplier, _rotation.RotationSpeed * _multiplier))
         {
             _isRotating = false;
             return;
@@ -46,16 +54,22 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             _isRotating = true;
         }
 
-        if ((Approximately(currentRotationAngle, _rotation.MaxAngle * _multiplier * _clockRotation, _rotation.RotationSpeed) == false))
+        if ((Approximately(currentRotationAngle, _rotation.MaxAngle * _multiplier * _clockRotation, _rotation.RotationSpeed * _multiplier)))
         {
-            _isRotating = true;
+            _isRotating = false;
 
-            _wheelDirection = wheelDirection;
-            _targetAngle = angle;
+            return;
         }
         else
         {
-            _isRotating = false;
+            _isRotating = true;
+        }
+
+
+        if (Mathf.Abs(currentRotationAngle) > _rotation.MaxAngle * _multiplier)
+        {
+            _isRotating = true;
+            _clockRotation = (int)Mathf.Sign(_rotation.MaxAngle * _multiplier - currentRotationAngle);
         }
     }
 

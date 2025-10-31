@@ -22,7 +22,7 @@ public class Trunk : MonoBehaviour // ame as speed upgrader
     private void OnEnable()
     {
         _upgrader.UpgradeExecuted += SetNewStats;
-        Debug.Log("IN Trunck");
+       
     }
 
     private void OnDisable()

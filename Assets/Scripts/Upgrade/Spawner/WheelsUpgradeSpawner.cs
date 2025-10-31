@@ -27,7 +27,7 @@ public class WheelsUpgradeSpawner : GenericUpgradeSpawner<WheelUpgrade>
         }
         else
         {
-            if (part.Count != _wheelSpawners.Count)
+            if (part.Count > _wheelSpawners.Count)
             {
                 throw new System.Exception("Wheel spawners not enough");
             }
