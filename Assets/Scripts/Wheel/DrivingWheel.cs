@@ -4,12 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
 public class DrivingWheel : MonoBehaviour, ISphereShape
 {
-    [SerializeField] private WheelSpawner _spawner;
+    // [SerializeField] private WheelSpawner _spawner;
+
+    [SerializeField]  private WheelView _wheelView;
+    [SerializeField] private PhysicWheel _physicWheel;
 
     private WheelMover _wheelMover;
     private Rigidbody _rigidbody;
     private IDirectionChanger _directionChanger;
-    private PhysicWheel _physicWheel;
+    
 
     public float Radius => _physicWheel.Radius;
     public Transform Transform => transform;
@@ -17,14 +20,14 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
 
     private void Awake()
     {
-        UseInAwake(); // awake in start
+        UseInAwake();
 
         if (_directionChanger != null)
         {
             _directionChanger.DirectionChanged += OnDirectionChanged; // subscribe on enable is not work after start abviously
         }
 
-        _spawner.NewWheelSpawned += ChangePhysicWheel;
+       // _spawner.NewWheelSpawned += ChangePhysicWheel;
     }
 
     private void OnEnable()
@@ -35,7 +38,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         }*/
     }
 
-    private void ChangePhysicWheel(WheelUpgrade upgrade)
+   /* private void ChangePhysicWheel(WheelUpgrade upgrade)
     {
 
         if (upgrade is PhysicWheel)
@@ -46,7 +49,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
         {
             throw new Exception(" PhysicWheel does not implement WheelUpgrade");
         }
-    }
+    }*/
 
     private void OnDisable()
     {
@@ -55,7 +58,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
             _directionChanger.DirectionChanged -= OnDirectionChanged;
         }
 
-        _spawner.NewWheelSpawned -= ChangePhysicWheel;
+       // _spawner.NewWheelSpawned -= ChangePhysicWheel;
     }
 
     public void ForwardMove(ISpeed speed)
@@ -84,7 +87,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape
     private void OnDirectionChanged(Vector3 direction)
     {
         LookDirection = direction;
-        
+
         _wheelMover.SetDirection(direction);
     }
 

@@ -1,5 +1,5 @@
 
-public abstract class RotaryWheel : DrivingWheel
+public abstract class RotaryWheel : DrivingWheel, IRotaryWheel
 {
     private WheelRotator _rotator;
 

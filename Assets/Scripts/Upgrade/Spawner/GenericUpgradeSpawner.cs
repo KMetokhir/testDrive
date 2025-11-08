@@ -1,6 +1,6 @@
 
 public class GenericUpgradeSpawner<T> : UpgradePartsSpawner
-    where T : UpgradePart
+    where T : IUpgradePart
 {
     public override bool IsSpawnPossible(UpgradePart part)
     {

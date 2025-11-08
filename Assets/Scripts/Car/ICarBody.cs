@@ -1,5 +1,6 @@
+using UnityEngine;
 
-public interface ICarBody // rb transforms
+public interface ICarBody
 {
-
+    public Rigidbody Rigidbody { get; }
 }

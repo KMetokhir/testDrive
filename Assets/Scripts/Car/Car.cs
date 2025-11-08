@@ -2,15 +2,27 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour, ISeller, ICarLevel /*, ILevel*/
+public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection /*, ILevel*/
 {
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Trunk _trunk;
     [SerializeField] private Money _money;
 
+    private Rigidbody _rigidbody;
+
     /* private ILevel _level;*/
     public uint Level { get; private set; }
-   
+
+    public Rigidbody Rigidbody => _rigidbody;
+
+    public Vector3 ForwardDirection => transform.forward;
+
+    public Vector3 DownDirection => -transform.up;   
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {

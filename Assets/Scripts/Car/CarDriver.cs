@@ -7,8 +7,13 @@ public class CarDriver : MonoBehaviour
     [SerializeField] private Speed _speed; //ISpeed
     [SerializeField] private Rotation _rotation;
 
-    [SerializeField] private RightRotaryWheel _rightRotaryWheel;
-    [SerializeField] private LeftRotaryWheel _leftRotaryWheel;
+    [SerializeField] private DrivenWheelsSpawner _drivenWheelsSpawner;
+
+    //[SerializeField] private RightRotaryWheel _rightRotaryWheel;
+    // [SerializeField] private LeftRotaryWheel _leftRotaryWheel;
+
+    /*[SerializeField] private RotaryWheelsSpawner*/
+    [SerializeField] private DrivenWheelsSpawner _drivingWheeslSpawner;
 
     [SerializeField] private List<RotaryWheel> _rotaryWheels;
     [SerializeField] private List<DrivingWheel> _drivingWheels;
@@ -19,6 +24,8 @@ public class CarDriver : MonoBehaviour
     {
         _screenInput.AngleChanged += OnAngleChanged;
         _screenInput.MouseUp += OnMouseEventUp;
+
+      //  _drivenWheelsSpawner.WheelSpawned+= Add
     }
 
     private void OnMouseEventUp()

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class PhysicWheel : WheelUpgrade
+public class PhysicWheel : MonoBehaviour
 {
     private SphereCollider _collider;
 

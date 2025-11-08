@@ -2,12 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Suspension : MonoBehaviour
-{
-    [SerializeField] private Rigidbody _carBodyRb;// add interface
+{    
     [SerializeField] private float _springStrength = 50000f;
     [SerializeField] private float _springDamping = 100f;
     [SerializeField] private float _springDistance = 0.3f;
 
+    private ICarBody _carBody;// add interface
     private Rigidbody _wheelRb;
     private ConfigurableJoint _joint;
 
@@ -18,8 +18,10 @@ public class Suspension : MonoBehaviour
 
     void Start()
     {
+        _carBody = FindAnyObjectByType<Car>();
+
         _joint = _wheelRb.gameObject.AddComponent<ConfigurableJoint>();
-        _joint.connectedBody = _carBodyRb;
+        _joint.connectedBody = _carBody.Rigidbody;
 
         _joint.xMotion = ConfigurableJointMotion.Locked;
         _joint.yMotion = ConfigurableJointMotion.Limited;

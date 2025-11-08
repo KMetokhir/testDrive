@@ -10,6 +10,8 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private int _rayDegreeOffset;
     [SerializeField] private int _countOfPositiveRays;
 
+    private ICarDirection _carDirection;
+
     private ISphereShape _owner;
 
     private List<Ray> _rays;
@@ -17,6 +19,7 @@ public class GroundChecker : MonoBehaviour
     private void Start()
     {
         _owner = GetComponent<ISphereShape>();
+        _carDirection = FindObjectOfType<Car>();// tmp
     }
 
     public bool IsGrounded()
@@ -39,23 +42,23 @@ public class GroundChecker : MonoBehaviour
         return isGrounded;
     }
 
-    private List<Ray> GetGroundCheckRays(Vector3 origin, int positioveRaysCount, int degreeOffset)
+    private List<Ray> GetGroundCheckRays(Vector3 origin, int raysCount, int degreeOffset)
     {
-        if (positioveRaysCount <= 0)
+        if (raysCount <= 0)
         {
-            throw new NullReferenceException(nameof(positioveRaysCount));
+            throw new NullReferenceException(nameof(raysCount));
         }
 
         Transform ownerTransform = _owner.Transform;
 
         List<Ray> rays = new List<Ray>();
 
-        Vector3 startDirection = -ownerTransform.up;
+        Vector3 startDirection = _carDirection.DownDirection;//-ownerTransform.up;
         Vector3 rayDirection;
         int positiveRotation = 1;
         int negativeRotation = -1;
 
-        for (int i = 0; i <= positioveRaysCount; i++)
+        for (int i = 0; i <= raysCount; i++)
         {
             rayDirection = Quaternion.AngleAxis(degreeOffset * i * positiveRotation, ownerTransform.right) * startDirection;
             rays.Add(new Ray(origin, rayDirection));

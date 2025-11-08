@@ -5,8 +5,9 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
 {
     private const int ForwardDirection = 1;
     private const int BackwardDirection = -1;
+    private const int StopDirection = 0;
 
-    [SerializeField] private GroundChecker _groundChecker;  
+    [SerializeField] private GroundChecker _groundChecker;
 
     private bool _isMoving;
 
@@ -50,6 +51,8 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
 
     public void StopMoving()
     {
+        _lookDirection = StopDirection;
+
         _isMoving = false;
     }
 

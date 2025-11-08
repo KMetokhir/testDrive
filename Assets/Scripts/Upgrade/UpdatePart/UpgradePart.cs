@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class UpgradePart : MonoBehaviour
+public abstract class UpgradePart : MonoBehaviour, IUpgradePart
 
 {
     [SerializeField] private Vector3 _spawnLocalPosition;
