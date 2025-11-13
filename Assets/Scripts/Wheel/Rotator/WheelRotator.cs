@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 {
-    [SerializeField] private Transform _wheelTransform;
-    [SerializeField] private Transform _carBodyTransform;
+    //  [SerializeField] private Transform _wheelTransform;
+    // [SerializeField] private Transform _carBodyTransform;
+
+    private ICarDirection _carDirection;
 
     private Rotation _rotation;
 
@@ -19,7 +22,9 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     private void Awake()
     {
         _isRotating = false;
-        _wheelDirection = _carBodyTransform.forward;
+        // 
+        _carDirection = FindObjectOfType<Car>();// tmp        
+        _wheelDirection = transform.forward;
         _targetAngle = 0;
 
         DirectionChanged?.Invoke(_wheelDirection);
@@ -30,12 +35,12 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     {
         _rotation = rotation;
 
-        Vector3 wheelWorldDirection = _wheelTransform.TransformDirection(wheelDirection);
-        Vector3 carForwardDirection = _carBodyTransform.forward;
+        Vector3 wheelWorldDirection = transform.TransformDirection(wheelDirection);
+        Vector3 carForwardDirection = _carDirection.ForwardDirection;
 
-        float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, _carBodyTransform.up);
+        float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, -_carDirection.DownDirection);
 
-       // Debug.Log(angle + " angle in "/* + currentRotationAngle + " " + gameObject.name*/);
+        // Debug.Log(angle + " angle in "/* + currentRotationAngle + " " + gameObject.name*/);
 
         _multiplier = GetMultiplier(currentRotationAngle, _rotation.AckermanMultiplier);
 
@@ -64,7 +69,6 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         {
             _isRotating = true;
         }
-
 
         if (Mathf.Abs(currentRotationAngle) > _rotation.MaxAngle * _multiplier)
         {

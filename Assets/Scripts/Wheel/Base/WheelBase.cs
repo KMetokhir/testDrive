@@ -1,45 +1,47 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.TextCore.LowLevel;
 
-public class WheelBase : MonoBehaviour
+public class WheelBase : ObservableUpgradePart
 {
     [SerializeField] private List<IWheelsSpawner> _spawners;
+    [SerializeField] private List<WheelUpgradePart> _wheelPrefabs;
 
-    [SerializeField] private List<WheelUpgrade> _wheelPrefabs;
+    public event Action<List<IWheel>, WheelBase> WheelsSpawned;
 
     private void Awake()
     {
         _spawners = GetComponents<IWheelsSpawner>().ToList();
     }
 
+    /*public List<IWheel> GetWheels()
+    {
+        return _wheels;
+    }*/
+
     private void Start()
     {
-        List<WheelUpgrade> wheels = new List<WheelUpgrade>();
+        List<IWheel> wheels = new List<IWheel>();
 
-        foreach (WheelUpgrade wheel in _wheelPrefabs)
+        foreach (WheelUpgradePart wheelPrefab in _wheelPrefabs)
         {
-            for (int i = 0; i < wheel.Count; i++)
+            for (int i = 0; i < wheelPrefab.Count; i++)
             {
-                var obj = Instantiate(wheel);
+                WheelUpgradePart upgrade = Instantiate(wheelPrefab);
 
                 foreach (var spawner in _spawners)
                 {
-                    if (spawner.TrySpawn(obj))
+                    if (spawner.TrySpawn(upgrade))
                     {
-                        Debug.Log("Spawn");
-                    }
-                    else
-                    {
-                        Debug.Log("Not spawn");
+                        wheels.Add(upgrade.Wheel);
+                        break;
                     }
                 }
             }
         }
 
+        WheelsSpawned?.Invoke(wheels, this);
     }
 }

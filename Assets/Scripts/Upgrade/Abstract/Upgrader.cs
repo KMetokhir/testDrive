@@ -11,6 +11,8 @@ public class Upgrader<T, S, M> : MonoBehaviour
     [SerializeField] private List<T> _upgrades;
     [SerializeField] private List<UpgradePartsSpawner> _spawners;
 
+
+
     [SerializeField] private S _view;
     [SerializeField] private Money _money;
 
@@ -22,7 +24,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     public event Action<M> UpgradeExecuted;
 
-    private void Awake()
+    private void Start()
     {
         _installedUpgradeParts = new List<UpgradePart>();
 
@@ -32,7 +34,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         foreach (UpgradePart upgradePart in _installedUpgradeParts)
         {
-            GameObject.Destroy(upgradePart.gameObject);
+            upgradePart.DestroyObject();
         }
 
         List<UpgradePart> newParts = _currentUpgrade.Execute();
@@ -48,6 +50,11 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 }
             }
         }
+
+
+        UpgradeExecuted?.Invoke((M)_currentUpgrade);
+
+        _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
     }
 
     private void OnEnable()
@@ -55,12 +62,12 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _view.UpgradeButtonClicked += Upgrade;
     }
 
-    private void Start()
+    /*private void Start()
     {
-        UpgradeExecuted?.Invoke((M)_currentUpgrade);
+        *//*UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
-        _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
-    }
+        _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());*//*
+    }*/
 
     private void Upgrade()
     {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions.Comparers;
 
 public class WheelMover : MonoBehaviour // from ground checker get the normal to surface and rotate direction in 90 degree to normal
 {
@@ -17,6 +18,10 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
     private ISpeed _speed;
 
     private int _lookDirection;
+
+    public bool IsGrounded => _groundChecker.IsGrounded();
+
+    public event Action<float, int, float> RigidbodyMoving;
 
     private void Awake()
     {
@@ -74,11 +79,15 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
         if (_isMoving && _groundChecker.IsGrounded())
         {
             Move(_speed.Value, _rigidbody, _direction);
+
+            RigidbodyMoving?.Invoke(_rigidbody.velocity.magnitude, _lookDirection, Time.fixedDeltaTime);
         }
 
         if (_isMoving && _rigidbody.velocity.z > _speed.MaxSpeed)
         {
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, _speed.MaxSpeed);
+
+            RigidbodyMoving?.Invoke(_rigidbody.velocity.magnitude, _lookDirection, Time.fixedDeltaTime);
         }
     }
 }

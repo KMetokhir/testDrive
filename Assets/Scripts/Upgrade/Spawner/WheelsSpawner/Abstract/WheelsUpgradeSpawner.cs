@@ -4,15 +4,15 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using UnityEngine;
 
-public class WheelsUpgradeSpawner<T,M> : GenericUpgradeSpawner<T>, IWheelsSpawner
-    where T: WheelUpgrade 
-    where M: WheelUpgradeSpawner<T>
+public class WheelsUpgradeSpawner<T, M> : GenericUpgradeSpawner<T>, IWheelsSpawner 
+    where T : WheelUpgradePart
+    where M : WheelUpgradeSpawner<T>
 {
     [SerializeField] private List<M> _wheelSpawners;
 
     private M _currentSpawner;
 
-    public event Action<IWheelUpgrade> WheelSpawned;   
+    public event Action<IWheelUpgrade> WheelSpawned; // not Necessary does't used
 
     private void OnValidate()
     {

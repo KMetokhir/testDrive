@@ -1,8 +1,6 @@
 using UnityEngine;
 
-public class DrivingWheelUpgrade : WheelUpgrade  // generic for other wheels
+public class DrivingWheelUpgrade : WheelUpgradePart  
 {
-    [SerializeField] private DrivingWheel _drivingWheel;
-
-    public DrivingWheel DrivingWheel => _drivingWheel;
+   
 }

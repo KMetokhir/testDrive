@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +8,12 @@ public class CarDriver : MonoBehaviour
     [SerializeField] private Speed _speed; //ISpeed
     [SerializeField] private Rotation _rotation;
 
-    [SerializeField] private DrivenWheelsSpawner _drivenWheelsSpawner;
-
+    [SerializeField] private WheelBaseSpawner _wheelBaseSpawner;
     //[SerializeField] private RightRotaryWheel _rightRotaryWheel;
     // [SerializeField] private LeftRotaryWheel _leftRotaryWheel;
 
     /*[SerializeField] private RotaryWheelsSpawner*/
-    [SerializeField] private DrivenWheelsSpawner _drivingWheeslSpawner;
+
 
     [SerializeField] private List<RotaryWheel> _rotaryWheels;
     [SerializeField] private List<DrivingWheel> _drivingWheels;
@@ -22,10 +22,65 @@ public class CarDriver : MonoBehaviour
 
     private void OnEnable()
     {
+        _wheelBaseSpawner.PartSpawned += SubcrideToBase;
+    }
+
+    private void Subscribe()
+    {
         _screenInput.AngleChanged += OnAngleChanged;
         _screenInput.MouseUp += OnMouseEventUp;
 
-      //  _drivenWheelsSpawner.WheelSpawned+= Add
+    }
+
+    private void Unsubscribe()
+    {
+        _screenInput.AngleChanged -= OnAngleChanged;
+        _screenInput.MouseUp -= OnMouseEventUp;
+
+    }
+
+    private void SubcrideToBase(WheelBase wheelBase)
+    {
+        wheelBase.WheelsSpawned += SetWheels;
+        wheelBase.Destroied += OnBaseDestroied; // destroyObject method avalible
+    }
+
+    private void OnBaseDestroied(UpgradePart part)
+    {
+
+        Unsubscribe();
+
+        WheelBase wheelBase = (WheelBase)part;
+
+        if (wheelBase == null)
+        {
+            throw new Exception("Upgrade partis not WheelBase");
+        }
+
+        wheelBase.Destroied -= OnBaseDestroied;
+    }
+
+    private void SetWheels(List<IWheel> wheels, WheelBase wheelbase)
+    {
+        wheelbase.WheelsSpawned -= SetWheels;
+
+        _rotaryWheels.Clear();
+        _drivingWheels.Clear();
+
+        foreach (IWheel wheel in wheels)
+        {
+            if (wheel is DrivingWheel)
+            {
+                _drivingWheels.Add(wheel as DrivingWheel);
+            }
+
+            if (wheel is RotaryWheel)
+            {
+                _rotaryWheels.Add(wheel as RotaryWheel);
+            }
+        }
+
+        Subscribe();
     }
 
     private void OnMouseEventUp()
@@ -45,6 +100,7 @@ public class CarDriver : MonoBehaviour
     private void OnAngleChanged(float angle)
     {
         float maxInputAngle = 90;
+
 
         if (Mathf.Abs(angle) <= maxInputAngle)
         {

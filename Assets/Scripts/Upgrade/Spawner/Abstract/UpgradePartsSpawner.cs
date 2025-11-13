@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class UpgradePartsSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform _parent;
+    [SerializeField] private Transform _parent;    
 
     public virtual bool TrySpawn(UpgradePart part)
     {
