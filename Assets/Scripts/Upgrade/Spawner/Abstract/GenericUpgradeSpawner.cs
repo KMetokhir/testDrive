@@ -1,14 +1,11 @@
 
-public class GenericUpgradeSpawner<T> : UpgradePartsSpawner
-    where T : IUpgradePart
+using UnityEngine;
+
+public class GenericUpgradeSpawner<T> : UpgradePartSpawner
+    where T : class, IUpgradePart
 {
     public override bool IsSpawnPossible(UpgradePart part)
     {
-        if (part is T)
-        {
-            return true;
-        }
-
-        return false;
+        return part as T != null;
     }
 }

@@ -20,67 +20,102 @@ public class CarDriver : MonoBehaviour
 
     [SerializeField] private float _moveForce;
 
+    private void Awake()
+    {
+        _rotaryWheels = new List<RotaryWheel>();
+        _drivingWheels = new List<DrivingWheel>();
+    }
     private void OnEnable()
     {
-        _wheelBaseSpawner.PartSpawned += SubcrideToBase;
+        _wheelBaseSpawner.PartSpawned += SubcribeToBase;
+       
     }
 
-    private void Subscribe()
+    private void OnDisable()
+    {
+        _wheelBaseSpawner.PartSpawned -= SubcribeToBase;
+        UnsubscribeInput();
+    }
+
+    private void SubscribeInput()
     {
         _screenInput.AngleChanged += OnAngleChanged;
         _screenInput.MouseUp += OnMouseEventUp;
 
     }
 
-    private void Unsubscribe()
+    private void UnsubscribeInput()
     {
         _screenInput.AngleChanged -= OnAngleChanged;
         _screenInput.MouseUp -= OnMouseEventUp;
 
     }
 
-    private void SubcrideToBase(WheelBase wheelBase)
+    private void SubcribeToBase(WheelBase wheelBase)
     {
-        wheelBase.WheelsSpawned += SetWheels;
+        wheelBase.WheelSpawned += SetWheel;
+        wheelBase.WheelDestroied += RemoveWheel;
         wheelBase.Destroied += OnBaseDestroied; // destroyObject method avalible
+
+        SubscribeInput();
+    }
+
+    private void UnsubscribeFrombase(WheelBase wheelBase)
+    {
+        wheelBase.WheelSpawned -= SetWheel;
+        wheelBase.WheelDestroied -= RemoveWheel;
+        wheelBase.Destroied -= OnBaseDestroied;
+
+    }
+
+    private void RemoveWheel(IWheel wheel)
+    {
+        
+        if (wheel is DrivingWheel)
+        {
+            _drivingWheels.Remove(wheel as DrivingWheel);
+        }
+
+        if (wheel is RotaryWheel)
+        {
+            _rotaryWheels.Remove(wheel as RotaryWheel);
+        }
     }
 
     private void OnBaseDestroied(UpgradePart part)
     {
 
-        Unsubscribe();
+        UnsubscribeInput();
 
         WheelBase wheelBase = (WheelBase)part;
 
         if (wheelBase == null)
         {
-            throw new Exception("Upgrade partis not WheelBase");
+            throw new Exception("Upgrade  not WheelBase");
         }
 
-        wheelBase.Destroied -= OnBaseDestroied;
+        UnsubscribeFrombase(wheelBase);
+        _drivingWheels.Clear();
+        _rotaryWheels.Clear();
+        
     }
 
-    private void SetWheels(List<IWheel> wheels, WheelBase wheelbase)
+    private void SetWheel(IWheel wheel)
     {
-        wheelbase.WheelsSpawned -= SetWheels;
-
-        _rotaryWheels.Clear();
-        _drivingWheels.Clear();
-
-        foreach (IWheel wheel in wheels)
-        {
+       
+        
             if (wheel is DrivingWheel)
             {
                 _drivingWheels.Add(wheel as DrivingWheel);
-            }
+           
+        }
 
             if (wheel is RotaryWheel)
             {
                 _rotaryWheels.Add(wheel as RotaryWheel);
-            }
-        }
 
-        Subscribe();
+            
+            }          
     }
 
     private void OnMouseEventUp()

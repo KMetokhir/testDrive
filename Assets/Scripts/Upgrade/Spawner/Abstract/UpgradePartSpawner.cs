@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class UpgradePartsSpawner : MonoBehaviour
+public abstract class UpgradePartSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _parent;    
 
@@ -16,7 +16,7 @@ public abstract class UpgradePartsSpawner : MonoBehaviour
         }
 
         return false;
-    }
+    }    
 
     public abstract bool IsSpawnPossible(UpgradePart part);
 }

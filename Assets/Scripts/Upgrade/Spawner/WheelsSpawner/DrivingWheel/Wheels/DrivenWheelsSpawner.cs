@@ -1,5 +1,5 @@
 
-public class DrivenWheelsSpawner : WheelsUpgradeSpawner<DrivingWheelUpgrade, DrivenWheelSpawner>
+public class DrivenWheelsSpawner : GenericWheelsUpgradeSpawner<DrivingWheelUpgrade, DrivenWheelSpawner>
 {
 
 }

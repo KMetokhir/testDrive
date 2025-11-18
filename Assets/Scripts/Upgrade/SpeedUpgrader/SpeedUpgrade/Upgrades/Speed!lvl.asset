@@ -17,5 +17,8 @@ MonoBehaviour:
   _upgradeLevel: 1
   _upgradeParts:
   - {fileID: 3940836406512695771, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+  - {fileID: 9205643665690870874, guid: 1f62aca431dd27947ae14a400bc68ba8, type: 3}
+  - {fileID: 4344676969812587729, guid: 621e35b974e588f4897089b87865d7ea, type: 3}
+  - {fileID: -4153677366387139974, guid: 1e8e84b39390022409bd92668eb43f7d, type: 3}
   _acceleration: 1000
   _maxSpeed: 100

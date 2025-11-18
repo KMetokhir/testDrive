@@ -14701,7 +14701,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 29.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17736,6 +17736,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4441795303046922749, guid: 195b0fff902145247a6fc520096ee761, type: 3}
   m_PrefabInstance: {fileID: 390209121}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1363855844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1363855845}
+  m_Layer: 7
+  m_Name: MagnetCrane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1363855845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363855844}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.0468, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1365270868 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4441795303046922749, guid: 195b0fff902145247a6fc520096ee761, type: 3}
@@ -25792,6 +25823,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4441795303046922749, guid: 195b0fff902145247a6fc520096ee761, type: 3}
   m_PrefabInstance: {fileID: 362631521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1941537940
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4538723801654801537, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_Name
+      value: WheelsBase (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4538723801654801537, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911550344947824636, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5adb1b5bf050a4240acb757d2af9431a, type: 3}
 --- !u!1001 &1942358048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28701,6 +28793,8 @@ MonoBehaviour:
   _spawners: []
   _view: {fileID: 1557241404}
   _money: {fileID: 6356997410679717254}
+  _compositePartSpawners: []
+  _observableParts: []
 --- !u!4 &620881182461984173
 Transform:
   m_ObjectHideFlags: 0
@@ -28737,6 +28831,8 @@ MonoBehaviour:
   - {fileID: 542833378}
   _view: {fileID: 1206787663}
   _money: {fileID: 6356997410679717254}
+  _compositePartSpawners: []
+  _observableParts: []
 --- !u!1 &1768659771267144144
 GameObject:
   m_ObjectHideFlags: 0
@@ -29354,6 +29450,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 246163658582372459, guid: cc266d9c534f3ba448b1be628be04722, type: 3}
+      propertyPath: m_Name
+      value: CraneBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 246163658582372459, guid: cc266d9c534f3ba448b1be628be04722, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
@@ -29399,7 +29499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416747971190514950, guid: cc266d9c534f3ba448b1be628be04722, type: 3}
       propertyPath: m_Name
-      value: MagnetCrane
+      value: Crane
       objectReference: {fileID: 0}
     - target: {fileID: 2416747971190514950, guid: cc266d9c534f3ba448b1be628be04722, type: 3}
       propertyPath: m_Layer
@@ -29431,6 +29531,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 705507995}
+  - {fileID: 1941537940}
   - {fileID: 1065255116}
   - {fileID: 1924909342}
   - {fileID: 1316481487}
@@ -29443,6 +29544,7 @@ SceneRoots:
   - {fileID: 1012070666}
   - {fileID: 1587541682}
   - {fileID: 691727016}
+  - {fileID: 1363855845}
   - {fileID: 580508144}
   - {fileID: 8932932603097562383}
   - {fileID: 1516858354}

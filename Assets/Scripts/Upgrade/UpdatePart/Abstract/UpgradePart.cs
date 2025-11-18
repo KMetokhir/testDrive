@@ -9,8 +9,11 @@ public abstract class UpgradePart : MonoBehaviour, IUpgradePart
     public Vector3 SpawnPosition => _spawnLocalPosition;
     public uint Count => _count;
 
-    public virtual void DestroyObject()
+    public  void DestroyObject()
     {
-        Destroy(this);
+        MakeInDestroy();
+        Destroy(gameObject);
     }
+
+    protected abstract void MakeInDestroy();
 }

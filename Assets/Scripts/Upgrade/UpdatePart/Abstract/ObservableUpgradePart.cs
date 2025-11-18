@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public abstract class ObservableUpgradePart : UpgradePart
-   
 {
-    public event Action<UpgradePart> Destroied;
+    public event Action<ObservableUpgradePart> Destroied;
 
-    private void OnDestroy()
+    protected override void MakeInDestroy()
     {
         Destroied?.Invoke(this);
     }
