@@ -17,11 +17,11 @@ public class Upgrader<T, S, M> : MonoBehaviour
     [SerializeField] private Money _money;
 
     [SerializeField] private List<UpgradePartSpawner> _compositePartSpawners;  // Observable part spawner
-    [SerializeField] private List<ObservableUpgradePart> _observableParts;
+                                                                               // [SerializeField] private List<ObservableUpgradePart> _observableParts;
 
     private ICarLevel _carLevel;
 
-    private List<UpgradePart> _installedUpgradeParts;
+    [SerializeField] private List<UpgradePart> _installedUpgradeParts;
 
     private T _currentUpgrade;
 
@@ -70,12 +70,19 @@ public class Upgrader<T, S, M> : MonoBehaviour
             if (spawner.IsSpawnPossible(_installedUpgradeParts[i]))
             {
                 // UpgradePart part = _installedUpgradeParts[i];
-                _installedUpgradeParts[i].DestroyObject();
+                //_installedUpgradeParts[i].DestroyObject();
 
-                //Destroy(_installedUpgradeParts[i].gameObject);
+                var part = _installedUpgradeParts[i];
 
                 _installedUpgradeParts.RemoveAt(i);  // remove all or only one????
+
+                part.DestroyObject();
+
+
                 break;
+
+                //Destroy(_installedUpgradeParts[i].gameObject);               
+
             }
         }
 
@@ -163,13 +170,15 @@ public class Upgrader<T, S, M> : MonoBehaviour
                     RemoveOldPart(spawner);
                     ProcessCompositPart(newParts[i]);
 
-                    _installedUpgradeParts.Add(newParts[i]);
+                    installedParts.Add(newParts[i]);
                     newParts.RemoveAt(i);
 
                     break;
                 }
             }
         }
+
+
 
         for (int i = newParts.Count - 1; i >= 0; i--) // unite in one circle with spawn below
         {
@@ -178,7 +187,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 if (spawner.TrySpawn(newParts[i]))
                 {
 
-                    //  RemoveOldPart(spawner);
+                    RemoveOldPart(spawner);
 
                     ObservableUpgradePart observablePart = newParts[i] as ObservableUpgradePart;
 
@@ -187,8 +196,11 @@ public class Upgrader<T, S, M> : MonoBehaviour
                         throw new Exception("Part is not observable");
                     }
 
-                    _observableParts.Add(observablePart);
+                    //_observableParts.Add(observablePart);
+                    installedParts.Add(newParts[i]);
                     newParts.RemoveAt(i);
+
+
 
                     observablePart.Destroied += RemoveObservablePart;
 
@@ -198,6 +210,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
             }
         }
 
+        _installedUpgradeParts.AddRange(installedParts);
 
 
         if (newParts.Count != 0)
@@ -209,7 +222,9 @@ public class Upgrader<T, S, M> : MonoBehaviour
     private void RemoveObservablePart(ObservableUpgradePart part)
     {
         Debug.Log("REMOVE parts from list in upgrade");
-        _observableParts.Remove(part);
+        // _observableParts.Remove(part);
+
+        _installedUpgradeParts.Remove(part);
     }
 
     private void ProcessCompositPart(UpgradePart part)

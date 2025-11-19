@@ -47,9 +47,9 @@ public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnes
 
     public override bool IsSpawnPossible(UpgradePart part)
     {
-        _currentSpawner = GetNextSpawner();
+        M spawner = GetNextSpawner();
 
-        return _currentSpawner.IsSpawnPossible(part);
+        return spawner.IsSpawnPossible(part);
     }
 
     private M GetNextSpawner()

@@ -1,6 +1,6 @@
 public class WheelBaseSpawner : ObservablePartSpawner<WheelBase>
 {
-    public override bool TrySpawn(UpgradePart part)
+    /*public override bool TrySpawn(UpgradePart part)
     {
         if (base.TrySpawn(part))
         {
@@ -10,5 +10,5 @@ public class WheelBaseSpawner : ObservablePartSpawner<WheelBase>
         }
 
         return false;
-    }
+    }*/
 }

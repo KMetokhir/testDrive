@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4048778448667179022}
   - component: {fileID: 1791635199003271426}
   - component: {fileID: 3067076403321421033}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 7145339805517138665}
   - component: {fileID: 5868162273389677046}
   - component: {fileID: -4153677366387139974}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightRotaryWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928956540318555555}
   - component: {fileID: 7364284430148420847}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Steering
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8629756694180806746}
   - component: {fileID: 838590911080975718}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5662316646886189833}
   - component: {fileID: 7677032620602750562}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WheelView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,6 +399,10 @@ PrefabInstance:
     - target: {fileID: 2543705683735638689, guid: c0fb009deef163642b16c693e469392a, type: 3}
       propertyPath: m_Name
       value: Wheeel0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2543705683735638689, guid: c0fb009deef163642b16c693e469392a, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7533954508316603069, guid: c0fb009deef163642b16c693e469392a, type: 3}
       propertyPath: m_LocalPosition.x
