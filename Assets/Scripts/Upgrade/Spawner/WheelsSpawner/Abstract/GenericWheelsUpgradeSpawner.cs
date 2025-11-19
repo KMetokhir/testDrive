@@ -12,6 +12,8 @@ public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnes
 
     private M _currentSpawner;
 
+    public override UpgradePart LastSpawnedPart => _currentSpawner.LastSpawnedPart;
+
     public override event Action<WheelUpgradePart> WheelSpawned;
 
     private void OnValidate()
@@ -24,7 +26,10 @@ public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnes
 
     public override bool TrySpawn(UpgradePart part)
     {
-        _currentSpawner = GetNextSpawner();
+        if (_currentSpawner == null)
+        {
+            _currentSpawner = GetNextSpawner();
+        }
 
         if (_currentSpawner.TrySpawn(part) == false)
         {
@@ -41,6 +46,8 @@ public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnes
         }
 
         Debug.Log("SPANW" + part.gameObject.ToString());
+
+        _currentSpawner = GetNextSpawner();
 
         return true;
     }

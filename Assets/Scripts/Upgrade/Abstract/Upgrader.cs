@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Profiling.Memory.Experimental;
+
 using UnityEngine;
 
 public class Upgrader<T, S, M> : MonoBehaviour
@@ -36,77 +35,21 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         _currentUpgrade = FindUpgrade(1, 0);// tmp
 
-        SpawnParts(_currentUpgrade);
-
-        /* foreach (UpgradePart upgradePart in _installedUpgradeParts)
-         {
-             upgradePart.DestroyObject();
-         }
-
-         List<UpgradePart> newParts = _currentUpgrade.Execute();
-
-         foreach (UpgradePart part in newParts)
-         {
-             foreach (UpgradePartSpawner spawner in _spawners)
-             {
-                 if (spawner.TrySpawn(part))
-                 {
-                     RemoveOldPart(spawner, part);
-                     _installedUpgradeParts.Add(part);
-                     break;
-                 }
-             }
-         }*/
+        ProcessUpgrade(_currentUpgrade);
+       
 
         UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
         _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
     }
-
-    private void RemoveOldPart(UpgradePartSpawner spawner)
-    {
-        for (int i = _installedUpgradeParts.Count - 1; i >= 0; i--)
-        {
-            if (spawner.IsSpawnPossible(_installedUpgradeParts[i]))
-            {
-                // UpgradePart part = _installedUpgradeParts[i];
-                //_installedUpgradeParts[i].DestroyObject();
-
-                var part = _installedUpgradeParts[i];
-
-                _installedUpgradeParts.RemoveAt(i);  // remove all or only one????
-
-                part.DestroyObject();
-
-
-                break;
-
-                //Destroy(_installedUpgradeParts[i].gameObject);               
-
-            }
-        }
-
-        /*foreach (UpgradePart oldPart in _installedUpgradeParts)
-        {
-            if (spawner.IsSpawnPossible(oldPart))
-            {
-                _installedUpgradeParts.Remove(oldPart);
-                oldPart.DestroyObject();
-            }
-        }*/
-    }
+   
 
     private void OnEnable()
     {
         _view.UpgradeButtonClicked += Upgrade;
     }
 
-    /*private void Start()
-    {
-        *//*UpgradeExecuted?.Invoke((M)_currentUpgrade);
-
-        _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());*//*
-    }*/
+    
 
     private void Upgrade()
     {
@@ -127,7 +70,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
             {
                 _currentUpgrade = upgrade;
 
-                SpawnParts(_currentUpgrade);
+                ProcessUpgrade(_currentUpgrade);
                 /*if (_installedUpgradeParts.Count != newParts.Count)
                 {
                     throw new Exception("Unknown upgrade part, need spawner");
@@ -140,75 +83,50 @@ public class Upgrader<T, S, M> : MonoBehaviour
         }
     }
 
-    private void SpawnParts(Upgrade upgrade)
+    private void SpawnParts(List<UpgradePartSpawner> spawners, List<UpgradePart> newParts, List<UpgradePart> installedParts)
     {
-        List<UpgradePart> newParts = _currentUpgrade.Execute();
-
-
-
-        List<UpgradePart> installedParts = new List<UpgradePart>();
-
-        /* while (newParts.Count > 0) { 
-
-
-
-         }
-
-         foreach (UpgradePart part in newParts) { 
-
-             for
-
-         }*/
-
-
         for (int i = newParts.Count - 1; i >= 0; i--)
         {
-            foreach (UpgradePartSpawner spawner in _spawners)
+            foreach (UpgradePartSpawner spawner in spawners)
             {
-                if (spawner.TrySpawn(newParts[i]))
+                if (spawner.IsSpawnPossible(newParts[i]))
                 {
-                    RemoveOldPart(spawner);
-                    ProcessCompositPart(newParts[i]);
+                    var oldpart = spawner.LastSpawnedPart;
 
-                    installedParts.Add(newParts[i]);
-                    newParts.RemoveAt(i);
-
-                    break;
-                }
-            }
-        }
-
-
-
-        for (int i = newParts.Count - 1; i >= 0; i--) // unite in one circle with spawn below
-        {
-            foreach (UpgradePartSpawner spawner in _compositePartSpawners)
-            {
-                if (spawner.TrySpawn(newParts[i]))
-                {
-
-                    RemoveOldPart(spawner);
-
-                    ObservableUpgradePart observablePart = newParts[i] as ObservableUpgradePart;
-
-                    if (observablePart == null)
+                    if (oldpart != null)
                     {
-                        throw new Exception("Part is not observable");
+                        _installedUpgradeParts.Remove(oldpart);
+                        oldpart.DestroyObject();
                     }
 
-                    //_observableParts.Add(observablePart);
-                    installedParts.Add(newParts[i]);
-                    newParts.RemoveAt(i);
+                    if (spawner.TrySpawn(newParts[i]))
+                    {
+                        ProcessCompositPart(newParts[i]);
+                        ProcessObservablePart(newParts[i]);
 
+                        installedParts.Add(newParts[i]);
+                        newParts.RemoveAt(i);
 
+                        break;
 
-                    observablePart.Destroied += RemoveObservablePart;
-
-
-                    break;
+                    }
+                    else
+                    {
+                        throw new Exception("Unknown exception, spawn possible, but false");
+                    }
                 }
             }
         }
+    }
+
+    private void ProcessUpgrade(Upgrade upgrade)
+    {
+        List<UpgradePart> newParts = _currentUpgrade.Execute();
+        List<UpgradePart> installedParts = new List<UpgradePart>();
+
+        SpawnParts(_spawners, newParts, installedParts);
+
+        SpawnParts(_compositePartSpawners, newParts, installedParts);
 
         _installedUpgradeParts.AddRange(installedParts);
 
@@ -217,6 +135,16 @@ public class Upgrader<T, S, M> : MonoBehaviour
         {
             throw new Exception("Some upgrade parts not Spawned ");
         }
+    }
+
+    private void ProcessObservablePart(UpgradePart part)
+    {
+        ObservableUpgradePart observablePart = part as ObservableUpgradePart;
+
+        if (observablePart != null)
+        {
+            observablePart.Destroied += RemoveObservablePart;
+        }        
     }
 
     private void RemoveObservablePart(ObservableUpgradePart part)
@@ -253,7 +181,6 @@ public class Upgrader<T, S, M> : MonoBehaviour
             throw new Exception("Incorrect input data " + nameof(part));
         }
     }
-
 
     private uint GetMaxUpgradeLevel()
     {
