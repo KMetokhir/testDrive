@@ -9,11 +9,6 @@ public class CarDriver : MonoBehaviour
     [SerializeField] private Rotation _rotation;
 
     [SerializeField] private WheelBaseSpawner _wheelBaseSpawner;
-    //[SerializeField] private RightRotaryWheel _rightRotaryWheel;
-    // [SerializeField] private LeftRotaryWheel _leftRotaryWheel;
-
-    /*[SerializeField] private RotaryWheelsSpawner*/
-
 
     [SerializeField] private List<RotaryWheel> _rotaryWheels;
     [SerializeField] private List<DrivingWheel> _drivingWheels;

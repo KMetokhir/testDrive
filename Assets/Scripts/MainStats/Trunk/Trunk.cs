@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trunk : MonoBehaviour // ame as speed upgrader
+public class Trunk : MonoBehaviour // same as speed upgrader
 {
     [SerializeField] private TrunkView _view;
     [SerializeField] private PowerUpgrader _upgrader;

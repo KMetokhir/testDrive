@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class MagnetField : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
-
-    // private bool _isMoving;
-
 
     private List<IAttractable> _attractedObjects;
     private List<AttractionPoint> _attractionPoints;
@@ -22,9 +18,7 @@ public class MagnetField : MonoBehaviour
     private void Awake()
     {
         _cubeSize = PhysicCube.localScale;
-
-        // _isMoving = false;
-        // _attractedObjects = new List<IAttractable>();
+   
         _attractionPoints = new List<AttractionPoint>();
         _surfacePoints = new List<SurfacePoint>();
 
@@ -69,14 +63,11 @@ public class MagnetField : MonoBehaviour
 
             SurfacePoint surfacePoint = GetClosestPoint(obj.Transform.position);
 
-            AttractionPoint point = new AttractionPoint(surfacePoint, obj, transform);
-            // point.ObjectAttracted += OnObjectAttracted;
+            AttractionPoint point = new AttractionPoint(surfacePoint, obj, transform);           
 
             _attractionPoints.Add(point);
             _surfacePoints.Remove(surfacePoint);
-        }
-
-        //  _isMoving = true;
+        }       
     }
 
     private void FixedUpdate()

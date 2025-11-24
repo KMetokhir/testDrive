@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ButtonWithSliderView : MonoBehaviour
+public class LevelUpVeiw : MonoBehaviour
 {
     [SerializeField] private Button _upgradeButton;
 
-    [SerializeField] private Slider _slider;// same as trunkView
+    [SerializeField] private Slider _slider;
 
-    public event Action UpgradeButtonClicked;
+    public event Action ButtonClicked;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public abstract class ButtonWithSliderView : MonoBehaviour
             throw new NullReferenceException(nameof(_upgradeButton));
         }
     }
-
+    
     private void OnEnable()
     {
         _upgradeButton.onClick.AddListener(OnButtonClick);
@@ -31,6 +31,16 @@ public abstract class ButtonWithSliderView : MonoBehaviour
     private void OnDisable()
     {
         _upgradeButton.onClick.RemoveListener(OnButtonClick);
+    }
+
+    public void ActivateButton()
+    {
+        _upgradeButton.gameObject.SetActive(true);
+    }
+
+    public void DeactivateButton()
+    {
+        _upgradeButton.gameObject.SetActive(false);
     }
 
     public void ShowValue(uint value, uint maxValue)
@@ -44,6 +54,6 @@ public abstract class ButtonWithSliderView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        UpgradeButtonClicked?.Invoke();
+        ButtonClicked?.Invoke();
     }
 }

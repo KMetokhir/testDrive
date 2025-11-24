@@ -12,7 +12,6 @@ public class MagnetAria : MonoBehaviour
     private Coroutine _detectCoroutine;
     private bool _isWork = false;
 
-
     public event Action<List<IAttractable>> AttractableObjectsFound;
 
     private void Start()
@@ -97,6 +96,5 @@ public class MagnetAria : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _magnetRadius);
-
     }
 }

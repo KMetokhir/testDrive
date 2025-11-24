@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection /*, ILevel*/
+public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //, ILevel
 {
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Trunk _trunk;
