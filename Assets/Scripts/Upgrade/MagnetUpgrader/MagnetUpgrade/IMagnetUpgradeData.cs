@@ -1,6 +1,5 @@
-using UnityEngine;
 
-public class IMagnetUpgradeData : MonoBehaviour
+public interface IMagnetUpgradeData : IUpgradeData
 {
-    
+    public float MagnetRadius { get; }
 }

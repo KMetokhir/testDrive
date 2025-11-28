@@ -8,7 +8,9 @@ public class ViewRotator : MonoBehaviour
     {
         if (targetDirection != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(targetDirection);
+            Vector3 direction  = new Vector3 (targetDirection.x, targetDirection.y, targetDirection.z); // to model
+            transform.rotation = Quaternion.LookRotation(direction);        
+
         }
     }
 }

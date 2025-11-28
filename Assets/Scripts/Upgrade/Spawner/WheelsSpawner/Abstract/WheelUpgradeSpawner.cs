@@ -14,7 +14,6 @@ public class WheelUpgradeSpawner<T> : GenericUpgradeSpawner<T>
             return true;
         }
 
-
         return false;
     }
 }

@@ -13,6 +13,6 @@ public class WheelViewMover : MonoBehaviour
 
          transform.Rotate(transform.InverseTransformDirection(axis), rotationSpeedModifier * speed * direction * deltaTime);*/
 
-        transform.Rotate(Vector3.right, speed * direction * deltaTime, Space.Self);
+        transform.Rotate(Vector3.right, speed * direction * deltaTime, Space.Self);        
     }
 }

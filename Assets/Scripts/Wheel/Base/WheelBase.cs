@@ -8,7 +8,7 @@ using UnityEngine;
 public class WheelBase : CompositePart
 {
 
-    [SerializeField] private List<WheelsUpgradeSpawner> _spawners;
+    [SerializeField] private List<WheelUpgradeSpawner> _spawners;
    // [SerializeField] private List<WheelUpgradePart> _wheelPrefabs;
 
     private List<WheelUpgradePart> _dependentUpgradeParts;
@@ -18,7 +18,7 @@ public class WheelBase : CompositePart
 
     private void Awake()
     {
-        _spawners = GetComponents<WheelsUpgradeSpawner>().ToList();
+        _spawners = GetComponents<WheelUpgradeSpawner>().ToList();
         _dependentUpgradeParts = new List<WheelUpgradePart>();
 
         foreach (var spawner in _spawners)

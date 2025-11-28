@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class MagnetUpgrader : MonoBehaviour
+public class MagnetUpgrader : Upgrader<MagnetUpgrade, MagnetUpgraderView, IMagnetUpgradeData>
 { 
 }

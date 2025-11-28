@@ -18,7 +18,7 @@ public class Suspension : MonoBehaviour
 
     void Start()
     {
-        _carBody = FindAnyObjectByType<Car>();
+        _carBody = FindAnyObjectByType<Car>();//tmp
 
         _joint = _wheelRb.gameObject.AddComponent<ConfigurableJoint>();
         _joint.connectedBody = _carBody.Rigidbody;

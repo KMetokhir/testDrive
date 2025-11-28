@@ -19,6 +19,8 @@ public class WheelView : MonoBehaviour
         }
 
         _mover.Move( speed * _rotationSpeedModifier, clockRotation, deltaTime);
+
+
     }
 
     private void OnDrawGizmos()
