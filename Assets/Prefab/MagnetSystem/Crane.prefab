@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 333291435068997224}
   - component: {fileID: 7897042712831527373}
   - component: {fileID: 5655192944120671068}
+  - component: {fileID: 5959430287025207613}
   m_Layer: 7
   m_Name: CraneBase
   m_TagString: Untagged
@@ -173,6 +174,19 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &5959430287025207613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4000412414338277737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8487e504aa63a7f4198190637f4d0300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parent: {fileID: 8621863919619127994}
 --- !u!1 &5290781447003528973
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +197,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7121705795676554735}
   - component: {fileID: 9144848437073152212}
-  - component: {fileID: 8185616214851198581}
   m_Layer: 7
   m_Name: Crane
   m_TagString: Untagged
@@ -222,23 +235,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnLocalPosition: {x: 0, y: 6.4299994, z: 8.4}
   _count: 1
-  _spawner: {fileID: 8185616214851198581}
+  _spawner: {fileID: 5959430287025207613}
   _magnet: {fileID: 0}
   _rope: {fileID: 7641672141713292482}
   _rigidbody: {fileID: 7897042712831527373}
---- !u!114 &8185616214851198581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5290781447003528973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8487e504aa63a7f4198190637f4d0300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parent: {fileID: 0}
 --- !u!1 &7935526117192376614
 GameObject:
   m_ObjectHideFlags: 0

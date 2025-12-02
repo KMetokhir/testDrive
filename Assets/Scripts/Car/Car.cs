@@ -33,24 +33,56 @@ public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //
     private void OnCraneSpawned(Crane crane)
     {
         _joint.connectedBody = crane.Rigidbody; // tmp
-        crane.Destroied += OnCraineDestoied;
-        crane.MagnetSpawned += OnMagnetSpawned;
+
+        SubscribeToCrane(crane);
     }
 
-    private void OnCraineDestoied(ObservableUpgradePart part)
+    private void SubscribeToCrane(Crane crane) // same in carDriver 
     {
-        throw new NotImplementedException();
+        crane.Destroied += OnCraineDestroied;
+        crane.MagnetSpawned += OnMagnetSpawned;
+        crane.MagnetDestroied += OnMagnetDestroied;
+
+    }
+
+    private void UnsubscribeFromCrane(Crane crane)
+    {
+        crane.Destroied -= OnCraineDestroied;
+        crane.MagnetSpawned -= OnMagnetSpawned;
+        crane.MagnetDestroied -= OnMagnetDestroied;
+    }
+
+    private void OnMagnetDestroied(Magnet magnet)
+    {
+        if (_magnet == magnet)
+        {
+            _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
+            _magnet.Stop();
+            _magnet = null;
+        }
+    }
+
+    private void OnCraineDestroied(ObservableUpgradePart part)
+    {
+        Crane crane = part as Crane;
+
+        if (crane == null)
+        {
+            throw new Exception("part not Crane type");
+        }
+
+        _magnet.Stop();
+        _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
+        _magnet = null;
+
+        UnsubscribeFromCrane(crane);
     }
 
     private void OnMagnetSpawned(Magnet magnet)
     {
-        magnet.Destroied += OnMagnrtDestroied;
-        throw new NotImplementedException();
-    }
-
-    private void OnMagnrtDestroied(ObservableUpgradePart part)
-    {
-        throw new NotImplementedException();
+        _magnet = magnet;
+        _magnet.ObjectInMagnetAria += OnObjectInMagnetAria;
+        _magnet.StartWorke();
     }
 
     private void Start()
@@ -90,6 +122,8 @@ public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //
 
     private void OnObjectInMagnetAria(ICollectable collectable)
     {
+        Debug.Log("IN TRY ADD");
+
         if (_trunk.TryAdd(collectable) == false)
         {
             _magnet.Stop();

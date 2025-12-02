@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 093484b1b76da6544ac70a51da686a5d, type: 3}
-  m_Name: MagnetUpgrade1
+  m_Name: MagnetUpgrade2
   m_EditorClassIdentifier: 
   _cost: 0
   _carLevel: 1
-  _upgradeLevel: 0
+  _upgradeLevel: 1
   _upgradeParts:
-  - {fileID: 9144848437073152212, guid: c405e0145c73f2b47b6fefa79b7a6c7d, type: 3}
-  - {fileID: 4218785124024451468, guid: 28dc1f591b0a1284ca92d92a4bac2045, type: 3}
-  _magnetRadius: 5
+  - {fileID: 4218785124024451468, guid: 47696ae8c9a532944869b0a729c565c1, type: 3}
+  _magnetRadius: 10

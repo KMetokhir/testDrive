@@ -15,6 +15,7 @@ public class Crane : CompositePart
     public Rigidbody Rigidbody => _rigidbody;
 
     public event Action<Magnet> MagnetSpawned;
+    public event Action<Magnet> MagnetDestroied;
 
     private void Start()
     {
@@ -36,9 +37,10 @@ public class Crane : CompositePart
         _spawner.PartSpawned -= OnMagnetSpawned;
     }
 
-
     private void OnMagnetSpawned(Magnet magnet)
     {
+        _rope.ConnectTarget(magnet.GetComponent<Rigidbody>());
+
         MagnetSpawned?.Invoke(magnet);
         _magnetUpgrade = magnet;
         _magnetUpgrade.Destroied += OnMagnetDestoied;
@@ -63,8 +65,21 @@ public class Crane : CompositePart
 
     }
 
+    
+
     private void OnMagnetDestoied(ObservableUpgradePart part)
     {
-        _magnetUpgrade = null;
+        Magnet magnet = part as Magnet;
+
+        if (magnet != null)
+        {
+           _magnetUpgrade.Destroied-= OnMagnetDestoied;
+           _magnetUpgrade = null;
+            MagnetDestroied?.Invoke(magnet);
+        }
+        else
+        {
+            throw new Exception("Not Magnet type");
+        }
     }
 }

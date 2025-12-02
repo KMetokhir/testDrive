@@ -23,7 +23,7 @@ public class CarDriver : MonoBehaviour
     private void OnEnable()
     {
         _wheelBaseSpawner.PartSpawned += SubcribeToBase;
-       
+
     }
 
     private void OnDisable()
@@ -65,7 +65,7 @@ public class CarDriver : MonoBehaviour
 
     private void RemoveWheel(IWheel wheel)
     {
-        
+
         if (wheel is DrivingWheel)
         {
             _drivingWheels.Remove(wheel as DrivingWheel);
@@ -86,31 +86,29 @@ public class CarDriver : MonoBehaviour
 
         if (wheelBase == null)
         {
-            throw new Exception("Upgrade  not WheelBase");
+            throw new Exception("Upgrade  not WheelBase type");
         }
 
         UnsubscribeFrombase(wheelBase);
         _drivingWheels.Clear();
         _rotaryWheels.Clear();
-        
     }
 
     private void SetWheel(IWheel wheel)
     {
-       
-        
-            if (wheel is DrivingWheel)
-            {
-                _drivingWheels.Add(wheel as DrivingWheel);
-           
+
+        if (wheel is DrivingWheel)
+        {
+            _drivingWheels.Add(wheel as DrivingWheel);
+
         }
 
-            if (wheel is RotaryWheel)
-            {
-                _rotaryWheels.Add(wheel as RotaryWheel);
+        if (wheel is RotaryWheel)
+        {
+            _rotaryWheels.Add(wheel as RotaryWheel);
 
-            
-            }          
+
+        }
     }
 
     private void OnMouseEventUp()
