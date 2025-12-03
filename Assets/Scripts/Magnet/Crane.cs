@@ -8,7 +8,7 @@ public class Crane : CompositePart
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Rope _rope;
     [SerializeField] private Rigidbody _rigidbody;
-   // [SerializeField] private FixedJoint _joint;
+    // [SerializeField] private FixedJoint _joint;
 
     private Magnet _magnetUpgrade; // magnetUpgrade not magnet
 
@@ -21,11 +21,11 @@ public class Crane : CompositePart
     {
         _spawner = GetComponent<MagnetSpawner>();
 
-      //  _rope.ConnectTarget(_magnet.GetComponent<Rigidbody>());
+        //  _rope.ConnectTarget(_magnet.GetComponent<Rigidbody>());
 
-    //  Car  carBody = FindAnyObjectByType<Car>();//tmp
-     //   _joint.connectedBody = carBody.Rigidbody;
-    }       
+        //  Car  carBody = FindAnyObjectByType<Car>();//tmp
+        //   _joint.connectedBody = carBody.Rigidbody;
+    }
 
     private void OnEnable()
     {
@@ -34,7 +34,10 @@ public class Crane : CompositePart
 
     private void OnDisable()
     {
-        _spawner.PartSpawned -= OnMagnetSpawned;
+        if (_spawner != null) // tmp
+        {
+            _spawner.PartSpawned -= OnMagnetSpawned;
+        }
     }
 
     private void OnMagnetSpawned(Magnet magnet)
@@ -65,7 +68,7 @@ public class Crane : CompositePart
 
     }
 
-    
+
 
     private void OnMagnetDestoied(ObservableUpgradePart part)
     {
@@ -73,8 +76,8 @@ public class Crane : CompositePart
 
         if (magnet != null)
         {
-           _magnetUpgrade.Destroied-= OnMagnetDestoied;
-           _magnetUpgrade = null;
+            _magnetUpgrade.Destroied -= OnMagnetDestoied;
+            _magnetUpgrade = null;
             MagnetDestroied?.Invoke(magnet);
         }
         else

@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class MagnetAria : MonoBehaviour
 {
-    [SerializeField] private float _magnetRadius = 0.2f;
+    private MagnetSettings _magnetSettings;
+
     [SerializeField] private float _detectInterval = 0.2f;
 
     private Coroutine _detectCoroutine;
@@ -14,9 +15,14 @@ public class MagnetAria : MonoBehaviour
 
     public event Action<List<IAttractable>> AttractableObjectsFound;
 
-    private void Start()
+    private void Awake()
     {
-        StartDetecting();
+        _magnetSettings = FindObjectOfType<MagnetSettings>(); // tmp
+
+        Debug.Log("Mag Settings");
+        Debug.Log(_magnetSettings == null );
+
+        //StartDetecting();
     }
 
     private void OnDisable()
@@ -78,7 +84,7 @@ public class MagnetAria : MonoBehaviour
         bool isDetected = false;
         attractables = new List<IAttractable>();
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _magnetRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _magnetSettings.MagnetRadius);
 
         foreach (Collider col in colliders)
         {
@@ -95,6 +101,6 @@ public class MagnetAria : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _magnetRadius);
+        Gizmos.DrawWireSphere(transform.position, _magnetSettings.MagnetRadius);
     }
 }
