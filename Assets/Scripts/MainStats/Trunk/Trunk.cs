@@ -1,11 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Trunk : MonoBehaviour // same as speed upgrader add trunk settings 
 {
-    [SerializeField] private TrunkView _view;
+   // [SerializeField] private TrunkView _view;
     [SerializeField] private PowerUpgrader _upgrader;
+
+    [SerializeField] private TrunkView _view;    
+
+    [Inject]
+    private void Construct(TrunkView view)
+    {
+        _view = view;
+    }
 
     private uint _maxWeight;
 
@@ -21,8 +30,10 @@ public class Trunk : MonoBehaviour // same as speed upgrader add trunk settings
 
     private void OnEnable()
     {
-        _upgrader.UpgradeExecuted += SetNewStats;
-       
+        if (_upgrader != null) // tmp
+        {
+            _upgrader.UpgradeExecuted += SetNewStats;
+        }
     }
 
     private void OnDisable()
@@ -73,4 +84,9 @@ public class Trunk : MonoBehaviour // same as speed upgrader add trunk settings
 
         MaxWeightChanged?.Invoke();
     }
+
+
+    /*public class Factory : PlaceholderFactory<Trunk>
+    {
+    }*/
 }

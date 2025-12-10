@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 public class LevelUpSystem : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class LevelUpSystem : MonoBehaviour
     [SerializeField] private LevelUpVeiw _view;
 
     private List<IUpgradable> _upgradables;
+
+    [Inject]
+    private void Construct(LevelUpVeiw view)
+    {
+        _view = view;
+    }
+
     private uint _currentUpgradesLevel => (uint)_upgradables.Sum(v => v.UpgradeLevel);
 
     private void Awake()

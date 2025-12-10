@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
+using Zenject;
 
 public class Upgrader<T, S, M> : MonoBehaviour
     where S : ButtonWithSliderView
@@ -12,7 +13,6 @@ public class Upgrader<T, S, M> : MonoBehaviour
     [SerializeField] private List<T> _upgrades;
     [SerializeField] private List<UpgradePartSpawner> _spawners;
 
-    [SerializeField] private S _view;
     [SerializeField] private Money _money;
 
     [SerializeField] private List<UpgradePartSpawner> _compositePartSpawners;  // Observable part spawner
@@ -21,6 +21,14 @@ public class Upgrader<T, S, M> : MonoBehaviour
     private ICarLevel _carLevel;
 
     [SerializeField] private List<UpgradePart> _installedUpgradeParts;
+
+    [SerializeField] private S _view;
+
+    [Inject]
+    private void Construct(S view)
+    {
+        _view = view;
+    }
 
     private T _currentUpgrade;
 
@@ -36,20 +44,20 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _currentUpgrade = FindUpgrade(1, 0);// tmp
 
         ProcessUpgrade(_currentUpgrade);
-       
+
 
         UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
         _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
     }
-   
+
 
     private void OnEnable()
     {
         _view.UpgradeButtonClicked += Upgrade;
     }
 
-    
+
 
     private void Upgrade()
     {
@@ -144,7 +152,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
         if (observablePart != null)
         {
             observablePart.Destroied += RemoveObservablePart;
-        }        
+        }
     }
 
     private void RemoveObservablePart(ObservableUpgradePart part)

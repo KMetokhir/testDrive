@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class CarDriver : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class CarDriver : MonoBehaviour
     [SerializeField] private List<DrivingWheel> _drivingWheels;
 
     [SerializeField] private float _moveForce;
+
+    [Inject]
+    private void Construct(ScreenInput screenInput)
+    {
+        _screenInput = screenInput;
+    }
 
     private void Awake()
     {

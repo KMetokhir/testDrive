@@ -1,9 +1,16 @@
 using UnityEngine;
+using Zenject;
 
 public class Money : MonoBehaviour
 {
     [SerializeField] private uint _stratValue;
     [SerializeField] private MoneyView _view;
+
+    [Inject]
+    private void Construct(MoneyView view)
+    {
+        _view = view;
+    }
 
     public uint Value { get; private set; }
 
@@ -32,4 +39,8 @@ public class Money : MonoBehaviour
         Value += value;
         _view.Show(Value);
     }
+
+    /*public class Factory : PlaceholderFactory<Money>
+    {
+    }*/
 }
