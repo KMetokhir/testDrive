@@ -23,6 +23,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
     [SerializeField] private List<UpgradePart> _installedUpgradeParts;
 
     [SerializeField] private S _view;
+    
 
     [Inject]
     private void Construct(S view)
@@ -41,7 +42,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         _carLevel = FindObjectOfType<Car>();
 
-        _currentUpgrade = FindUpgrade(1, 0);// tmp
+        _currentUpgrade = FindUpgrade(_carLevel.Level, 0);// tmp
 
         ProcessUpgrade(_currentUpgrade);
 

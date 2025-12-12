@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
-public class LevelUpSystem : MonoBehaviour
+public class LevelUpSystem : MonoBehaviour, ILevel
 {
     [SerializeField] private uint _currentLevel;
     [SerializeField] private uint _upgradesToLevelUp;
@@ -21,6 +21,8 @@ public class LevelUpSystem : MonoBehaviour
     }
 
     private uint _currentUpgradesLevel => (uint)_upgradables.Sum(v => v.UpgradeLevel);
+
+    public uint Value => _currentLevel;
 
     private void Awake()
     {

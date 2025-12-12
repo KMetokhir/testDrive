@@ -1,35 +1,44 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using System.IO;
 
 public class SOUser : MonoBehaviour
 {
-    [SerializeField] TestSO _so;
+    [SerializeField]  public TestSO myData;
+    private string savePath;
 
-    [Inject]
-    public void Construct(TestSO so)
+   
+
+    void Awake()
     {
-        _so = so;
+        savePath = Path.Combine(Application.persistentDataPath, "scriptableObjectSave.txt");
+       // LoadData();
     }
 
-    public event Action<int> ChangeValue;
-
-
-    private void OnEnable()
+    void OnApplicationQuit()
     {
-        _so.SubscribeToMonoBehaviour(this);
+       // SaveData();
     }
 
-    private void OnDisable()
+    public void SaveData()
     {
-        _so.UnsubscribeFromMonoBehaviour(this);
+        if (myData != null)
+        {
+            string dataName = myData.name;
+            File.WriteAllText(savePath, dataName);
+        }
     }
 
-
-    private void Start()
+    public void LoadData()
     {
-        ChangeValue?.Invoke(10);
+        if (File.Exists(savePath))
+        {
+            string dataName = File.ReadAllText(savePath);
+            // Load ScriptableObject by name from Resources or AssetDatabase
+            myData = Resources.Load<TestSO>(dataName);
+            if (myData == null)
+            {
+                Debug.LogWarning("ScriptableObject not found: " + dataName);
+            }
+        }
     }
 }

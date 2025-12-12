@@ -92,7 +92,7 @@ public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //
             _magnet.StartWorke();
         }
 
-        Level = 1;
+        Level = 1; // tmp
     }
 
     private void OnEnable()
