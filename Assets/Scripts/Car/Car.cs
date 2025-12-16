@@ -122,8 +122,7 @@ public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //
 
     private void OnObjectInMagnetAria(ICollectable collectable)
     {
-        Debug.Log("IN TRY ADD");
-
+      
         if (_trunk.TryAdd(collectable) == false)
         {
             _magnet.Stop();

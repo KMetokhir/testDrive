@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class Installer : MonoInstaller
         Container.BindInstance(_powerUpgraderView).AsSingle();
         Container.BindInstance(_upgradePanel).AsSingle();
 
+       Container.Bind<ILevel>().FromComponentInParents().AsSingle();
+
+        
 
         Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_Prefab);
 

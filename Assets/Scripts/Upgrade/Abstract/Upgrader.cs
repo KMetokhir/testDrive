@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -18,17 +18,22 @@ public class Upgrader<T, S, M> : MonoBehaviour
     [SerializeField] private List<UpgradePartSpawner> _compositePartSpawners;  // Observable part spawner
                                                                                // [SerializeField] private List<ObservableUpgradePart> _observableParts;
 
-    private ICarLevel _carLevel;
+
 
     [SerializeField] private List<UpgradePart> _installedUpgradeParts;
 
     [SerializeField] private S _view;
-    
+
+    private ILevel _carLevel;
+
+    private uint _currentUpgradeLevel;
+    private string _currentUpgradeLevelKey;
 
     [Inject]
-    private void Construct(S view)
+    private void Construct(S view, ILevel carLevel)
     {
         _view = view;
+        _carLevel = carLevel;
     }
 
     private T _currentUpgrade;
@@ -37,12 +42,18 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     private void Start()
     {
+
         _compositePartSpawners = new List<UpgradePartSpawner>();
         _installedUpgradeParts = new List<UpgradePart>();
 
-        _carLevel = FindObjectOfType<Car>();
 
-        _currentUpgrade = FindUpgrade(_carLevel.Level, 0);// tmp
+        _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
+        _currentUpgradeLevel = (uint)PlayerPrefsIntManager.LoadVariable(_currentUpgradeLevelKey);
+        Debug.Log($"START UPLEVEL {_currentUpgradeLevel}");
+
+        // _carLevel = FindObjectOfType<Car>();
+
+        _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
 
         ProcessUpgrade(_currentUpgrade);
 
@@ -70,7 +81,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         uint nextLevelUpgrade = _currentUpgrade.UpgradeLevel + 1;// tmp
 
-        T upgrade = FindUpgrade(_carLevel.Level, nextLevelUpgrade);
+        T upgrade = FindUpgrade(_carLevel.Value, nextLevelUpgrade);
         bool isExists = upgrade != null;
 
         if (isExists)
@@ -88,6 +99,9 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
                 _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
+
+                _currentUpgradeLevel = _currentUpgrade.UpgradeLevel;
+                PlayerPrefsIntManager.SaveVariable(_currentUpgradeLevelKey,(int) _currentUpgradeLevel);
             }
         }
     }
@@ -158,7 +172,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     private void RemoveObservablePart(ObservableUpgradePart part)
     {
-        Debug.Log("REMOVE parts from list in upgrade");
+      
         // _observableParts.Remove(part);
 
         _installedUpgradeParts.Remove(part);

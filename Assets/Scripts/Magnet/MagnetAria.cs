@@ -19,8 +19,7 @@ public class MagnetAria : MonoBehaviour
     {
         _magnetSettings = FindObjectOfType<MagnetSettings>(); // tmp
 
-        Debug.Log("Mag Settings");
-        Debug.Log(_magnetSettings == null );
+       
 
         //StartDetecting();
     }

@@ -557,10 +557,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7a3a5fa9a0f68b74885a831179d9331e, type: 2}
   _spawners:
   - {fileID: 7939075979764286457}
-  _view: {fileID: 0}
   _money: {fileID: 1283719126719638185}
   _compositePartSpawners: []
+  level: 0
   _installedUpgradeParts: []
+  _view: {fileID: 0}
 --- !u!114 &6994620413937247093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,10 +581,11 @@ MonoBehaviour:
   _spawners:
   - {fileID: 7625726672653032970}
   - {fileID: 1037121065284625193}
-  _view: {fileID: 0}
   _money: {fileID: 1283719126719638185}
   _compositePartSpawners: []
+  level: 0
   _installedUpgradeParts: []
+  _view: {fileID: 0}
 --- !u!114 &265386682347966667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,10 +601,11 @@ MonoBehaviour:
   _upgrades:
   - {fileID: 11400000, guid: 574d8db4a5a03044e93bb6b6a7d3fd69, type: 2}
   _spawners: []
-  _view: {fileID: 0}
   _money: {fileID: 1283719126719638185}
   _compositePartSpawners: []
+  level: 0
   _installedUpgradeParts: []
+  _view: {fileID: 0}
 --- !u!1 &9019238109973814664
 GameObject:
   m_ObjectHideFlags: 0

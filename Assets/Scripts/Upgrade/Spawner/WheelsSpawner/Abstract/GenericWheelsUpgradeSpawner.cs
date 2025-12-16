@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using UnityEngine;
 
@@ -43,9 +42,7 @@ public class GenericWheelsUpgradeSpawner<T, M> : WheelUpgradeSpawner // T unnese
             }
 
             WheelSpawned?.Invoke(part as T);
-        }
-
-        Debug.Log("SPANW" + part.gameObject.ToString());
+        }       
 
         _currentSpawner = GetNextSpawner();
 

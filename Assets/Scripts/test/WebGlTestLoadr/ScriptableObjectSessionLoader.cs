@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WebGLSessionLoader : MonoBehaviour
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+public class ScriptableObjectSessionLoader : MonoBehaviour
 {
-    [SerializeField] private TestSO _defaultVariable;
+  /*  [SerializeField] private TestSO _defaultVariable;
     [SerializeField] private string _playerPrefsKey = "WebGL_ScriptableVar";
 
     [SerializeField]  private TestSO _loadedVariable;
@@ -25,7 +29,9 @@ public class WebGLSessionLoader : MonoBehaviour
 
 private void Start()
     {
+
         // Initial load
+        SaveVariableForSession(_defaultVariable);
         LoadVariableForSession();
     }
 
@@ -36,8 +42,7 @@ private void Start()
     }
 
     private void LoadVariableForSession()
-    {
-        
+    {      
 
 
         // First check if we have a session ID
@@ -99,13 +104,20 @@ private void Start()
 
     public string GetResourcePath(TestSO variable)
     {
-        string assetPath = UnityEditor.AssetDatabase.GetAssetPath(variable);
+
+#if UNITY_EDITOR
+        string assetPath = AssetDatabase.GetAssetPath(variable);
+#endif
         string returnPath;
 
+        string folderName = "/Resources/";
+
         // Convert to Resources path
-        if (assetPath.Contains("/Resources/"))
+        if (assetPath.Contains(folderName))
         {
-            int resourcesIndex = assetPath.LastIndexOf("/Resources/") + 11;
+           
+
+            int resourcesIndex = assetPath.LastIndexOf(folderName) + folderName.Length;
             string resourcesRelativePath = assetPath.Substring(resourcesIndex);
 
             // Remove file extension
@@ -115,21 +127,21 @@ private void Start()
         {
             returnPath = string.Empty;
 
-            throw new System.Exception("Scriptable object " + nameof(variable) + " not in Resources folder");
+            throw new System.Exception("Scriptable object " + nameof(variable) + " not in  " +folderName + " folder");
         }
 
         return returnPath;
     }
 
-/*private string GetResourcePath(TestSO variable)
+*//*private string GetResourcePath(TestSO variable)
     {
         // Simple implementation - assumes variable.name matches Resources path
         // You might need a more robust mapping system
         return $"ScriptableObjects/{variable.name}";
-    }*/
+    }*//*
 
     // Property to access the loaded variable
     public TestSO LoadedVariable => _loadedVariable;
-
+*/
    
 }
