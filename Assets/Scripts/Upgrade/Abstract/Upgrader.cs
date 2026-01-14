@@ -46,14 +46,16 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _compositePartSpawners = new List<UpgradePartSpawner>();
         _installedUpgradeParts = new List<UpgradePart>();
 
+        PlayerPrefs.DeleteAll();
 
         _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
-        _currentUpgradeLevel = (uint)PlayerPrefsIntManager.LoadVariable(_currentUpgradeLevelKey);
+        _currentUpgradeLevel = (uint)PlayerPrefsIntManager.LoadInt(_currentUpgradeLevelKey);
         Debug.Log($"START UPLEVEL {_currentUpgradeLevel}");
 
         // _carLevel = FindObjectOfType<Car>();
 
         _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
+        Debug.Log($"Upgrade name {_currentUpgrade.ToString()}");
 
         ProcessUpgrade(_currentUpgrade);
 
@@ -101,7 +103,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
 
                 _currentUpgradeLevel = _currentUpgrade.UpgradeLevel;
-                PlayerPrefsIntManager.SaveVariable(_currentUpgradeLevelKey,(int) _currentUpgradeLevel);
+                PlayerPrefsIntManager.SaveInt(_currentUpgradeLevelKey,(int) _currentUpgradeLevel);
             }
         }
     }
@@ -156,6 +158,11 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         if (newParts.Count != 0)
         {
+            foreach (var part in newParts)
+            {
+                Debug.Log(part.ToString()+ " dont installed");
+            }
+
             throw new Exception("Some upgrade parts not Spawned ");
         }
     }
