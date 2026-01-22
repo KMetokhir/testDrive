@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 
-public class AttractableTest : MonoBehaviour, IAttractable
+public class Attractable : MonoBehaviour, IAttractable
 {
-    [SerializeField] private float _toleranceDistance;
+    //[SerializeField] private float _toleranceDistance;
     [SerializeField] private uint _weight;
     [SerializeField] private uint _cost;
+    [SerializeField] private uint _level;
 
     private Vector3 _currentPosition;
 

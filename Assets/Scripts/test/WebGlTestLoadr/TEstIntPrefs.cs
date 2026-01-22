@@ -19,17 +19,17 @@ public class TEstIntPrefs : MonoBehaviour
     {
         key = nameof(i);
         // i = PlayerPrefsIntManager.LoadVariable(key);
-        i = PlayerPrefsIntManager.LoadInt(key);
+        i = PlayerPrefsManager.LoadInt(key);
         Debug.Log("start " + i);
         Show((uint)i, old);
 
         i=i +1;
         //PlayerPrefsIntManager.SaveVariable(key, i);
-        PlayerPrefsIntManager.SaveInt(key, i);
+        PlayerPrefsManager.SaveInt(key, i);
         Debug.Log("Load "+ i);
 
         // i = PlayerPrefsIntManager.LoadVariable(key);
-        i = PlayerPrefsIntManager.LoadInt(key);
+        i = PlayerPrefsManager.LoadInt(key);
         Debug.Log("after load " + i);
         Show((uint)i, newVar);
     }    

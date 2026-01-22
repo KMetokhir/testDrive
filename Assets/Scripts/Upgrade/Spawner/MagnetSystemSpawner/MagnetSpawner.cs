@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MagnetSpawner : ObservablePartSpawner<Magnet>
 {
-    public override bool TrySpawn(UpgradePart part)  
+    public override bool TrySpawn(UpgradePart part)
     {
         if (base.TrySpawn(part))
         {
-            part.transform.parent = null; // same crane spawner
+            part.transform.parent = null; // same crane spawner           
 
             return true;
         }

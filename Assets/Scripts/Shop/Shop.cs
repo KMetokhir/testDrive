@@ -4,7 +4,7 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
-   
+
     private List<IAttractable> _objs;
 
     private void Awake()
@@ -14,7 +14,9 @@ public class Shop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out ISeller seller))
+        ISeller seller = other.gameObject.GetComponentInParent<ISeller>();
+
+        if (seller!=null)
         {
             _objs = seller.Buy();
         }
@@ -25,8 +27,8 @@ public class Shop : MonoBehaviour
         foreach (var obj in _objs)
         {
             Debug.Log(obj.ToString());
-            Move(obj.Transform, transform.position, _moveSpeed, Time.fixedDeltaTime);   
-        
+            Move(obj.Transform, transform.position, _moveSpeed, Time.fixedDeltaTime);
+
         }
     }
 

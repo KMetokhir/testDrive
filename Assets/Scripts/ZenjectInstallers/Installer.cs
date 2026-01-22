@@ -8,7 +8,7 @@ public class Installer : MonoInstaller
 {
     [SerializeField] private TrunkView _trunkView;
     [SerializeField] private MoneyView _moneyView;
-    [SerializeField] private CarConteiner _Prefab;
+    [SerializeField] private CarConteiner _prefab;
     [SerializeField] private ScreenInput _screenInput;
     [SerializeField] private UpgradePanel _upgradePanel;
     [SerializeField] private LevelUpVeiw _levelUpView;
@@ -31,9 +31,9 @@ public class Installer : MonoInstaller
 
         
 
-        Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_Prefab);
+        Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_prefab);
 
-
+        
         //   Container.BindFactory<Money, Money.Factory>().FromComponentInNewPrefab(_Prefab);
 
 

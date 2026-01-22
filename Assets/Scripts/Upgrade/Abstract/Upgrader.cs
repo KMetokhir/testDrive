@@ -10,15 +10,13 @@ public class Upgrader<T, S, M> : MonoBehaviour
     where M : IUpgradeData
     where T : Upgrade, M
 {
-    [SerializeField] private List<T> _upgrades;
+    [SerializeField] private  List<T> _upgrades;
     [SerializeField] private List<UpgradePartSpawner> _spawners;
 
     [SerializeField] private Money _money;
 
     [SerializeField] private List<UpgradePartSpawner> _compositePartSpawners;  // Observable part spawner
                                                                                // [SerializeField] private List<ObservableUpgradePart> _observableParts;
-
-
 
     [SerializeField] private List<UpgradePart> _installedUpgradeParts;
 
@@ -46,32 +44,47 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _compositePartSpawners = new List<UpgradePartSpawner>();
         _installedUpgradeParts = new List<UpgradePart>();
 
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
 
         _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
-        _currentUpgradeLevel = (uint)PlayerPrefsIntManager.LoadInt(_currentUpgradeLevelKey);
+        _currentUpgradeLevel = (uint)PlayerPrefsManager.LoadInt(_currentUpgradeLevelKey);
         Debug.Log($"START UPLEVEL {_currentUpgradeLevel}");
+
+
+        LoadUpgradesInOrder(_currentUpgradeLevel);
 
         // _carLevel = FindObjectOfType<Car>();
 
-        _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
-        Debug.Log($"Upgrade name {_currentUpgrade.ToString()}");
-
-        ProcessUpgrade(_currentUpgrade);
-
-
-        UpgradeExecuted?.Invoke((M)_currentUpgrade);
-
         _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
-    }
 
+
+    }
 
     private void OnEnable()
     {
         _view.UpgradeButtonClicked += Upgrade;
     }
 
+    private void LoadUpgradesInOrder(uint currentUpgradeLevel)
+    {
+        List<T> upgrades = _upgrades;
 
+        upgrades = upgrades.OrderBy(upgrade => upgrade.UpgradeLevel).Where(upgrade => upgrade.UpgradeLevel <= currentUpgradeLevel).ToList();
+
+        foreach (T upgrade in upgrades)
+        {
+
+            ProcessUpgrade(upgrade);
+        }
+
+        _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
+        Debug.Log($"Upgrade name {_currentUpgrade.ToString()}");
+
+        //ProcessUpgrade(_currentUpgrade);
+
+        UpgradeExecuted?.Invoke((M)_currentUpgrade);
+      
+    }
 
     private void Upgrade()
     {
@@ -103,7 +116,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
 
                 _currentUpgradeLevel = _currentUpgrade.UpgradeLevel;
-                PlayerPrefsIntManager.SaveInt(_currentUpgradeLevelKey,(int) _currentUpgradeLevel);
+                PlayerPrefsManager.SaveInt(_currentUpgradeLevelKey, (int)_currentUpgradeLevel);
             }
         }
     }
@@ -144,9 +157,11 @@ public class Upgrader<T, S, M> : MonoBehaviour
         }
     }
 
-    private void ProcessUpgrade(Upgrade upgrade)
+    private void ProcessUpgrade(T upgrade)
     {
-        List<UpgradePart> newParts = _currentUpgrade.Execute();
+        //List<UpgradePart> newParts = _currentUpgrade.Execute();
+
+        List<UpgradePart> newParts = upgrade.Execute();
         List<UpgradePart> installedParts = new List<UpgradePart>();
 
         SpawnParts(_spawners, newParts, installedParts);
@@ -160,7 +175,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
         {
             foreach (var part in newParts)
             {
-                Debug.Log(part.ToString()+ " dont installed");
+                Debug.Log(part.ToString() + " dont installed");
             }
 
             throw new Exception("Some upgrade parts not Spawned ");
@@ -179,7 +194,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     private void RemoveObservablePart(ObservableUpgradePart part)
     {
-      
+
         // _observableParts.Remove(part);
 
         _installedUpgradeParts.Remove(part);
