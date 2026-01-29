@@ -1,12 +1,17 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Attractable : MonoBehaviour, IAttractable
+public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
 {
     //[SerializeField] private float _toleranceDistance;
     [SerializeField] private uint _weight;
     [SerializeField] private uint _cost;
     [SerializeField] private uint _level;
+    [SerializeField] private AttractablesType _type;
+
+    private string _id;
 
     private Vector3 _currentPosition;
 
@@ -14,6 +19,14 @@ public class Attractable : MonoBehaviour, IAttractable
     public Transform Transform => transform;
     public uint Weight => _weight;
     public uint Cost => _cost;
+    public uint Level => _level;
+    public string Id => _id;
+
+    public AttractablesType Type => _type;
+
+    public event Action<Attractable> Deactivated;
+
+    
 
     private void OnValidate()
     {
@@ -30,6 +43,7 @@ public class Attractable : MonoBehaviour, IAttractable
 
     private void Awake()
     {
+        _id = GenerateUniqueId();
         IsActive = true;
         _currentPosition = transform.position;
     }
@@ -37,5 +51,19 @@ public class Attractable : MonoBehaviour, IAttractable
     public void Deactivate()
     {
         IsActive = false;
+        Deactivated?.Invoke(this);
     }
+
+    private string GenerateUniqueId()
+    {
+        string time = DateTime.Now.Ticks.ToString();
+        string random = UnityEngine.Random.Range(1000, 9999).ToString();
+        return $"{_type}_{time}_{random}";
+    }   
+}
+
+public enum AttractablesType
+{
+    screw,
+    wrench
 }

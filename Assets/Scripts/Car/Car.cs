@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //, ILevel
+public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
 {
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Trunk _trunk;
@@ -16,7 +16,7 @@ public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //
     private Rigidbody _rigidbody;
 
     /* private ILevel _level;*/
-    public uint Level { get; private set; }
+   // public uint Level { get; private set; }
 
     public Rigidbody Rigidbody => _rigidbody;
 
@@ -92,7 +92,7 @@ public class Car : MonoBehaviour, ISeller, ICarLevel, ICarBody, ICarDirection //
             _magnet.StartWorke();
         }
 
-        Level = 1; // tmp
+      //  Level = 1; // tmp
     }
 
     private void OnEnable()
