@@ -60,6 +60,8 @@ public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
         string random = UnityEngine.Random.Range(1000, 9999).ToString();
         return $"{_type}_{time}_{random}";
     }   
+
+
 }
 
 public enum AttractablesType
