@@ -25,8 +25,9 @@ public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
     public AttractablesType Type => _type;
 
     public event Action<Attractable> Deactivated;
+    public event Action<Attractable> Collected;
 
-    
+
 
     private void OnValidate()
     {
@@ -54,12 +55,18 @@ public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
         Deactivated?.Invoke(this);
     }
 
+    public void Collect()
+    {
+        Collected?.Invoke(this);
+    }
+
+
     private string GenerateUniqueId()
     {
         string time = DateTime.Now.Ticks.ToString();
         string random = UnityEngine.Random.Range(1000, 9999).ToString();
         return $"{_type}_{time}_{random}";
-    }   
+    }
 
 
 }

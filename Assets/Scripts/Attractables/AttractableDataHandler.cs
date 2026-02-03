@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AttractableDataHandler : MonoBehaviour
 {
@@ -20,12 +22,14 @@ public class AttractableDataHandler : MonoBehaviour
         LoadAllObjects();
     }
 
-    public void RegisterObject(Attractable attractable, string sceneName)
+    public void RegisterObject(Attractable attractable, string sceneName, int rows, int columns)
     {
         if (attractable == null)
             throw new System.Exception($"{nameof(attractable)}  is null");
 
-        bool isObjectregistered = _alldata.FirstOrDefault(val => val.Id == attractable.Id) != null;
+        string dataId = GenerateDataId(attractable.Id, sceneName);
+
+        bool isObjectregistered = _alldata.FirstOrDefault(val => val.Id == dataId) != null;
 
         if (isObjectregistered)
         {
@@ -33,16 +37,17 @@ public class AttractableDataHandler : MonoBehaviour
         }
         else
         {
-            AttractableData data = new AttractableData(attractable.Id, attractable.transform.position, attractable.Type, sceneName);
-            string key = $"{ObjectKeyPrefix}{data.Id}";
+
+            AttractableData data = new AttractableData(dataId, attractable.transform.position, attractable.Type, sceneName, rows, columns);
+            string key = $"{ObjectKeyPrefix}{dataId}";
             PlayerPrefs.SetString(key, data.ToString());
-            PlayerPrefs.Save();            
+            PlayerPrefs.Save();
 
             _alldata.Add(data);
 
             UpdateObjectList();
 
-            Debug.Log($"Registered object: {attractable.Id} at {attractable.Transform.position}");
+            Debug.Log($"Registered object: {data.Id} at {attractable.Transform.position}");
         }
     }
 
@@ -50,7 +55,7 @@ public class AttractableDataHandler : MonoBehaviour
     {
         string allIdData = string.Join(",", _allId);
         PlayerPrefs.SetString(AllObjectsIdKey, allIdData);
-        PlayerPrefs.Save();      
+        PlayerPrefs.Save();
     }
 
     public void RemoveAllDataOnScene(string sceneName)
@@ -59,12 +64,19 @@ public class AttractableDataHandler : MonoBehaviour
 
         foreach (var data in sceneData)
         {
-            RemoveById(data.Id);
+            RemoveData(data.Id);
         }
     }
-    public void RemoveById(string id)
+    public void RemoveById(string id, string sceneName)
     {
-        AttractableData data = _alldata.FirstOrDefault(val => val.Id == id);
+        string dataId = GenerateDataId(id, sceneName);
+
+        RemoveData(dataId);
+    }
+
+    private void RemoveData(string dataId)
+    {
+        AttractableData data = _alldata.FirstOrDefault(val => val.Id == dataId);
 
         if (data == null)
         {
@@ -79,14 +91,15 @@ public class AttractableDataHandler : MonoBehaviour
 
     }
 
-    public List<Vector3> GetPositionsOnScene(string sceneName, AttractablesType type)
+    public List<Vector3> GetPositionsOnScene(string sceneName, AttractablesType type, int rows, int columns)
     {
         List<Vector3> positions = new List<Vector3>();
 
-        List<AttractableData> sceneTypeData = _alldata.Where(val => val.SceneName == sceneName && val.Type == type).ToList();
+        List<AttractableData> foundData = _alldata.Where(val => val.SceneName == sceneName && val.Type == type && val.Rows == rows && val.Columns == columns).ToList();
 
-        foreach (AttractableData data in sceneTypeData)
+        foreach (AttractableData data in foundData)
         {
+            Debug.Log(data.Rows + " columns " + data.Columns);
             positions.Add(data.Position);
         }
 
@@ -102,9 +115,9 @@ public class AttractableDataHandler : MonoBehaviour
         if (PlayerPrefs.HasKey(AllObjectsIdKey))
         {
             string objectList = PlayerPrefs.GetString(AllObjectsIdKey);
-            string[] objectIds = objectList.Split(',');          
+            string[] dataIds = objectList.Split(',');
 
-            foreach (string id in objectIds)
+            foreach (string id in dataIds)
             {
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -123,65 +136,115 @@ public class AttractableDataHandler : MonoBehaviour
         }
     }
 
-    [System.Serializable]
-    public class AttractableData
+    private string GenerateDataId(string id, string sceneName)
     {
-        public readonly string Id;
-        public readonly Vector3 Position;
-        public readonly AttractablesType Type;
-        public readonly string SceneName;
+        char divider = '_';
 
-        public AttractableData(string id, Vector3 pos, AttractablesType type, string scene)
+        return sceneName + divider + id;
+    }
+
+    /* private string GetObjectId(string dataId)
+     {
+         char divider = '_';
+         int objectIdIndex = 1;
+
+         string[] parts = dataId.Split(divider);
+
+         if (parts.Length != 2)
+         {
+             throw new Exception($"incorrect data Id  {dataId}");
+         }
+
+         return parts[objectIdIndex];
+     }*/
+}
+
+[System.Serializable]
+public class AttractableData
+{
+    public readonly string Id;
+    public readonly Vector3 Position;
+    public readonly AttractablesType Type;
+    public readonly string SceneName;
+    public readonly int Rows;
+    public readonly int Columns;
+
+    public AttractableData(string id, Vector3 pos, AttractablesType type, string scene, int rows, int columns)
+    {
+        if (rows <= 0 || columns <= 0)
         {
-            Id = id;
-            Position = pos;
-            Type = type;
-            SceneName = scene;
+            throw new ArgumentNullException("Rows and Columns can not be equal 0");
         }
 
-        public AttractableData(string savedString)
+        Id = id;
+        Position = pos;
+        Type = type;
+        SceneName = scene;
+        Rows = rows;
+        Columns = columns;
+    }
+
+    public AttractableData(string savedString)
+    {
+        try
         {
-            try
+            // Debug.Log(savedString);
+
+            string[] parts = savedString.Split('|');
+
+            //Debug.Log(parts[0]);
+
+            if (parts.Length >= 4)
             {
-                // Debug.Log(savedString);
+                Id = parts[0];
 
-                string[] parts = savedString.Split('|');
+                string[] position = parts[1].Split('&');
+                Position = new Vector3(
+                    float.Parse(position[0]),
+                    float.Parse(position[1]),
+                    float.Parse(position[2])
+                );
+                // Debug.Log($"{position[0]} {position[1]} {position[2]}");
 
-                //Debug.Log(parts[0]);
-
-                if (parts.Length >= 4)
+                if (Enum.TryParse(parts[2], out AttractablesType type))
                 {
-                    Id = parts[0];
+                    Type = type;
+                }
+                else
+                {
+                    throw new Exception($"type {parts[2]} doesn't excist");
+                }
 
-                    string[] position = parts[1].Split('&');
-                    Position = new Vector3(
-                        float.Parse(position[0]),
-                        float.Parse(position[1]),
-                        float.Parse(position[2])
-                    );
-                    // Debug.Log($"{position[0]} {position[1]} {position[2]}");
+                SceneName = parts[3];
 
-                    if (Enum.TryParse(parts[2], out AttractablesType type))
-                    {
-                        Type = type;
-                    }
-                    else
-                    {
-                        throw new Exception($"type {parts[2]} doesn't excist");
-                    }
+                if (int.TryParse(parts[4], out int rows))
+                {
+                    Rows = rows;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid number format! " + parts[4]);
+                }
 
-                    SceneName = parts[3];
+                if (int.TryParse(parts[5], out int columns))
+                {
+                    Columns = columns;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid number format! " + parts[5]);
                 }
             }
-            catch (Exception e)
-            {
-                Debug.LogError($"Error parsing SceneObjectData: {e.Message}");
-            }
         }
-
-        public override string ToString()
+        catch (Exception e)
         {
-            return $"{Id}|{Position.x}&{Position.y}&{Position.z}|{Type}|{SceneName}";
+            Debug.LogError($"Error parsing SceneObjectData: {e.Message}");
         }
     }
+
+    public override string ToString()
+    {
+        return $"{Id}|{Position.x}&{Position.y}&{Position.z}|{Type}|{SceneName}|{Rows}|{Columns}";
+    }
 }
+
