@@ -4,7 +4,7 @@ using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
-public class ProjectInstaller : MonoInstaller
+public class AttractableSpawnerProjectInstaller : MonoInstaller
 {
     /* [Header("Persistent Object Settings")]
      [SerializeField] private string persistentObjectName = "GlobalPersistentObject";
@@ -14,7 +14,7 @@ public class ProjectInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        AttractablesSpawner spawnerGO = Instantiate(spawnerPrefab);
+        AttractablesSpawner spawnerGO = Instantiate(spawnerPrefab); // add id _spawnerGo is null in head
 
 
         /*Container.BindInterfacesAndSelfTo<AttractablesSpawner>()

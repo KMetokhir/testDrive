@@ -15,7 +15,7 @@ public class CarInstaller : MonoBehaviour
     {
         CarConteiner carCont = _carFactory.Create();
 
-        CarPlacer pl = carCont.GetComponentInChildren<CarPlacer>();
+       // CarPlacer pl = carCont.GetComponentInChildren<CarPlacer>();
 
     }   
 }

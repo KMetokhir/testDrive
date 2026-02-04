@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2567287297870115454}
   - component: {fileID: 3436488063493891931}
-  - component: {fileID: 5641187422092565751}
+  - component: {fileID: 3264433429656695386}
   - component: {fileID: 2275130343729125132}
   m_Layer: 0
-  m_Name: ProjectContext
+  m_Name: ProjectContextWithWordSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 5641187422092565751}
+  - {fileID: 3264433429656695386}
   - {fileID: 2275130343729125132}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
@@ -64,7 +64,7 @@ MonoBehaviour:
       _missingHandlerDefaultResponse: 2
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1
---- !u!114 &5641187422092565751
+--- !u!114 &3264433429656695386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,10 +73,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4220608358342158835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6411dff584969cb4293f0c603bbb4464, type: 3}
+  m_Script: {fileID: 11500000, guid: 59cb8902712cc8e46bb5754391ad39d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gamePlayUIPrefab: {fileID: 1137930807907952901, guid: 53caf39cb5d396f409b0196a127b7c67, type: 3}
+  spawnerPrefab: {fileID: 5392933239108710840, guid: 69db79581be31414e90177d5f3535be6, type: 3}
 --- !u!114 &2275130343729125132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,4 +89,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22879e3c17e095a4db131e43d7dce5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gamePlayUIPrefab: {fileID: 1137930807907952901, guid: 53caf39cb5d396f409b0196a127b7c67, type: 3}
   _carPrefab: {fileID: -2829895552115497181, guid: e68b6726b00b07f4fa5ddfb18220d998, type: 3}

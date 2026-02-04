@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 5392933239108710840}
   - component: {fileID: 7321960892633073077}
   m_Layer: 0
-  m_Name: AttractablesSpawnSystem
+  m_Name: AttractablesGlobalSpawnSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

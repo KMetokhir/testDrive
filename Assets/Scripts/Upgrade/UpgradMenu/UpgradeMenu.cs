@@ -11,6 +11,11 @@ public  class UpgradeMenu : MonoBehaviour
         _upgraderPanel = upgraderPanel;
     }
 
+    private void Awake()
+    {
+        _upgraderPanel.Hide();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out UpgradeAria seller))
