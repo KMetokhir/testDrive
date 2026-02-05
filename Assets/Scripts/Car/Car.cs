@@ -108,7 +108,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
     private void OnDisable()
     {
         _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
-        _trunk.MaxWeightChanged -= OnMaxWeightChanged;
+        _trunk.MaxWeightChanged -= OnMaxWeightChanged;     
     }
 
     private void OnMaxWeightChanged()

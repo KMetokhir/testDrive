@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GenericWheelsUpgradeSpawner<T, M> : WheelUpgradeSpawner // T unnesesary
+public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnesesary
    where T : WheelUpgradePart
     where M : WheelUpgradeSpawner<T>
 {

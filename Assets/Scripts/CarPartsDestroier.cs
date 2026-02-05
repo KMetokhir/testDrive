@@ -7,23 +7,63 @@ using UnityEngine.VFX;
 
 public class CarPartsDestroier : MonoBehaviour
 {
-    [SerializeField] List<IObservablePartSpawner> spawnerd;
+    [SerializeField] List<IObservablePartSpawner> _spawners;
 
-    private List<IUpgradePart> _parts;
+    private List<ObservableUpgradePart> _parts;
 
     private void Awake()
     {
         //spawnerd = GetComponentsInChildren<ObservablePartSpawner<WheelBase>>().ToList();
-        var spawners = GetComponentsInChildren<IObservablePartSpawner>();
+        _parts = new List<ObservableUpgradePart>();
+        _spawners = GetComponentsInChildren<IObservablePartSpawner>().ToList();
 
-        foreach (var spawner in spawners)
+        foreach (var spawner in _spawners)
         {
             spawner.PartSpawned += OnPartSpawned;
+
+        }
+
+        // Debug.LogError(_spawners.Count);
+    }
+
+    private void OnDisable()
+    {
+        foreach (var spawner in _spawners)
+        {
+            spawner.PartSpawned -= OnPartSpawned;
+
+        }
+
+        foreach (var part in _parts)
+        {
+            part.Destroied -= OnPartSpawned;
         }
     }
 
     private void OnPartSpawned(IUpgradePart part)
     {
-       
+        ObservableUpgradePart observabelPart = part as ObservableUpgradePart;
+
+        if (observabelPart != null)
+        {
+            _parts.Add(observabelPart);
+            observabelPart.Destroied += RemovePartFromList;
+        }
+    }
+
+    private void RemovePartFromList(ObservableUpgradePart part)
+    {
+        _parts.Remove(part);
+        part.Destroied -= RemovePartFromList;
+        Debug.Log("remove from list");
+    }
+
+    private void OnDestroy()
+    {
+        foreach(var part in _parts)
+        {
+            part.Destroied -= RemovePartFromList;
+            part.DestroyObject();
+        }
     }
 }

@@ -31,7 +31,7 @@ public class Installer : MonoInstaller
 
         
 
-        Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_prefab);
+       // Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_prefab);
 
         
         //   Container.BindFactory<Money, Money.Factory>().FromComponentInNewPrefab(_Prefab);

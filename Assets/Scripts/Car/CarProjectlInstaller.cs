@@ -7,27 +7,17 @@ public class CarProjectlInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        SignalBusInstaller.Install(Container);
+
+        Container.DeclareSignal<CarSpawnedSignal>();
+
 
         Container.Bind<ILevel>().FromComponentInParents().AsSingle();
 
-       // Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_carPrefab).AsSingle();
-        Container.Bind<CarConteiner>().FromInstance(_carPrefab).AsSingle();
-       // Container.Bind<ICarBody>().FromInstance(_carPrefab.GetComponentInChildren<ICarBody>()).AsSingle();
 
-        Container.Bind<RuntimeCarFactory>().AsSingle();
+        Container.Bind<CarConteiner>().FromInstance(_carPrefab)
+            .WhenInjectedInto<RuntimeCarFactory>();
 
-        
-
-       
-
-
-        /* Container.Bind<ILevel>().FromComponentInParents().AsSingle();
-
-         // Bind the default prefab
-         Container.Bind<CarConteiner>().FromInstance(_defaultCarPrefab).AsSingle();
-
-         // Bind a simple runtime factory
-         Container.Bind<RuntimeCarFactory>().AsSingle();*/
-
+        Container.Bind<RuntimeCarFactory>().AsSingle().NonLazy();
     }
 }

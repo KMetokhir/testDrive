@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5df0ea225c46e42bb2b7dc35c2d0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 4081951971108951258}
 --- !u!114 &878905240026034215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc961042a35a1034ab05991ea6bf041a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerd: []
 --- !u!1 &3081590145264812773
 GameObject:
   m_ObjectHideFlags: 0

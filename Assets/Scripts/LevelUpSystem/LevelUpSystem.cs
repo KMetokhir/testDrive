@@ -28,7 +28,7 @@ public class LevelUpSystem : MonoBehaviour, ILevel
     {
         _upgradables = GetComponents<IUpgradable>().ToList();
 
-        Debug.Log(_upgradables.Count);
+       // Debug.Log(_upgradables.Count);
 
         _view.ShowValue(_currentUpgradesLevel, _upgradesToLevelUp);
 

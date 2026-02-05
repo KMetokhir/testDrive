@@ -204,6 +204,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 195b0fff902145247a6fc520096ee761, type: 3}
+--- !u!1 &14792568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14792570}
+  - component: {fileID: 14792571}
+  m_Layer: 0
+  m_Name: testCameraFolloweer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &14792570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14792568}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 108.78469, y: -39.476673, z: 108.485695}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &14792571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14792568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83eedbfdd1fc583478d5e72b1cb6a7df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!1 &22250144
 GameObject:
   m_ObjectHideFlags: 0
@@ -11080,6 +11125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5df0ea225c46e42bb2b7dc35c2d0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!54 &1065592049
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28522,6 +28568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5df0ea225c46e42bb2b7dc35c2d0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!4 &6997566961947260772
 Transform:
   m_ObjectHideFlags: 0
@@ -29400,3 +29447,4 @@ SceneRoots:
   - {fileID: 1065592047}
   - {fileID: 2144266545684896964}
   - {fileID: 967582480}
+  - {fileID: 14792570}

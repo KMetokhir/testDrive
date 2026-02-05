@@ -12,7 +12,7 @@ public class CarSelection : MonoBehaviour
 
     private RuntimeCarFactory _carFactory;
 
-    [SerializeField] private CarConteiner _carConteiner;
+    [SerializeField] private CarConteiner _carConteiner;  
 
     [Inject]
     private void Construct(RuntimeCarFactory carFactory)
@@ -32,19 +32,37 @@ public class CarSelection : MonoBehaviour
 
     public void SpawnCar()
     {
-        _carConteiner = _carFactory.CreateCar(Vector3.zero);
+        // Destroy previous car if exists
+        if (_carConteiner != null)
+        {
+            Destroy(_carConteiner.gameObject);
+            _carConteiner = null;
+        }
+
+        // Create new car
+        _carConteiner = _carFactory.CreateCar();
+        Debug.Log($"Spawned car: {_carConteiner.name}");
     }
 
+    // Test with right mouse button
     private void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (_carConteiner != null)
-            {
-                Destroy(_carConteiner.GameObject());
-            }
-
             SelectCar(0);
+            SpawnCar();
+        }
+
+        // Test with other keys
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectCar(0);
+            SpawnCar();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectCar(1);
             SpawnCar();
         }
     }

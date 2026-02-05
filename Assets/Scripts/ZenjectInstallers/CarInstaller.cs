@@ -3,7 +3,7 @@ using Zenject;
 
 public class CarInstaller : MonoBehaviour
 {
-    private CarConteiner.Factory _carFactory;    
+   // private CarConteiner.Factory _carFactory;    
 
    /* [Inject]
     public void Construct(CarConteiner.Factory carFactory)
@@ -13,7 +13,7 @@ public class CarInstaller : MonoBehaviour
 
     private void Start()
     {
-        CarConteiner carCont = _carFactory.Create();
+       // CarConteiner carCont = _carFactory.Create();
 
        // CarPlacer pl = carCont.GetComponentInChildren<CarPlacer>();
 
