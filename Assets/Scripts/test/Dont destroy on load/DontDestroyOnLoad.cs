@@ -27,6 +27,9 @@ public class DontDestroyOnLoad : MonoBehaviour
         // Make this object persist across scenes
         DontDestroyOnLoad(this.gameObject);
 
+
+        //PlayerPrefs.DeleteAll();
+
       //  Debug.Log("AWAKE in " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + " "+ gameObject.name);
     }
 

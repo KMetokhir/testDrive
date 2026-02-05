@@ -13,12 +13,18 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
     private Rigidbody _rigidbody;
     private IDirectionChanger _directionChanger;
 
+    private Suspension _suspension;
+
+    private bool _isActivated;
+
     public float Radius => _physicWheel.Radius;
     public Transform Transform => transform;
     protected Vector3 LookDirection { get; private set; }
 
     private void Awake()
     {
+        _isActivated = false;
+
         UseInAwake();
 
         if (_directionChanger != null)
@@ -67,6 +73,20 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         // _spawner.NewWheelSpawned -= ChangePhysicWheel;
     }
 
+    public void Activate(ICarBody carBody)
+    {
+        if (_isActivated == false)
+        {
+            _isActivated = true;
+            _suspension.Activate(carBody, _rigidbody);
+        }
+        else
+        {
+            throw new Exception($"Wheel {this.gameObject} activated allready");
+        }
+    }
+    
+
     public void ForwardMove(ISpeed speed)
     {
         _wheelMover.ForwardMove(speed, _rigidbody, LookDirection);
@@ -90,6 +110,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         _wheelMover = GetComponent<WheelMover>();
         LookDirection = transform.forward;
         _directionChanger = GetComponent<IDirectionChanger>();
+        _suspension = GetComponent<Suspension>();
     }
 
     private void OnDirectionChanged(Vector3 direction)

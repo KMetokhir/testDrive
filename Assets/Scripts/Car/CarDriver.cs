@@ -16,6 +16,8 @@ public class CarDriver : MonoBehaviour
 
     [SerializeField] private float _moveForce;
 
+    private ICarBody _carBody;
+
     [Inject]
     private void Construct(ScreenInput screenInput)
     {
@@ -24,20 +26,22 @@ public class CarDriver : MonoBehaviour
 
     private void Awake()
     {
+        _carBody = GetComponent<ICarBody>();
+
         _rotaryWheels = new List<RotaryWheel>();
         _drivingWheels = new List<DrivingWheel>();
     }
     private void OnEnable()
     {
-        _wheelBaseSpawner.PartSpawned += SubcribeToBase;
+        _wheelBaseSpawner.TypedPartSpawned += SubcribeToBase;
 
     }
 
     private void OnDisable()
     {
-        _wheelBaseSpawner.PartSpawned -= SubcribeToBase;
+        _wheelBaseSpawner.TypedPartSpawned -= SubcribeToBase;
         UnsubscribeInput();
-    }   
+    }
 
     private void SubscribeInput()
     {
@@ -51,7 +55,7 @@ public class CarDriver : MonoBehaviour
         _screenInput.AngleChanged -= OnAngleChanged;
         _screenInput.MouseUp -= OnMouseEventUp;
 
-    }    
+    }
 
     private void SubcribeToBase(WheelBase wheelBase)
     {
@@ -104,6 +108,8 @@ public class CarDriver : MonoBehaviour
     private void SetWheel(IWheel wheel)
     {
 
+        wheel.Activate(_carBody);
+
         if (wheel is DrivingWheel)
         {
             _drivingWheels.Add(wheel as DrivingWheel);
@@ -113,8 +119,6 @@ public class CarDriver : MonoBehaviour
         if (wheel is RotaryWheel)
         {
             _rotaryWheels.Add(wheel as RotaryWheel);
-
-
         }
     }
 

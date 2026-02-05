@@ -17,9 +17,8 @@ GameObject:
   - component: {fileID: 4083021393384105395}
   - component: {fileID: -2829895552115497181}
   - component: {fileID: 878905240026034215}
-  - component: {fileID: 6501294690196684585}
   m_Layer: 0
-  m_Name: Car
+  m_Name: Car 05.02.2026
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,19 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64b09fbb41bad2419d0f6ddd16ffcda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6501294690196684585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2792060018726625395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc961042a35a1034ab05991ea6bf041a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnerd: []
 --- !u!1 &3081590145264812773
 GameObject:
   m_ObjectHideFlags: 0

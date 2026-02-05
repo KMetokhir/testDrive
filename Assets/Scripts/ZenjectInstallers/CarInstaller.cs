@@ -5,11 +5,11 @@ public class CarInstaller : MonoBehaviour
 {
     private CarConteiner.Factory _carFactory;    
 
-    [Inject]
+   /* [Inject]
     public void Construct(CarConteiner.Factory carFactory)
     {
         _carFactory = carFactory;
-    }
+    }*/  //tmp
 
     private void Start()
     {

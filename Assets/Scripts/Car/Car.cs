@@ -27,7 +27,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _craneSpawner.PartSpawned += OnCraneSpawned;
+        _craneSpawner.TypedPartSpawned += OnCraneSpawned;
     }
 
     private void OnCraneSpawned(Crane crane)

@@ -29,14 +29,14 @@ public class Crane : CompositePart
 
     private void OnEnable()
     {
-        _spawner.PartSpawned += OnMagnetSpawned;
+        _spawner.TypedPartSpawned += OnMagnetSpawned;
     }
 
     private void OnDisable()
     {
         if (_spawner != null) // tmp
         {
-            _spawner.PartSpawned -= OnMagnetSpawned;
+            _spawner.TypedPartSpawned -= OnMagnetSpawned;
         }
     }
 

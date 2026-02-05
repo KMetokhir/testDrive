@@ -7032,8 +7032,8 @@ MonoBehaviour:
   _quadSpawnArias:
   - {fileID: 1535608328}
   - {fileID: 1005811046}
-  _rowsPerQuad: 1
-  _columnsPerQuad: 1
+  _rowsPerQuad: 3
+  _columnsPerQuad: 3
   _spawner: {fileID: 0}
 --- !u!4 &628903944
 Transform:
@@ -9644,7 +9644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &902116779
 AudioListener:
   m_ObjectHideFlags: 0
@@ -10678,16 +10678,28 @@ PrefabInstance:
       value: Quad (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.0649333
+      value: 16.6
       objectReference: {fileID: 0}
     - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.67
+      value: -2.6699972
       objectReference: {fileID: 0}
     - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.01
+      value: 4.3171062
       objectReference: {fileID: 0}
     - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11426,7 +11438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1072368808
 Transform:
   m_ObjectHideFlags: 0
@@ -16805,8 +16817,16 @@ PrefabInstance:
       value: Quad
       objectReference: {fileID: 0}
     - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.022383
+      value: -30.6
       objectReference: {fileID: 0}
     - target: {fileID: 8747083090509968140, guid: 00039c69ee4a71c47ad08f35f3ce9953, type: 3}
       propertyPath: m_LocalPosition.y

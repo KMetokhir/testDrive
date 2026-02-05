@@ -1,25 +1,42 @@
 using UnityEngine;
+using UnityEngine.WSA;
+using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Suspension : MonoBehaviour
-{    
+{
     [SerializeField] private float _springStrength = 50000f;
     [SerializeField] private float _springDamping = 100f;
     [SerializeField] private float _springDistance = 0.3f;
 
-    private ICarBody _carBody;// add interface
+    [Inject]
+    private ICarBody _carBody;
+
     private Rigidbody _wheelRb;
     private ConfigurableJoint _joint;
 
-    private void Awake()
+    /* private void Awake()
+     {
+         _wheelRb = GetComponent<Rigidbody>();
+     }*/
+
+    public void Activate(ICarBody carBody, Rigidbody wheelRb)
     {
-        _wheelRb = GetComponent<Rigidbody>();
+        if (_carBody == null && _wheelRb == null)
+        {
+            _carBody = carBody;
+            _wheelRb = wheelRb;
+
+            CreateJoint();
+        }
+        else
+        {
+            throw new System.Exception($"Suspension on wheel {this.gameObject} already Activated");
+        }        
     }
 
-    void Start()
+    private void CreateJoint()
     {
-        _carBody = FindAnyObjectByType<Car>();//tmp
-
         _joint = _wheelRb.gameObject.AddComponent<ConfigurableJoint>();
         _joint.connectedBody = _carBody.Rigidbody;
 
@@ -45,4 +62,34 @@ public class Suspension : MonoBehaviour
         _joint.angularYMotion = ConfigurableJointMotion.Locked;
         _joint.angularZMotion = ConfigurableJointMotion.Locked;
     }
+
+    /* void Start()
+     {
+       //  _carBody = FindAnyObjectByType<Car>();//tmp
+
+         _joint = _wheelRb.gameObject.AddComponent<ConfigurableJoint>();
+         _joint.connectedBody = _carBody.Rigidbody;
+
+         _joint.xMotion = ConfigurableJointMotion.Locked;
+         _joint.yMotion = ConfigurableJointMotion.Limited;
+         _joint.zMotion = ConfigurableJointMotion.Locked;
+
+         SoftJointLimitSpring limitSpring = new SoftJointLimitSpring
+         {
+             spring = _springStrength,
+             damper = _springDamping
+         };
+
+         _joint.linearLimitSpring = limitSpring;
+
+         SoftJointLimit limit = new SoftJointLimit
+         {
+             limit = _springDistance
+         };
+         _joint.linearLimit = limit;
+
+         _joint.angularXMotion = ConfigurableJointMotion.Locked;
+         _joint.angularYMotion = ConfigurableJointMotion.Locked;
+         _joint.angularZMotion = ConfigurableJointMotion.Locked;
+     }*/
 }

@@ -65,6 +65,11 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _view.UpgradeButtonClicked += Upgrade;
     }
 
+    private void OnDisable()
+    {
+        _view.UpgradeButtonClicked -= Upgrade;
+    }
+
     private void LoadUpgradesInOrder(uint currentUpgradeLevel)
     {
         List<T> upgrades = _upgrades;
