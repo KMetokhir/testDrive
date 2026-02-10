@@ -9,8 +9,7 @@ public class SceneLoadHandler : MonoBehaviour
     public string SceneName => _sceneName;
 
     public event Action SceneUnloaded;
-
-
+    public event Action SceneLoaded;
 
     void OnEnable()
     {
@@ -27,12 +26,9 @@ public class SceneLoadHandler : MonoBehaviour
     }
 
     void OnDisable()
-    {
-        // Unsubscribe to prevent memory leaks
+    {      
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
-
-    
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;    
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -40,5 +36,6 @@ public class SceneLoadHandler : MonoBehaviour
         Debug.Log($"Scene loaded: {scene.name}");
 
         _sceneName = scene.name;
+        SceneLoaded?.Invoke();
     }
 }

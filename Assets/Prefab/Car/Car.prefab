@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4081951971108951258}
+  _carDestroier: {fileID: 6501294690196684585}
 --- !u!114 &878905240026034215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +599,7 @@ GameObject:
   - component: {fileID: 4379915390209025701}
   - component: {fileID: 7625726672653032970}
   - component: {fileID: 6280666645575941663}
+  - component: {fileID: 426639792433533329}
   m_Layer: 0
   m_Name: carBody
   m_TagString: Untagged
@@ -769,6 +771,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 863002c2ea9c77646ae23d206b599a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLoadHandler: {fileID: 426639792433533329}
+  _yOffset: 0.5
+--- !u!114 &426639792433533329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9133296035443208221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afaaa4416084c1044ac2cbfb902123f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1921869645998315373

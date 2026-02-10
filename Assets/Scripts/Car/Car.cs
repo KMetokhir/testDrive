@@ -16,7 +16,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
     private Rigidbody _rigidbody;
 
     /* private ILevel _level;*/
-   // public uint Level { get; private set; }
+    // public uint Level { get; private set; }
 
     public Rigidbody Rigidbody => _rigidbody;
 
@@ -80,6 +80,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
 
     private void OnMagnetSpawned(Magnet magnet)
     {
+
         _magnet = magnet;
         _magnet.ObjectInMagnetAria += OnObjectInMagnetAria;
         _magnet.StartWorke();
@@ -92,7 +93,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
             _magnet.StartWorke();
         }
 
-      //  Level = 1; // tmp
+        //  Level = 1; // tmp
     }
 
     private void OnEnable()
@@ -107,8 +108,11 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
 
     private void OnDisable()
     {
-        _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
-        _trunk.MaxWeightChanged -= OnMaxWeightChanged;     
+        if (_magnet != null)
+        {
+            _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
+            _trunk.MaxWeightChanged -= OnMaxWeightChanged;
+        }
     }
 
     private void OnMaxWeightChanged()
@@ -122,7 +126,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
 
     private void OnObjectInMagnetAria(ICollectable collectable)
     {
-      
+
         if (_trunk.TryAdd(collectable) == false)
         {
             _magnet.Stop();

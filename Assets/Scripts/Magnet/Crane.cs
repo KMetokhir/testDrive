@@ -1,14 +1,17 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class Crane : CompositePart
 {
     [SerializeField] private MagnetSpawner _spawner;
-    [SerializeField] private Magnet _magnet;
+   // [SerializeField] private Magnet _magnet;
     [SerializeField] private Rope _rope;
     [SerializeField] private Rigidbody _rigidbody;
     // [SerializeField] private FixedJoint _joint;
+
 
     private Magnet _magnetUpgrade; // magnetUpgrade not magnet
 
@@ -19,13 +22,36 @@ public class Crane : CompositePart
 
     private void Start()
     {
-        _spawner = GetComponent<MagnetSpawner>();
+        _spawner = GetComponentInChildren<MagnetSpawner>();
 
-        //  _rope.ConnectTarget(_magnet.GetComponent<Rigidbody>());
 
-        //  Car  carBody = FindAnyObjectByType<Car>();//tmp
-        //   _joint.connectedBody = carBody.Rigidbody;
+        MessageBroker.Default
+        .Receive<CarSpawned>()        
+        .Subscribe(msg => OnCarSpawned(msg.CarRigidbody))
+        .AddTo(this);
+
     }
+
+    private void OnCarSpawned(Rigidbody carRigidbody)   
+    {       
+
+        StartCoroutine(EnableJointSafely(carRigidbody));       
+    }
+
+    private IEnumerator EnableJointSafely(Rigidbody carBody)
+    {
+
+     
+        transform.parent = carBody.transform;
+        _magnetUpgrade.transform.parent = carBody.transform;
+
+        yield return new WaitForFixedUpdate();
+
+        transform.parent = null;
+        _magnetUpgrade.transform.parent = null;
+       
+    }
+
 
     private void OnEnable()
     {
@@ -42,6 +68,7 @@ public class Crane : CompositePart
 
     private void OnMagnetSpawned(Magnet magnet)
     {
+        Debug.Log("MagnetSpawned");
         _rope.ConnectTarget(magnet.GetComponent<Rigidbody>());
 
         MagnetSpawned?.Invoke(magnet);
@@ -67,7 +94,6 @@ public class Crane : CompositePart
         _magnetUpgrade.DestroyObject();
 
     }
-
 
 
     private void OnMagnetDestoied(ObservableUpgradePart part)

@@ -6,13 +6,11 @@ using Zenject;
 public class CarConteiner : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private CarCompositDestroier _carDestroier;
 
-    public void DoSmth()
+    public void Destroy()
     {
-        Debug.Log("Do smth in " + rb.transform.position); // tmp tests
+        _carDestroier.Destroy();
         
     }
-    /*public class Factory : PlaceholderFactory<CarConteiner>
-    {
-    }*/
 }
