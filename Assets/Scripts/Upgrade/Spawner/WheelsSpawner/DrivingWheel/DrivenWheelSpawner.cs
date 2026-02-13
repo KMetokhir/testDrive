@@ -1,6 +1,6 @@
 using System;
 
-public class DrivenWheelSpawner : WheelUpgradeSpawner<DrivingWheelUpgrade>
+public class DrivenWheelSpawner : GenericUpgradeSpawner<DrivingWheelUpgrade>// WheelUpgradeSpawner<DrivingWheelUpgrade>
 {
    
 }

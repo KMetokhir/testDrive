@@ -1,5 +1,5 @@
 
-public class LeftRotaryWheelSpawner : WheelUpgradeSpawner<LeftRotaryWheelUpgrade>
+public class LeftRotaryWheelSpawner : GenericUpgradeSpawner<LeftRotaryWheelUpgrade> //WheelUpgradeSpawner<LeftRotaryWheelUpgrade>
 {
 
 }

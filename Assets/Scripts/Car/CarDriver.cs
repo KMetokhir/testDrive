@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 using Zenject;
 
 public class CarDriver : MonoBehaviour
@@ -33,13 +34,13 @@ public class CarDriver : MonoBehaviour
     }
     private void OnEnable()
     {
-        _wheelBaseSpawner.TypedPartSpawned += SubcribeToBase;
+        _wheelBaseSpawner.PartSpawned += SubcribeToBase;
 
     }
 
     private void OnDisable()
     {
-        _wheelBaseSpawner.TypedPartSpawned -= SubcribeToBase;
+        _wheelBaseSpawner.PartSpawned -= SubcribeToBase;
         UnsubscribeInput();
     }
 
@@ -58,7 +59,7 @@ public class CarDriver : MonoBehaviour
     }
 
     private void SubcribeToBase(WheelBase wheelBase)
-    {
+    {      
         wheelBase.WheelSpawned += SetWheel;
         wheelBase.WheelDestroied += RemoveWheel;
         wheelBase.Destroied += OnBaseDestroied; // destroyObject method avalible
@@ -107,7 +108,6 @@ public class CarDriver : MonoBehaviour
 
     private void SetWheel(IWheel wheel)
     {
-
         wheel.Activate(_carBody);
 
         if (wheel is DrivingWheel)

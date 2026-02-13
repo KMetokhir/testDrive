@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class UpgradePartSpawner : MonoBehaviour
 {   
+    [SerializeField] private Transform _spawnPosition;
     [SerializeField] private Transform _parent;
 
     public virtual  UpgradePart LastSpawnedPart { get; private set; }
@@ -10,8 +11,8 @@ public abstract class UpgradePartSpawner : MonoBehaviour
     {
         if (IsSpawnPossible(part))
         {
-            part.transform.position = _parent.TransformPoint(part.SpawnPosition);
-            part.transform.rotation = _parent.transform.rotation;
+            part.transform.position = _spawnPosition.TransformPoint(part.SpawnPosition);
+            part.transform.rotation = _spawnPosition.transform.rotation;
             part.transform.parent = _parent;
 
             LastSpawnedPart = part;

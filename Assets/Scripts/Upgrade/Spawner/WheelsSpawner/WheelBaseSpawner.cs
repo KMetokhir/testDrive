@@ -1,4 +1,4 @@
-public class WheelBaseSpawner : ObservablePartSpawner<WheelBase>
+public class WheelBaseSpawner : GenericObservableSpawner<WheelBase>
 {
    
 }

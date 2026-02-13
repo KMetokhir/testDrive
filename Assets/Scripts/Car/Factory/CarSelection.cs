@@ -42,6 +42,7 @@ public class CarSelection : MonoBehaviour
 
         // Create new car
         _carConteiner = _carFactory.CreateCar();
+        _carConteiner.transform.parent = null;
         Debug.Log($"Spawned car: {_carConteiner.name}");
     }
 

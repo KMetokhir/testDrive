@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58613b7bed580aa458ba9bc082796a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPosition: {fileID: 2071474889106936130}
   _parent: {fileID: 2071474889106936130}
 --- !u!1 &2924319027635410616
 GameObject:
@@ -89,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3a6badb75ff844eb216d6fc4be1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPosition: {fileID: 263134970104918957}
   _parent: {fileID: 263134970104918957}
 --- !u!1 &4538723801654801537
 GameObject:
@@ -141,7 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aac85e3c89335343b4dc22b81d4b0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 0}
+  _spawnPosition: {fileID: 7911550344947824636}
+  _parent: {fileID: 7911550344947824636}
   _wheelSpawners:
   - {fileID: 8585129358916854752}
 --- !u!114 &2131384321180873446
@@ -156,7 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5496637a9f32cfa4298950945e728965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 0}
+  _spawnPosition: {fileID: 7911550344947824636}
+  _parent: {fileID: 7911550344947824636}
   _wheelSpawners:
   - {fileID: 283567436356239659}
 --- !u!114 &3940836406512695771
@@ -173,10 +177,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnLocalPosition: {x: 0, y: -2, z: 0}
   _count: 1
-  _wheelPrefabs:
-  - {fileID: 9205643665690870874, guid: 763f306f6a194eb45b055faf2d266592, type: 3}
-  - {fileID: 4344676969812587729, guid: 621e35b974e588f4897089b87865d7ea, type: 3}
-  - {fileID: -4153677366387139974, guid: 1e8e84b39390022409bd92668eb43f7d, type: 3}
 --- !u!114 &3179665229125497421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,10 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d771f2bb87db94b4d897aa8117e14366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 0}
+  _spawnPosition: {fileID: 7911550344947824636}
+  _parent: {fileID: 7911550344947824636}
   _wheelSpawners:
-  - {fileID: 6615766380262643954}
   - {fileID: 5208396643045939751}
+  - {fileID: 6615766380262643954}
 --- !u!1 &5199691280105790040
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3b611a03592c9429382123904e5380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPosition: {fileID: 6889438356746993823}
   _parent: {fileID: 6889438356746993823}
 --- !u!1 &6188598227651848522
 GameObject:
@@ -282,4 +284,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58613b7bed580aa458ba9bc082796a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPosition: {fileID: 524178863218013849}
   _parent: {fileID: 524178863218013849}

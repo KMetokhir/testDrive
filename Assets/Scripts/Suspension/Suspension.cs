@@ -1,4 +1,5 @@
 //using System;
+using System;
 using System.Collections;
 using UniRx;
 using UnityEngine;
@@ -12,10 +13,10 @@ public class Suspension : MonoBehaviour
     [SerializeField] private float _springDamping = 100f;
     [SerializeField] private float _springDistance = 0.3f;
 
-    [Inject]
+   // [Inject]
     private ICarBody _carBody;
 
-    private Rigidbody _carBodyRB; // tmp same as iCARbODY
+   // private Rigidbody _carBodyRB; // tmp same as iCARbODY
 
     private Rigidbody _wheelRb;
     private ConfigurableJoint _joint;
@@ -33,15 +34,21 @@ public class Suspension : MonoBehaviour
             _carBody = carBody;
             _wheelRb = wheelRb;
 
-            _carBodyRB = carBody.Rigidbody;
+           // _carBodyRB = carBody.Rigidbody; 
 
             CreateJoint();
 
             MessageBroker.Default
-            .Receive<CarSpawned>()
-            .Where(msg => msg.CarRigidbody == _carBodyRB)
-            .Subscribe(_ => OnCarSpawned())
-            .AddTo(this);
+           .Receive<CarStartSpawn>()
+           .Subscribe(msg =>
+           OnCarStartSpawn(msg.CarRigidbody))
+           .AddTo(this);
+
+            MessageBroker.Default
+              .Receive<CarEndSpawn>()
+              .Subscribe(msg =>
+              OnCarSpawned(msg.CarRigidbody))
+              .AddTo(this);
         }
         else
         {
@@ -49,19 +56,24 @@ public class Suspension : MonoBehaviour
         }
     }
 
-    private void OnCarSpawned()
-    {
-        StartCoroutine(EnableJointSafely());
-    }
-
-    private IEnumerator EnableJointSafely()
+    private void OnCarStartSpawn(Rigidbody carRigidbody)
     {
         DeactivateJoint();
+    }
+
+    private void OnCarSpawned(Rigidbody carRigidbody)
+    {
+        ActivateJoint();
+    }
+
+   /* private IEnumerator EnableJointSafely()
+    {
+        
 
         yield return new WaitForFixedUpdate();
 
-        ActivateJoint();       
-    }
+      
+    }*/
 
     private void CreateJoint()
     {

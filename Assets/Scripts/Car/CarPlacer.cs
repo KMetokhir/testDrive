@@ -1,14 +1,16 @@
 using System;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 using static UnityEditor.Progress;
-using UniRx;
 
 public class CarPlacer : MonoBehaviour
 {
     [SerializeField] private SceneLoadHandler _sceneLoadHandler; // added in CarPrefab but it allready excicts in AtrractablesSpaen System prefab use zenject
     [SerializeField] private float _yOffset;
+  //  [SerializeField] private CarCompositDestroier _carDestroier;
 
     private const string PositionKeyPrefix = "CarPosition";
     private const string RotationKeyPrefix = "CarRotation";
@@ -30,6 +32,7 @@ public class CarPlacer : MonoBehaviour
     private void OnEnable()
     {
         _sceneLoadHandler.SceneLoaded += OnSceneLoaded;
+        _sceneLoadHandler.SceneUnloaded += SavePosition;
     }
 
     private void OnSceneLoaded()
@@ -42,7 +45,8 @@ public class CarPlacer : MonoBehaviour
         SavePosition();
 
         _sceneLoadHandler.SceneLoaded -= OnSceneLoaded;
-    }
+        _sceneLoadHandler.SceneUnloaded -= SavePosition;
+    }    
 
     private string GenerateKey(string sceneName, string keyPrefix)
     {
@@ -53,6 +57,8 @@ public class CarPlacer : MonoBehaviour
 
     private void SetPosition()
     {
+        //Debug.LogError("Load position");
+
         string positionKey = GenerateKey(_sceneLoadHandler.SceneName, PositionKeyPrefix);
         string rotationKey = GenerateKey(_sceneLoadHandler.SceneName, RotationKeyPrefix);
 
@@ -62,6 +68,11 @@ public class CarPlacer : MonoBehaviour
 
         Vector3 eulerRotation = PlayerPrefsManager.GetVector3(rotationKey, _defaultRotation.eulerAngles);
         Quaternion startRotation = Quaternion.Euler(new Vector3(0, eulerRotation.y, 0));
+
+        MessageBroker.Default.Publish(new CarStartSpawn
+        {
+            CarRigidbody = _rigidbody
+        });
 
         _rigidbody.isKinematic = true;
 
@@ -82,10 +93,17 @@ public class CarPlacer : MonoBehaviour
                });
            })
            .AddTo(this);
+
+        MessageBroker.Default.Publish(new CarEndSpawn
+        {
+            CarRigidbody = _rigidbody
+        });
     }
 
     private void SavePosition()
     {
+      //  Debug.LogError("Save position");
+
         PlayerPrefsManager.SaveVector3(GenerateKey(_sceneLoadHandler.SceneName, PositionKeyPrefix), _rigidbody.transform.position);
         PlayerPrefsManager.SaveVector3(GenerateKey(_sceneLoadHandler.SceneName, RotationKeyPrefix), _rigidbody.transform.rotation.eulerAngles);
     }

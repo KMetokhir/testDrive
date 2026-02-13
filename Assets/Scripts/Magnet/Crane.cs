@@ -1,79 +1,90 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
 public class Crane : CompositePart
 {
-    [SerializeField] private MagnetSpawner _spawner;
-   // [SerializeField] private Magnet _magnet;
+    [SerializeField] private MagnetSpawner _spawner;   
     [SerializeField] private Rope _rope;
     [SerializeField] private Rigidbody _rigidbody;
-    // [SerializeField] private FixedJoint _joint;
 
-
-    private Magnet _magnetUpgrade; // magnetUpgrade not magnet
+    [SerializeField]  private Magnet _magnet; // magnetUpgrade not magnet
 
     public Rigidbody Rigidbody => _rigidbody;
 
     public event Action<Magnet> MagnetSpawned;
     public event Action<Magnet> MagnetDestroied;
 
+    
     private void Start()
     {
         _spawner = GetComponentInChildren<MagnetSpawner>();
 
+        /*  MessageBroker.Default
+          .Receive<CarSpawned>()        
+          .Subscribe(msg => OnCarSpawned(msg.CarRigidbody))
+          .AddTo(this);*/
 
         MessageBroker.Default
-        .Receive<CarSpawned>()        
-        .Subscribe(msg => OnCarSpawned(msg.CarRigidbody))
-        .AddTo(this);
+           .Receive<CarStartSpawn>()
+           .Subscribe(msg =>
+           OnCarStartSpawn(msg.CarRigidbody))
+           .AddTo(this);
+
+        MessageBroker.Default
+          .Receive<CarEndSpawn>()
+          .Subscribe(msg =>
+          OnCarSpawned(msg.CarRigidbody))
+          .AddTo(this);
 
     }
 
-    private void OnCarSpawned(Rigidbody carRigidbody)   
-    {       
-
-        StartCoroutine(EnableJointSafely(carRigidbody));       
-    }
-
-    private IEnumerator EnableJointSafely(Rigidbody carBody)
-    {
-
-     
-        transform.parent = carBody.transform;
-        _magnetUpgrade.transform.parent = carBody.transform;
-
-        yield return new WaitForFixedUpdate();
-
+    private void  OnCarSpawned(Rigidbody carRigidbody)
+    {   
+       /* _magnet.transform.parent = null;
         transform.parent = null;
-        _magnetUpgrade.transform.parent = null;
-       
+        _rope.ConnectTarget(_magnet.GetComponent<Rigidbody>());*/
     }
+
+
+    private void  OnCarStartSpawn(Rigidbody carRigidbody)
+    {  
+       /* _magnet.transform.parent = carRigidbody.transform; // Maybe hav to create new joint if needded
+        _rope.ConnectTarget(null);
+        transform.parent = carRigidbody.transform;*/
+    }
+
 
 
     private void OnEnable()
     {
-        _spawner.TypedPartSpawned += OnMagnetSpawned;
+        _spawner.PartSpawned += OnMagnetSpawned;
     }
 
     private void OnDisable()
     {
         if (_spawner != null) // tmp
         {
-            _spawner.TypedPartSpawned -= OnMagnetSpawned;
+            _spawner.PartSpawned -= OnMagnetSpawned;
         }
     }
 
     private void OnMagnetSpawned(Magnet magnet)
     {
+
+        // _spawner.SetParent(transform.parent);
+
+      //  magnet.transform.parent = transform.parent;
         Debug.Log("MagnetSpawned");
+
         _rope.ConnectTarget(magnet.GetComponent<Rigidbody>());
 
         MagnetSpawned?.Invoke(magnet);
-        _magnetUpgrade = magnet;
-        _magnetUpgrade.Destroied += OnMagnetDestoied;
+        _magnet = magnet;
+        _magnet.Destroied += OnMagnetDestoied;
     }
 
     public override List<UpgradePartSpawner> GetSpawners()
@@ -90,8 +101,8 @@ public class Crane : CompositePart
 
     protected override void DestroyDependentParts()
     {
-        _magnetUpgrade.Destroied -= OnMagnetDestoied;
-        _magnetUpgrade.DestroyObject();
+        _magnet.Destroied -= OnMagnetDestoied;
+        _magnet.DestroyObject();
 
     }
 
@@ -102,8 +113,8 @@ public class Crane : CompositePart
 
         if (magnet != null)
         {
-            _magnetUpgrade.Destroied -= OnMagnetDestoied;
-            _magnetUpgrade = null;
+            _magnet.Destroied -= OnMagnetDestoied;
+            _magnet = null;
             MagnetDestroied?.Invoke(magnet);
         }
         else

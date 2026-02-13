@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class WheelBase : CompositePart
 {
-
-    [SerializeField] private List<WheelsUpgradeSpawner> _spawners;
+    [SerializeField] private List<IWheelSpawnersContainer> _spawners;
+    //[SerializeField] private List<WheelsSpanwersContainer> _spawners;
    // [SerializeField] private List<WheelUpgradePart> _wheelPrefabs;
 
     private List<WheelUpgradePart> _dependentUpgradeParts;
@@ -18,14 +18,17 @@ public class WheelBase : CompositePart
 
     private void Awake()
     {
-        _spawners = GetComponents<WheelsUpgradeSpawner>().ToList();
+        _spawners = GetComponents<IWheelSpawnersContainer>().ToList();
         _dependentUpgradeParts = new List<WheelUpgradePart>();
 
         foreach (var spawner in _spawners)
-        {
-            spawner.WheelSpawned += OnWheelSpawned;
+        {          
+            spawner.PartSpawned += OnWheelSpawned;
         }
     }
+
+    
+
     private void Start()
     {
         
@@ -66,7 +69,16 @@ public class WheelBase : CompositePart
 
         foreach (var spawner in _spawners)
         {
-            spawners.Add(spawner);
+            UpgradePartSpawner upgradePartSpawner = spawner as UpgradePartSpawner;
+
+            if (upgradePartSpawner != null)
+            {
+                spawners.Add(upgradePartSpawner);
+            }
+            else
+            {
+                throw new Exception($"Spawner {spawner} as UpgradePartSpawner == null");
+            }
         }
 
         return spawners;
@@ -105,6 +117,8 @@ public class WheelBase : CompositePart
 
     private void OnWheelSpawned(WheelUpgradePart part)
     {
+        part.transform.parent = transform.root;
+        
         _dependentUpgradeParts.Add(part);
 
         part.Destroied += OnWheelUpgradeDestroied;

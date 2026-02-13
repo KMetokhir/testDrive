@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnesesary
-   where T : WheelUpgradePart
-    where M : WheelUpgradeSpawner<T>
+public class GenericSpawnersContainer<T, M> : GenericObservableSpawner<T>
+   where T : UpgradePart
+    where M : GenericUpgradeSpawner<T>
 {
-    [SerializeField] private List<M> _wheelSpawners;
+    [SerializeField] private  List<M> _wheelSpawners;
 
     private M _currentSpawner;
 
     public override UpgradePart LastSpawnedPart => _currentSpawner.LastSpawnedPart;
 
-    public override event Action<WheelUpgradePart> WheelSpawned;
+    public override event Action<T> PartSpawned;
 
     private void OnValidate()
     {
@@ -40,8 +40,8 @@ public class GenericWheelsUpgradeSpawner<T, M> : WheelsUpgradeSpawner // T unnes
             {
                 throw new System.Exception("Wheel spawners not enough");
             }
-
-            WheelSpawned?.Invoke(part as T);
+            
+            PartSpawned?.Invoke(part as T);
         }       
 
         _currentSpawner = GetNextSpawner();

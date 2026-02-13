@@ -12,6 +12,8 @@ public class CarCompositDestroier : MonoBehaviour
 
     private List<ObservableUpgradePart> _parts;
 
+    public event Action CarDestroied;
+
     private void Awake()
     {
         //spawnerd = GetComponentsInChildren<ObservablePartSpawner<WheelBase>>().ToList();
@@ -67,17 +69,8 @@ public class CarCompositDestroier : MonoBehaviour
             part.DestroyObject();
         }
 
-        if (gameObject != null)
-        {
-            Destroy(gameObject);
-        }
-    }
-    /*private void OnDestroy()
-    {
-        foreach(var part in _parts)
-        {
-            part.Destroied -= RemovePartFromList;
-            part.DestroyObject();
-        }
-    }*/
+        CarDestroied?.Invoke();
+
+         Destroy(gameObject);        
+    }    
 }

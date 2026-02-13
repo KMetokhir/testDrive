@@ -9,7 +9,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
     [SerializeField] private Trunk _trunk;
     [SerializeField] private Money _money;
 
-    [SerializeField] private FixedJoint _joint;
+    //[SerializeField] private FixedJoint _joint; убрать перенести на кран
 
     [SerializeField] private CraneSpawner _craneSpawner;
 
@@ -27,12 +27,12 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _craneSpawner.TypedPartSpawned += OnCraneSpawned;
+        _craneSpawner.PartSpawned += OnCraneSpawned;
     }
 
     private void OnCraneSpawned(Crane crane)
     {
-        _joint.connectedBody = crane.Rigidbody; // tmp
+      //  _joint.connectedBody = crane.Rigidbody; // tmp
 
         SubscribeToCrane(crane);
     }
