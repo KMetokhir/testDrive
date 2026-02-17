@@ -25,43 +25,9 @@ public class WheelBase : CompositePart
         {          
             spawner.PartSpawned += OnWheelSpawned;
         }
-    }
+    }    
 
-    
-
-    private void Start()
-    {
-        
-
-        /*WheelBase basew = this;
-
-        UpgradePart part = basew as UpgradePart;
-
-        part.DestroyObject();*/
-
-        /*foreach (WheelUpgradePart wheelPrefab in _wheelPrefabs)
-    {
-        for (int i = 0; i < wheelPrefab.Count; i++)
-        {
-            WheelUpgradePart upgrade = Instantiate(wheelPrefab);
-
-            foreach (var spawner in _spawners)
-            {
-                spawner.WheelSpawned += OnWheelSpawned;
-
-                if (spawner.TrySpawn(upgrade))
-                {
-
-                    _dependentUpgradeParts.Add(upgrade);
-
-                    upgrade.Destroied += OnWheelUpgradeDestroied;
-
-                    break;
-                }
-            }
-        }
-    }        */
-    }
+   
 
     public override List<UpgradePartSpawner> GetSpawners()
     {
@@ -85,7 +51,9 @@ public class WheelBase : CompositePart
     }
 
     protected override void DestroyDependentParts()/// invoke that wheel destroid
-    { 
+    {
+        
+
         foreach (var part in _dependentUpgradeParts)
         {
             part.Destroied -= OnWheelUpgradeDestroied;
@@ -124,7 +92,6 @@ public class WheelBase : CompositePart
         part.Destroied += OnWheelUpgradeDestroied;
 
         WheelSpawned?.Invoke(part.Wheel);
-
       
     }
 }

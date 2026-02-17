@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8486415058944201345}
-  - component: {fileID: 5900552638214796398}
   - component: {fileID: 6491740023543470213}
+  - component: {fileID: 6204862559081278492}
   m_Layer: 0
   m_Name: CraneSystem
   m_TagString: Untagged
@@ -33,7 +33,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6388499950769235419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5900552638214796398
+--- !u!114 &6491740023543470213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573573468328345794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fe5cc02fc83484d946d14801d948cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _carRb: {fileID: 4081951971108951258}
+  _spawner: {fileID: 7939075979764286457}
+--- !u!114 &6204862559081278492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,21 +59,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4dff13750c2314fbbf2cfa3857a3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6491740023543470213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 573573468328345794}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82fe5cc02fc83484d946d14801d948cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _carRb: {fileID: 4081951971108951258}
-  _spawner: {fileID: 7939075979764286457}
-  _craneJoint: {fileID: 0}
 --- !u!1 &2792060018726625395
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,6 +77,7 @@ GameObject:
   - component: {fileID: -2829895552115497181}
   - component: {fileID: 878905240026034215}
   - component: {fileID: 6501294690196684585}
+  - component: {fileID: 3108509199173479672}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -228,6 +228,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc961042a35a1034ab05991ea6bf041a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3108509199173479672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2792060018726625395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863002c2ea9c77646ae23d206b599a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLoadHandler: {fileID: 426639792433533329}
+  _yOffset: 0.5
+  _rigidbody: {fileID: 4081951971108951258}
 --- !u!1 &3081590145264812773
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +635,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7514963652073123417}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f382ad698b5455a4b9677c10e045f36c, type: 3}
   m_Name: 
@@ -692,7 +707,6 @@ GameObject:
   - component: {fileID: 1819564603378850088}
   - component: {fileID: 4379915390209025701}
   - component: {fileID: 7625726672653032970}
-  - component: {fileID: 6280666645575941663}
   - component: {fileID: 426639792433533329}
   m_Layer: 0
   m_Name: carBody
@@ -840,20 +854,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPosition: {fileID: 2365791277606744616}
   _parent: {fileID: 2365791277606744616}
---- !u!114 &6280666645575941663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9133296035443208221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 863002c2ea9c77646ae23d206b599a4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sceneLoadHandler: {fileID: 426639792433533329}
-  _yOffset: 0.5
 --- !u!114 &426639792433533329
 MonoBehaviour:
   m_ObjectHideFlags: 0

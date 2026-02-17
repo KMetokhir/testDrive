@@ -202,8 +202,8 @@ FixedJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 0.00001
-  m_ConnectedMassScale: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 0.00001
 --- !u!1 &5290781447003528973
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +254,6 @@ MonoBehaviour:
   _count: 1
   _spawner: {fileID: 5959430287025207613}
   _rope: {fileID: 7641672141713292482}
-  _rigidbody: {fileID: 7897042712831527373}
   _magnet: {fileID: 0}
 --- !u!1 &7935526117192376614
 GameObject:

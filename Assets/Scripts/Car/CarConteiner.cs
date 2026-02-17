@@ -6,7 +6,7 @@ using Zenject;
 public class CarConteiner : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private CarCompositDestroier _carDestroier;   
+    [SerializeField] private CarDestroyer _carDestroier;   
  
     public void Destroy()
     {       

@@ -10,7 +10,7 @@ public class CarProjectlInstaller : MonoInstaller
         SignalBusInstaller.Install(Container);
         Container.DeclareSignal<CarSpawnedSignal>();
 
-        Container.Bind<ILevel>().FromComponentInParents().AsSingle();
+        Container.Bind<ILevel>().FromComponentInParents().AsSingle();      
 
         Container.Bind<CarConteiner>().FromInstance(_carPrefab)
             .WhenInjectedInto<RuntimeCarFactory>();

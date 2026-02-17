@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 7150909276193586267}
   - component: {fileID: 5305217344773296154}
   - component: {fileID: 9205643665690870874}
+  - component: {fileID: 7486154431395600978}
   m_Layer: 8
   m_Name: DrivingWheel 3LVLTEST
   m_TagString: Untagged
@@ -282,6 +283,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnLocalPosition: {x: 0, y: 0, z: 0}
   _count: 1
+--- !u!114 &7486154431395600978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818158545780327788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4dff13750c2314fbbf2cfa3857a3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6354502088598263332
 GameObject:
   m_ObjectHideFlags: 0

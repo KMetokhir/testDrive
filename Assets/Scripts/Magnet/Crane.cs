@@ -7,20 +7,27 @@ using UnityEngine;
 
 public class Crane : CompositePart
 {
-    [SerializeField] private MagnetSpawner _spawner;   
+    [SerializeField] private MagnetSpawner _spawner;
     [SerializeField] private Rope _rope;
-    [SerializeField] private Rigidbody _rigidbody;
+   // [SerializeField] private Rigidbody _rigidbody;
 
-    [SerializeField]  private Magnet _magnet; // magnetUpgrade not magnet
+    [SerializeField] private Magnet _magnet; // magnetUpgrade not magnet
 
-    public Rigidbody Rigidbody => _rigidbody;
+    private FixedJoint _fixedJoint;
+
+  //  public Rigidbody Rigidbody => _rigidbody;
 
     public event Action<Magnet> MagnetSpawned;
     public event Action<Magnet> MagnetDestroied;
 
-    
+    private void Awake()
+    {
+        _fixedJoint = GetComponentInChildren<FixedJoint>();
+    }
+
     private void Start()
     {
+       
         _spawner = GetComponentInChildren<MagnetSpawner>();
 
         /*  MessageBroker.Default
@@ -28,7 +35,7 @@ public class Crane : CompositePart
           .Subscribe(msg => OnCarSpawned(msg.CarRigidbody))
           .AddTo(this);*/
 
-        MessageBroker.Default
+       /* MessageBroker.Default
            .Receive<CarStartSpawn>()
            .Subscribe(msg =>
            OnCarStartSpawn(msg.CarRigidbody))
@@ -38,24 +45,55 @@ public class Crane : CompositePart
           .Receive<CarEndSpawn>()
           .Subscribe(msg =>
           OnCarSpawned(msg.CarRigidbody))
-          .AddTo(this);
+          .AddTo(this);*/
 
     }
 
-    private void  OnCarSpawned(Rigidbody carRigidbody)
-    {   
-       /* _magnet.transform.parent = null;
-        transform.parent = null;
-        _rope.ConnectTarget(_magnet.GetComponent<Rigidbody>());*/
+    public void ConnectToBody(Rigidbody rigidbody)
+    {
+        if (_fixedJoint == null)
+        {
+            Debug.LogError("JOINT == null");
+
+        }
+        else
+        {
+            _fixedJoint.connectedBody = rigidbody;
+        }
+    }
+
+   /* private void OnCarSpawned(Rigidbody carRigidbody)
+    {
+        *//* _magnet.transform.parent = null;
+         transform.parent = null;
+         _rope.ConnectTarget(_magnet.GetComponent<Rigidbody>());*/
+
+       /* Rigidbody rb = _magnet.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+       Rigidbody ropeRb = rb.GetComponent<Rigidbody>();
+        ropeRb.isKinematic = false;
+        ropeRb.velocity = Vector3.zero;
+        ropeRb.angularVelocity = Vector3.zero;*//*
     }
 
 
-    private void  OnCarStartSpawn(Rigidbody carRigidbody)
-    {  
-       /* _magnet.transform.parent = carRigidbody.transform; // Maybe hav to create new joint if needded
-        _rope.ConnectTarget(null);
-        transform.parent = carRigidbody.transform;*/
-    }
+    private void OnCarStartSpawn(Rigidbody carRigidbody)
+    {
+        *//* _magnet.transform.parent = carRigidbody.transform; // Maybe hav to create new joint if needded
+         _rope.ConnectTarget(null);
+         transform.parent = carRigidbody.transform;*//*
+
+        // _rope.Disconnect();
+
+       *//* Rigidbody rb = _magnet.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        Rigidbody ropeRb = rb.GetComponent<Rigidbody>();
+      ropeRb.isKinematic = true;*//*
+    }*/
 
 
 
@@ -77,7 +115,7 @@ public class Crane : CompositePart
 
         // _spawner.SetParent(transform.parent);
 
-      //  magnet.transform.parent = transform.parent;
+        //  magnet.transform.parent = transform.parent;
         Debug.Log("MagnetSpawned");
 
         _rope.ConnectTarget(magnet.GetComponent<Rigidbody>());
