@@ -2,7 +2,7 @@ using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public abstract class GenericObservableSpawner<T> : GenericUpgradeSpawner<T>//, IObservablePartSpawner
+public abstract class GenericObservableSpawner<T> : GenericUpgradeSpawner<T>
      where T : class, IUpgradePart
 {
     public virtual event Action<T> PartSpawned;

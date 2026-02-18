@@ -355,7 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mover: {fileID: 4860444139372580226}
   _rotationSpeedModifier: 20
-  _rotator: {fileID: 8480581648290730643}
+  _rotator: {fileID: 2969056003060024092}
 --- !u!1 &7382569049528641085
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5412910201694947385}
-  - component: {fileID: 8480581648290730643}
+  - component: {fileID: 2969056003060024092}
   m_Layer: 8
   m_Name: Sterring
   m_TagString: Untagged
@@ -389,7 +389,7 @@ Transform:
   - {fileID: 4275141459089205594}
   m_Father: {fileID: 5969051674974939142}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8480581648290730643
+--- !u!114 &2969056003060024092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7382569049528641085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb47a4e729f914459e38194490ad044, type: 3}
+  m_Script: {fileID: 11500000, guid: dd989126e50463e469b4ebc22cc0123f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7839085628606403720

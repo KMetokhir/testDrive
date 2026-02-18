@@ -6,54 +6,21 @@ using Zenject;
 
 public class AttractableSpawnerProjectInstaller : MonoInstaller
 {
-    /* [Header("Persistent Object Settings")]
-     [SerializeField] private string persistentObjectName = "GlobalPersistentObject";
-     [SerializeField] private bool debugLogs = true;*/
-
     [SerializeField] AttractablesSpawner spawnerPrefab;
 
     public override void InstallBindings()
     {
-        AttractablesSpawner spawnerGO = Instantiate(spawnerPrefab); // add id _spawnerGo is null in head
+        AttractablesSpawner spawnerGO = Instantiate(spawnerPrefab);
+        SceneLoadHandler sceneLoadHandler = spawnerGO.GetComponentInChildren<SceneLoadHandler>();
 
-
-        /*Container.BindInterfacesAndSelfTo<AttractablesSpawner>()
-           .FromComponentInNewPrefab(spawnerGO)
-           .AsSingle()
-           .NonLazy();*/
+        Container.Bind<SceneLoadHandler>()
+            .FromInstance(sceneLoadHandler)
+            .AsSingle()
+            .NonLazy();
 
         Container.Bind<AttractablesSpawner>()
            .FromInstance(spawnerGO)
-           .AsSingle()          // Only one instance ever
-           .NonLazy();
-
-        /*if (debugLogs)
-            Debug.Log("[ProjectContext] Installing PersistentObject...");
-
-        // Create the PersistentObject GameObject
-        GameObject persistentGO = new GameObject(persistentObjectName);
-
-        // Add the PersistentObject component
-        PersistentObject persistentObject = persistentGO.AddComponent<PersistentObject>();
-
-        // Configure it (optional)
-        persistentObject.Initialize("Global_Instance");
-
-        // Mark as DontDestroyOnLoad
-        DontDestroyOnLoad(persistentGO);
-
-        // BIND IT GLOBALLY - This is the key!
-        Container.Bind<PersistentObject>()
-            .FromInstance(persistentObject)
-            .AsSingle()          // Only one instance ever
-            .NonLazy();          // Create immediately
-
-        // Also bind as interfaces if needed
-        Container.BindInterfacesTo<PersistentObject>()
-            .FromInstance(persistentObject)
-            .AsSingle();
-
-        if (debugLogs)
-            Debug.Log($"[ProjectContext] PersistentObject '{persistentObjectName}' created and bound globally");*/
+           .AsSingle()          
+           .NonLazy();     
     }
 }

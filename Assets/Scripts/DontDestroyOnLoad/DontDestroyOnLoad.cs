@@ -7,7 +7,7 @@ public class DontDestroyOnLoad : MonoBehaviour
     
     private void Awake()
     {
-      //  PlayerPrefs.DeleteAll();
+      PlayerPrefs.DeleteAll();
      
         DontDestroyOnLoad(this.gameObject);       
     }

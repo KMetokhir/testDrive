@@ -4,7 +4,7 @@ public class WheelView : MonoBehaviour
 {
     [SerializeField] private WheelViewMover _mover;
     [SerializeField] private float _rotationSpeedModifier;
-    [SerializeField] private ViewRotator _rotator;
+    [SerializeField] private WheeelViewSteering _rotator;
 
     private Vector3 rightDirection;
 
