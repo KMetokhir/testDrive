@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
+public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
 {
     [SerializeField] private AttractableConfig _config;
     [SerializeField] private  AttractableView _view;

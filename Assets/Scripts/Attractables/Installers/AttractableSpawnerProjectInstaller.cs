@@ -6,11 +6,11 @@ using Zenject;
 
 public class AttractableSpawnerProjectInstaller : MonoInstaller
 {
-    [SerializeField] AttractablesSpawner spawnerPrefab;
+    [SerializeField] AttractablesSpawner<Screw> spawnerPrefab;
 
     public override void InstallBindings()
     {
-        AttractablesSpawner spawnerGO = Instantiate(spawnerPrefab);
+        AttractablesSpawner<Screw> spawnerGO = Instantiate(spawnerPrefab);
         SceneLoadHandler sceneLoadHandler = spawnerGO.GetComponentInChildren<SceneLoadHandler>();
 
         Container.Bind<SceneLoadHandler>()
@@ -18,7 +18,7 @@ public class AttractableSpawnerProjectInstaller : MonoInstaller
             .AsSingle()
             .NonLazy();
 
-        Container.Bind<AttractablesSpawner>()
+        Container.Bind<AttractablesSpawner<Screw>>()
            .FromInstance(spawnerGO)
            .AsSingle()          
            .NonLazy();     

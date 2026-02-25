@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 694967185495059645}
   - component: {fileID: 5835894698702575974}
   - component: {fileID: 6909586755352321614}
-  - component: {fileID: 5949160558945019051}
+  - component: {fileID: 5158206680809693188}
   - component: {fileID: 7634368260710296684}
   m_Layer: 9
   m_Name: ScrewPrefab
@@ -107,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5949160558945019051
+--- !u!114 &5158206680809693188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5707730936648144068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 813de7efdc68eee4199b1203850853e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f0154f09616ab47ab7677f7631e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 6c9e7b575447000419a8179bcfba0f60, type: 2}

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class SpawnerHandler : MonoBehaviour
+public class SpawnerHandler<T> : MonoBehaviour
+    where T : Attractable
 {
     [SerializeField] private List<QuadSpawnArea> _quadSpawnArias;
     [SerializeField] private int _rowsPerQuad;
     [SerializeField] private int _columnsPerQuad;
 
     [Inject]
-    [SerializeField] private AttractablesSpawner _spawner;
+    [SerializeField] private AttractablesSpawner<T> _spawner;
 
     private void Start()
     {

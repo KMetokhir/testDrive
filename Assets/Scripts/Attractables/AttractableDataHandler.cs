@@ -141,22 +141,7 @@ public class AttractableDataHandler : MonoBehaviour
         char divider = '_';
 
         return sceneName + divider + id;
-    }
-
-    /* private string GetObjectId(string dataId)
-     {
-         char divider = '_';
-         int objectIdIndex = 1;
-
-         string[] parts = dataId.Split(divider);
-
-         if (parts.Length != 2)
-         {
-             throw new Exception($"incorrect data Id  {dataId}");
-         }
-
-         return parts[objectIdIndex];
-     }*/
+    }   
 }
 
 [System.Serializable]
@@ -187,12 +172,8 @@ public class AttractableData
     public AttractableData(string savedString)
     {
         try
-        {
-            // Debug.Log(savedString);
-
-            string[] parts = savedString.Split('|');
-
-            //Debug.Log(parts[0]);
+        {   
+            string[] parts = savedString.Split('|');            
 
             if (parts.Length >= 4)
             {
@@ -203,8 +184,7 @@ public class AttractableData
                     float.Parse(position[0]),
                     float.Parse(position[1]),
                     float.Parse(position[2])
-                );
-                // Debug.Log($"{position[0]} {position[1]} {position[2]}");
+                );            
 
                 if (Enum.TryParse(parts[2], out AttractablesType type))
                 {

@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
 
-public class AttractablesSpawner : MonoBehaviour
+public class AttractablesSpawner<T> : MonoBehaviour
+    where T : Attractable
 {   
     [SerializeField] private AttractableDataHandler _dataHandler;
-    [SerializeField] private AttractableGenerator<Attractable> _generator;
+    [SerializeField] private AttractableGenerator<T> _generator;
     [SerializeField] private float _yOffSet;
 
     private int _rowsPerQuad;
@@ -18,7 +19,7 @@ public class AttractablesSpawner : MonoBehaviour
     private string _currentSceneName => SceneManager.GetActiveScene().name; // use sceneload handler
  
 
-    public event Action<Attractable> AttractableSpawned;   
+    public event Action<T> AttractableSpawned;   
 
 
     public void Spawn(AttractablesType type, List<QuadSpawnArea> _quadSpawnArias, int rows, int columns)
@@ -52,7 +53,7 @@ public class AttractablesSpawner : MonoBehaviour
 
     private void SpawnObject(Vector3 spawnPoint)
     {
-        Attractable attractable = _generator.Generate();
+        T attractable = _generator.Generate();
         attractable.transform.position = spawnPoint;
 
         _dataHandler.RegisterObject(attractable, _currentSceneName, _rowsPerQuad, _columnsPerQuad);
