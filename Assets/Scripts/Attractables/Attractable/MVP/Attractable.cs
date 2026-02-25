@@ -17,7 +17,7 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
     public uint Cost => _model.Cost;
     public uint Level => _model.Level;
     public string Id => _model.Id;
-    public AttractablesType Type => _model.Type;
+   // public AttractablesType Type => _model.Type;
 
     public event Action<Attractable> Deactivated;
     public event Action<Attractable> Collected;
@@ -26,10 +26,10 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
     {
         _model = new AttractableModel(_config);
 
-        if (_view.Type != _model.Type)
+        /*if (_view.Type != _model.Type)
         {
             throw new System.Exception($"model.Type {_model.Type} != view.Type {_view.Type}");
-        }
+        }*/
 
         MessageBroker.Default
             .Receive<LevelUp>()
@@ -81,6 +81,10 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         _model.Collect();
     }
 
+    public void Activate()
+    {
+        _model.Activate();
+    }
 
     public void Deactivate()
     {

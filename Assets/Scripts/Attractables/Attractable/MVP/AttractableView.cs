@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class AttractableView : MonoBehaviour
 {
-    [SerializeField] private AttractablesType _type;
+    private MeshRenderer _mesh;
 
-    public AttractablesType Type => _type;
+    private void Awake()
+    {
+        _mesh = GetComponent<MeshRenderer>();
+    }
 
     public void Activate()
     {
-        gameObject.SetActive(true);
+        _mesh.enabled = true;
     }
 
     public void Deactivate()
     {
-       // gameObject.SetActive(false);
+        _mesh.enabled = false;
     }
 
     public void BecameAvalible()

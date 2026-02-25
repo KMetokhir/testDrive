@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5641187422092565751}
   - component: {fileID: 2275130343729125132}
   - component: {fileID: 4830774999255845622}
+  - component: {fileID: 6372278465578066359}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 6372278465578066359}
   - {fileID: 5641187422092565751}
   - {fileID: 2275130343729125132}
   - {fileID: 4830774999255845622}
@@ -104,4 +106,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cb8902712cc8e46bb5754391ad39d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerPrefab: {fileID: 2061770930773459464, guid: 65b79ff119b04d94c96c2b89b772830c, type: 3}
+  _screwSpawnerPrefab: {fileID: 2061770930773459464, guid: 65b79ff119b04d94c96c2b89b772830c, type: 3}
+  _wrenchSpawnerPrefab: {fileID: 9179662055480408389, guid: 659991f4065a91c4d8be982f8d76e478, type: 3}
+--- !u!114 &6372278465578066359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220608358342158835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f09793097924c44993129144be2600b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLoadHandlerPrefab: {fileID: 858694201752769068, guid: 1608d17e1a7cb4f4cbaae6f37510ede9, type: 3}

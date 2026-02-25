@@ -6,21 +6,19 @@ using Zenject;
 
 public class AttractableSpawnerProjectInstaller : MonoInstaller
 {
-    [SerializeField] AttractablesSpawner<Screw> spawnerPrefab;
+    [SerializeField] AttractablesSpawner<Screw> _screwSpawnerPrefab;
+    [SerializeField] AttractablesSpawner<Wrench> _wrenchSpawnerPrefab;
 
     public override void InstallBindings()
     {
-        AttractablesSpawner<Screw> spawnerGO = Instantiate(spawnerPrefab);
-        SceneLoadHandler sceneLoadHandler = spawnerGO.GetComponentInChildren<SceneLoadHandler>();
-
-        Container.Bind<SceneLoadHandler>()
-            .FromInstance(sceneLoadHandler)
-            .AsSingle()
-            .NonLazy();
-
         Container.Bind<AttractablesSpawner<Screw>>()
-           .FromInstance(spawnerGO)
-           .AsSingle()          
-           .NonLazy();     
+    .FromComponentInNewPrefab(_screwSpawnerPrefab)
+    .AsSingle()
+    .NonLazy();
+
+        Container.Bind<AttractablesSpawner<Wrench>>()
+   .FromComponentInNewPrefab(_wrenchSpawnerPrefab)
+   .AsSingle()
+   .NonLazy();
     }
 }

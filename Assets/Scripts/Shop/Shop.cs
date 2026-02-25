@@ -19,6 +19,11 @@ public class Shop : MonoBehaviour
         if (seller!=null)
         {
             _objs = seller.Buy();
+
+            foreach (IAttractable obj in _objs)
+            {
+                obj.Collect();
+            }
         }
     }
 

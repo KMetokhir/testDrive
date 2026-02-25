@@ -1,10 +1,9 @@
 using UnityEngine;
 
 public interface IAttractable : ICollectable
+
 {
     public bool IsActive { get; }
-    public bool IsPossibleToCollect { get; }
-    public Transform Transform { get; }   
-
-    public void Deactivate();
+    public bool IsPossibleToCollect { get; }  
+   
 }

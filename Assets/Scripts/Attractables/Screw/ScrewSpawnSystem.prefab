@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5910252899124633915}
   - component: {fileID: 2022687397284906496}
-  - component: {fileID: 259009329441547283}
   - component: {fileID: 7293867014964588810}
   - component: {fileID: 6756179586954017719}
   m_Layer: 0
@@ -48,20 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pool: {fileID: 7293867014964588810}
-  _dataHandler: {fileID: 5295446399775766278}
-  _sceneLoadHanddler: {fileID: 259009329441547283}
---- !u!114 &259009329441547283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2163650566944061755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afaaa4416084c1044ac2cbfb902123f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _dataHandler: {fileID: 6303857309306832296}
+  _sceneLoadHanddler: {fileID: 0}
 --- !u!114 &7293867014964588810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3866859849902342056}
-  - component: {fileID: 5295446399775766278}
+  - component: {fileID: 6303857309306832296}
   - component: {fileID: 7321960892633073077}
   - component: {fileID: 2061770930773459464}
   m_Layer: 0
@@ -125,7 +112,7 @@ Transform:
   - {fileID: 554281325400955176}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5295446399775766278
+--- !u!114 &6303857309306832296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4338668662555065942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e227bb63e064c94ebcf1fdd74300565, type: 3}
+  m_Script: {fileID: 11500000, guid: d166dda47431be64ebb4ab9bc51e20b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7321960892633073077
@@ -161,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e205030afe13274dbdd1e3e51f01adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataHandler: {fileID: 5295446399775766278}
+  _dataHandler: {fileID: 6303857309306832296}
   _generator: {fileID: 6756179586954017719}
   _yOffSet: 10
 --- !u!1 &8298139890682834066

@@ -8,7 +8,7 @@ using Zenject;
 public class AttractablesSpawner<T> : MonoBehaviour
     where T : Attractable
 {   
-    [SerializeField] private AttractableDataHandler _dataHandler;
+    [SerializeField] private AttractableDataHandler<T> _dataHandler;
     [SerializeField] private AttractableGenerator<T> _generator;
     [SerializeField] private float _yOffSet;
 
@@ -27,7 +27,7 @@ public class AttractablesSpawner<T> : MonoBehaviour
         _rowsPerQuad = rows;
         _columnsPerQuad = columns;
 
-        List<Vector3> spawnPoints = _dataHandler.GetPositionsOnScene(_currentSceneName, type, _rowsPerQuad, _columnsPerQuad);
+        List<Vector3> spawnPoints = _dataHandler.GetPositionsOnScene(_currentSceneName,  _rowsPerQuad, _columnsPerQuad);
         _dataHandler.RemoveAllDataOnScene(_currentSceneName);
 
         if (spawnPoints.Count != 0)

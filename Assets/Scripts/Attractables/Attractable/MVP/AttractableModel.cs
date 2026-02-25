@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttractableModel
 {
     public string Id { get; }
-    public AttractablesType Type { get; }
+   // public AttractablesType Type { get; }
     public uint Weight { get; }
     public uint Cost { get; }
     public uint Level { get; }
@@ -23,7 +23,7 @@ public class AttractableModel
 
     public AttractableModel(AttractableConfig config)
     {
-        Type = config.Type;
+      //  Type = config.Type;
         Weight = config.Weight;
         Cost = config.Cost;
         Level = config.Level;
@@ -81,6 +81,6 @@ public class AttractableModel
     {
         string time = DateTime.Now.Ticks.ToString();
         string random = UnityEngine.Random.Range(1000, 9999).ToString();
-        return $"{Type}_{time}_{random}";
+        return $"{time}_{random}";
     }
 }

@@ -6,10 +6,12 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AttractableDataHandler : MonoBehaviour
+public class AttractableDataHandler<T> : MonoBehaviour
+    where T : Attractable
 {
-    private const string AllObjectsIdKey = "AllObjects";
     private const string ObjectKeyPrefix = "Object_";
+
+    private readonly string _allObjectsIdKey = "AllObjects" + typeof(T);
 
     //  private Dictionary<string, List<AttractableData>> _allScenesAttractables = new Dictionary<string, List<AttractableData>>(); // IattractableData to methods
 
@@ -18,11 +20,13 @@ public class AttractableDataHandler : MonoBehaviour
 
     private void Awake()
     {
+        // _allObjectsIdKey += typeof(T);
+        Debug.LogError($"All objects key  {_allObjectsIdKey}");
         //_allId.Clear();
         LoadAllObjects();
     }
 
-    public void RegisterObject(Attractable attractable, string sceneName, int rows, int columns)
+    public void RegisterObject(T attractable, string sceneName, int rows, int columns)
     {
         if (attractable == null)
             throw new System.Exception($"{nameof(attractable)}  is null");
@@ -38,7 +42,7 @@ public class AttractableDataHandler : MonoBehaviour
         else
         {
 
-            AttractableData data = new AttractableData(dataId, attractable.transform.position, attractable.Type, sceneName, rows, columns);
+            AttractableData data = new AttractableData(dataId, attractable.transform.position, sceneName, rows, columns);
             string key = $"{ObjectKeyPrefix}{dataId}";
             PlayerPrefs.SetString(key, data.ToString());
             PlayerPrefs.Save();
@@ -54,7 +58,7 @@ public class AttractableDataHandler : MonoBehaviour
     public void UpdateObjectList()
     {
         string allIdData = string.Join(",", _allId);
-        PlayerPrefs.SetString(AllObjectsIdKey, allIdData);
+        PlayerPrefs.SetString(_allObjectsIdKey, allIdData);
         PlayerPrefs.Save();
     }
 
@@ -91,11 +95,11 @@ public class AttractableDataHandler : MonoBehaviour
 
     }
 
-    public List<Vector3> GetPositionsOnScene(string sceneName, AttractablesType type, int rows, int columns)
+    public List<Vector3> GetPositionsOnScene(string sceneName, int rows, int columns)
     {
         List<Vector3> positions = new List<Vector3>();
 
-        List<AttractableData> foundData = _alldata.Where(val => val.SceneName == sceneName && val.Type == type && val.Rows == rows && val.Columns == columns).ToList();
+        List<AttractableData> foundData = _alldata.Where(val => val.SceneName == sceneName && val.Rows == rows && val.Columns == columns).ToList();
 
         foreach (AttractableData data in foundData)
         {
@@ -103,7 +107,7 @@ public class AttractableDataHandler : MonoBehaviour
             positions.Add(data.Position);
         }
 
-        Debug.Log($"Found {positions.Count} objects of type '{type}' in scene '{sceneName}'");
+        Debug.Log($"Found {positions.Count} objects of type '' in scene '{sceneName}'");
 
         return positions;
     }
@@ -112,9 +116,9 @@ public class AttractableDataHandler : MonoBehaviour
     {
         _alldata.Clear();
 
-        if (PlayerPrefs.HasKey(AllObjectsIdKey))
+        if (PlayerPrefs.HasKey(_allObjectsIdKey))
         {
-            string objectList = PlayerPrefs.GetString(AllObjectsIdKey);
+            string objectList = PlayerPrefs.GetString(_allObjectsIdKey);
             string[] dataIds = objectList.Split(',');
 
             foreach (string id in dataIds)
@@ -141,7 +145,7 @@ public class AttractableDataHandler : MonoBehaviour
         char divider = '_';
 
         return sceneName + divider + id;
-    }   
+    }
 }
 
 [System.Serializable]
@@ -149,12 +153,12 @@ public class AttractableData
 {
     public readonly string Id;
     public readonly Vector3 Position;
-    public readonly AttractablesType Type;
+    // public readonly AttractablesType Type;
     public readonly string SceneName;
     public readonly int Rows;
     public readonly int Columns;
 
-    public AttractableData(string id, Vector3 pos, AttractablesType type, string scene, int rows, int columns)
+    public AttractableData(string id, Vector3 pos, string scene, int rows, int columns)
     {
         if (rows <= 0 || columns <= 0)
         {
@@ -163,7 +167,7 @@ public class AttractableData
 
         Id = id;
         Position = pos;
-        Type = type;
+        // Type = type;
         SceneName = scene;
         Rows = rows;
         Columns = columns;
@@ -172,8 +176,8 @@ public class AttractableData
     public AttractableData(string savedString)
     {
         try
-        {   
-            string[] parts = savedString.Split('|');            
+        {
+            string[] parts = savedString.Split('|');
 
             if (parts.Length >= 4)
             {
@@ -184,20 +188,20 @@ public class AttractableData
                     float.Parse(position[0]),
                     float.Parse(position[1]),
                     float.Parse(position[2])
-                );            
+                );
 
-                if (Enum.TryParse(parts[2], out AttractablesType type))
-                {
-                    Type = type;
-                }
-                else
-                {
-                    throw new Exception($"type {parts[2]} doesn't excist");
-                }
+                /* if (Enum.TryParse(parts[2], out AttractablesType type))
+                 {
+                     Type = type;
+                 }
+                 else
+                 {
+                     throw new Exception($"type {parts[2]} doesn't excist");
+                 }*/
 
-                SceneName = parts[3];
+                SceneName = parts[2];
 
-                if (int.TryParse(parts[4], out int rows))
+                if (int.TryParse(parts[3], out int rows))
                 {
                     Rows = rows;
                 }
@@ -206,7 +210,7 @@ public class AttractableData
                     Console.WriteLine("Invalid number format! " + parts[4]);
                 }
 
-                if (int.TryParse(parts[5], out int columns))
+                if (int.TryParse(parts[4], out int columns))
                 {
                     Columns = columns;
                 }
@@ -224,7 +228,7 @@ public class AttractableData
 
     public override string ToString()
     {
-        return $"{Id}|{Position.x}&{Position.y}&{Position.z}|{Type}|{SceneName}|{Rows}|{Columns}";
+        return $"{Id}|{Position.x}&{Position.y}&{Position.z}|{SceneName}|{Rows}|{Columns}";
     }
 }
 
