@@ -1,4 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttractOld : MonoBehaviour
+{
+   /* using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,7 +20,7 @@ public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
 
     private string _id;
 
-    private Vector3 _currentPosition;
+    // private Vector3 _currentPosition;
 
     public bool IsActive { get; private set; }
     public Transform Transform => transform;
@@ -46,7 +53,7 @@ public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
     {
         _id = GenerateUniqueId();
         IsActive = true;
-        _currentPosition = transform.position;
+        // _currentPosition = transform.position;
     }
 
     public void Deactivate()
@@ -67,12 +74,11 @@ public class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
         string random = UnityEngine.Random.Range(1000, 9999).ToString();
         return $"{_type}_{time}_{random}";
     }
-
-
 }
 
 public enum AttractablesType
 {
     screw,
     wrench
+}*/
 }

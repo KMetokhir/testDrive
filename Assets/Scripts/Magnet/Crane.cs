@@ -63,7 +63,9 @@ public class Crane : CompositePart
     {        
         Debug.Log("MagnetSpawned");
 
-        _rope.ConnectTarget(magnet.GetComponent<Rigidbody>());
+      //  _rope.transform.position = magnet.transform.position+ Vector3.up;
+
+        _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet.ConnectionPoint); // get it fro magnet variable
 
         MagnetSpawned?.Invoke(magnet);
         _magnet = magnet;

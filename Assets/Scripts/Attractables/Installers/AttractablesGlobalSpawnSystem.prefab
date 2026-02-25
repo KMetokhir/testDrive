@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 554281325400955176}
-  _prefab: {fileID: 2006668110981545911, guid: 58364f0ad2ddce3418353231bea72e76, type: 3}
+  _prefab: {fileID: 5949160558945019051, guid: 58364f0ad2ddce3418353231bea72e76, type: 3}
 --- !u!114 &259009329441547283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,11 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6af809e2dceb340984b17e3982de98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPrefab: {fileID: 2006668110981545911, guid: 58364f0ad2ddce3418353231bea72e76, type: 3}
-  rowsPerQuad: 2
-  spawnPointsPerRow: 2
   _dataHandler: {fileID: 5295446399775766278}
   _generator: {fileID: 8288585476713139697}
+  _yOffSet: 5
 --- !u!114 &7321960892633073077
 MonoBehaviour:
   m_ObjectHideFlags: 0

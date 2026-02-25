@@ -59,7 +59,7 @@ public class MagnetAria : MonoBehaviour
         {
             if (TryGetAttractable(out List<IAttractable> attractables))
             {
-                attractables = GetActiveObjects(attractables);
+                attractables = GetCollectableObjects(attractables);
 
                 if (attractables != null && attractables.Count > 0)
                 {
@@ -73,9 +73,9 @@ public class MagnetAria : MonoBehaviour
         _detectCoroutine = null;
     }
 
-    private List<IAttractable> GetActiveObjects(List<IAttractable> attractable)
+    private List<IAttractable> GetCollectableObjects(List<IAttractable> attractable)
     {
-        return attractable.Where(attractable => attractable.IsActive).ToList();
+        return attractable.Where(attractable => attractable.IsPossibleToCollect).ToList();
     }
 
     private bool TryGetAttractable(out List<IAttractable> attractables)
@@ -99,6 +99,7 @@ public class MagnetAria : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+    
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _magnetSettings.MagnetRadius);
     }

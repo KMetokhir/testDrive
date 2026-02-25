@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 public abstract class AttractableRemover<T> : MonoBehaviour // 
-    where T : Attractable
+    where T : Attractable // used only onCollected and ID => Icollectable instead
 {
     [SerializeField] private ObjectPool<T> _pool;
     [SerializeField] private AttractableDataHandler _dataHandler;
@@ -54,43 +54,4 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
         _pool.PutObject(attractable as T);
     }
 }
-
-/* [SerializeField] private ObjectPool<Attractable> _pool;
-
- public event Action EnemyRemoved;
-
- private void Awake()
- {
-     BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
-     boxCollider.isTrigger = true;
- }
-
- private void OnEnable()
- {
-     _pool.ObjectGeted += OnObjectGetted;
- }
-
- private void OnDisable()
- {
-     _pool.ObjectGeted -= OnObjectGetted;
- }
-
- private void OnObjectGetted(Attractable attractable
-     \)
- {
-     enemy.Destroyed += OnEnemyDestroyed;
- }
- private void OnEnemyDestroyed(Enemy enemy)
- {
-     enemy.Destroyed -= OnEnemyDestroyed;
-     EnemyRemoved?.Invoke();
-     _pool.PutObject(enemy);
- }
- private void OnTriggerEnter2D(Collider2D collision)
- {
-     if (collision.TryGetComponent(out Enemy enemy))
-     {
-         enemy.Destroy();
-     }
- }*/
 

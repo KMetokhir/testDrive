@@ -1,3 +1,4 @@
+using UniRx.Triggers;
 using UnityEngine;
 
 public abstract class UpgradePartSpawner : MonoBehaviour
@@ -13,7 +14,7 @@ public abstract class UpgradePartSpawner : MonoBehaviour
         {
             part.transform.position = _spawnPosition.TransformPoint(part.SpawnPosition);
             part.transform.rotation = _spawnPosition.transform.rotation;
-            part.transform.parent = _parent;
+            part.transform.parent = _parent; 
 
             LastSpawnedPart = part;
 

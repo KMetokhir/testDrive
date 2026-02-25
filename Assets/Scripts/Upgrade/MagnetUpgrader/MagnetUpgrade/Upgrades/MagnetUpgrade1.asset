@@ -18,4 +18,4 @@ MonoBehaviour:
   _upgradeParts:
   - {fileID: 9144848437073152212, guid: c405e0145c73f2b47b6fefa79b7a6c7d, type: 3}
   - {fileID: 4218785124024451468, guid: 28dc1f591b0a1284ca92d92a4bac2045, type: 3}
-  _magnetRadius: 5
+  _magnetRadius: 20

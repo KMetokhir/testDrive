@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 093484b1b76da6544ac70a51da686a5d, type: 3}
-  m_Name: MagnetUpgrade2
+  m_Script: {fileID: 11500000, guid: 4645604c7d8dfb94c8253598e838a1db, type: 3}
+  m_Name: ScrewConfig
   m_EditorClassIdentifier: 
-  _cost: 0
-  _carLevel: 1
-  _upgradeLevel: 1
-  _upgradeParts:
-  - {fileID: 4218785124024451468, guid: 47696ae8c9a532944869b0a729c565c1, type: 3}
-  _magnetRadius: 40
+  _type: 0
+  _weight: 1
+  _cost: 1
+  _level: 1

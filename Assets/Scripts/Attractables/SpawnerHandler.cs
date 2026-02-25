@@ -14,8 +14,6 @@ public class SpawnerHandler : MonoBehaviour
 
     private void Start()
     {
-      
-
         _spawner.Spawn(AttractablesType.screw, _quadSpawnArias, _rowsPerQuad, _columnsPerQuad);
     }
 }

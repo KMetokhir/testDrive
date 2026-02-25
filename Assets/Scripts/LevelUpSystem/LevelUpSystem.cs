@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
+using static CarDestroyer;
 
 public class LevelUpSystem : MonoBehaviour, ILevel
 {
@@ -52,6 +54,14 @@ public class LevelUpSystem : MonoBehaviour, ILevel
         _view.ButtonClicked += OnLevelUpButtonClicked;
     }
 
+    private void Start()
+    {
+        MessageBroker.Default.Publish(new LevelUp()
+        {
+            Level = _currentLevel
+        });
+    }
+
     private void OnLevelUpButtonClicked()
     {
         Debug.Log("TO NEW LEVEL");
@@ -65,5 +75,10 @@ public class LevelUpSystem : MonoBehaviour, ILevel
         {
             _view.ActivateButton();
         }
-    }
+    }   
+}
+
+public struct LevelUp
+{
+    public uint Level;
 }

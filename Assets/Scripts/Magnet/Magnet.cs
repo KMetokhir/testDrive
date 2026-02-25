@@ -7,7 +7,11 @@ public class Magnet : ObservableUpgradePart
     [SerializeField] private MagnetAria _magnetAria;
     [SerializeField] private MagnetField _magnetField;
 
+    [SerializeField] private Transform _connectionPoint;
+
     [SerializeField] private bool _isWork;
+
+    public Transform ConnectionPoint => _connectionPoint; // to vector3 
 
     public event Action<ICollectable> ObjectInMagnetAria;
 
