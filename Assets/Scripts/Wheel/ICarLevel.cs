@@ -1,4 +1,4 @@
-public interface ILevel 
+public interface ICarLevel 
 {
    public uint Value { get; }
 }

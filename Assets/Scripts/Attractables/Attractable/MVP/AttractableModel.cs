@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttractableModel
 {
     public string Id { get; }
-   // public AttractablesType Type { get; }
+    // public AttractablesType Type { get; }
     public uint Weight { get; }
     public uint Cost { get; }
     public uint Level { get; }
@@ -14,16 +14,19 @@ public class AttractableModel
 
     public bool IsActive { get; private set; }
     public bool IsAvalibleToCollector { get { return (Level <= _collectorLevel); } }
-    public bool IsPossibleToCollect { get { return IsAvalibleToCollector && IsActive; } }
+    public bool IsPossibleToCollect { get { return IsAvalibleToCollector && IsActive && _isCollected == false; } }
+
+    private bool _isCollected;
 
     public event Action Activated;
     public event Action Deactivated;
     public event Action Collected;
     public event Action BecameAvalible;
+    public event Action Stored;
 
     public AttractableModel(AttractableConfig config)
     {
-      //  Type = config.Type;
+        //  Type = config.Type;
         Weight = config.Weight;
         Cost = config.Cost;
         Level = config.Level;
@@ -40,6 +43,13 @@ public class AttractableModel
         _collectorLevel = defaultCollectorLevel;
 
         IsActive = true;
+        _isCollected = false;
+    }
+
+    private void Reload()
+    {
+        _isCollected = false;
+        ProcessCollectorLevel(_collectorLevel);
     }
 
     public void Activate()
@@ -49,6 +59,20 @@ public class AttractableModel
 
         IsActive = true;
         Activated?.Invoke();
+
+        Reload();
+    }
+
+    public void TransitToStore()
+    {
+        if (_isCollected)
+        {
+            Stored?.Invoke();
+        }
+        else
+        {
+            throw new Exception("cannot be stores befor colect");
+        }
     }
 
     public void Deactivate()
@@ -60,11 +84,16 @@ public class AttractableModel
         Deactivated?.Invoke();
     }
 
-    public void ProcessCollectorChangeLevel(uint collectorNewLevel)
-    {        
+    public void ProcessCollectorLevel(int collectorLevel)
+    {
+        if (collectorLevel < 0)
+        {
+            return;
+        }
+
         bool oldAvalibleStatus = IsAvalibleToCollector;
 
-        _collectorLevel = (int)collectorNewLevel;
+        _collectorLevel = (int)collectorLevel;
 
         if (oldAvalibleStatus != IsAvalibleToCollector)
         {
@@ -74,7 +103,13 @@ public class AttractableModel
 
     public void Collect()
     {
-        Collected?.Invoke();
+        if (IsPossibleToCollect)
+        {
+            _isCollected = true;
+            Collected?.Invoke();
+            
+        }
+
     }
 
     private string GenerateUniqueId()

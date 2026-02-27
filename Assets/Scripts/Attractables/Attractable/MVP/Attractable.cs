@@ -1,11 +1,17 @@
 using System;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
 {
+    public bool iscollectable; // TMP
+
     [SerializeField] private AttractableConfig _config;
-    [SerializeField] private  AttractableView _view;
+    [SerializeField] private AttractableView _view;
+    [SerializeField] private int CARlevel;// tmp
+
+    private ICarLevel _carLevel;
 
     private AttractableModel _model;
 
@@ -17,13 +23,29 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
     public uint Cost => _model.Cost;
     public uint Level => _model.Level;
     public string Id => _model.Id;
-   // public AttractablesType Type => _model.Type;
+    // public AttractablesType Type => _model.Type;
 
     public event Action<Attractable> Deactivated;
     public event Action<Attractable> Collected;
+    public event Action<Attractable> Stored;
+
+    private SignalBus _signalBus;
+
+    [Inject]
+    void Construct(SignalBus signalBus /*ICarLevel carLevel*/)
+    {
+        _signalBus = signalBus;
+        //  _carLevel = carLevel;
+
+        //   Debug.LogError( $" {_carLevel == null} in attractanble");
+    }
+
 
     private void Awake()
     {
+
+        // CARlevel =(int) _carLevel.Value;
+
         _model = new AttractableModel(_config);
 
         /*if (_view.Type != _model.Type)
@@ -31,11 +53,15 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
             throw new System.Exception($"model.Type {_model.Type} != view.Type {_view.Type}");
         }*/
 
-        MessageBroker.Default
+        // Debug.LogError("Subsribe to level up");
+
+        MessageBroker.Default  // unsubscribe on CompositDisposable in disable?
             .Receive<LevelUp>()
              .Subscribe(msg =>
-             _model.ProcessCollectorChangeLevel(msg.Level))
+             _model.ProcessCollectorLevel((int)msg.Level))
              .AddTo(this);
+
+        iscollectable = _model.IsPossibleToCollect;// test
     }
 
     private void OnEnable()
@@ -44,50 +70,83 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         _model.Deactivated += OnDeactivated;
         _model.BecameAvalible += OnBacameAvalible;
         _model.Collected += OnCollected;
+        _model.Stored += OnStored;
+
+        _signalBus.Subscribe<CarSpawnedSignal>(OnCarSpawned);
     }
+
+    private void OnStored()
+    {
+        Stored?.Invoke(this);
+    }
+
     private void OnDisable()
     {
         _model.Activated -= OnActivated;
         _model.Deactivated -= OnDeactivated;
         _model.BecameAvalible -= OnBacameAvalible;
         _model.Collected -= OnCollected;
+        _model.Stored -= OnStored;
 
+        _signalBus.Unsubscribe<CarSpawnedSignal>(OnCarSpawned);
+
+    }
+    public void TransitToStore()
+    {
+        _model.TransitToStore();
+    }
+
+    private void OnCarSpawned(CarSpawnedSignal signal)
+    {
+        //  Debug.LogError("Car Spawned In Attracrable");
+
+        CARlevel = (int)signal.Car.Value;
+        _model.ProcessCollectorLevel(CARlevel);
     }
 
     private void OnCollected()
     {
         Collected?.Invoke(this);
+        iscollectable = _model.IsPossibleToCollect;// test
     }
-   
+
 
     private void OnActivated()
     {
         _view.Activate();
+        iscollectable = _model.IsPossibleToCollect;// test
     }
 
     private void OnDeactivated()
     {
         _view.Deactivate();
         Deactivated?.Invoke(this);
+        iscollectable = _model.IsPossibleToCollect;// test
     }
 
     private void OnBacameAvalible()
     {
         _view.BecameAvalible();
+        iscollectable = _model.IsPossibleToCollect;// test
     }
 
     public void Collect()
     {
         _model.Collect();
+        iscollectable = _model.IsPossibleToCollect;// test
     }
 
     public void Activate()
     {
         _model.Activate();
+        iscollectable = _model.IsPossibleToCollect;// test
     }
 
     public void Deactivate()
     {
         _model.Deactivate();
+        iscollectable = _model.IsPossibleToCollect; // test
     }
 }
+
+  

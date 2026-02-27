@@ -2,6 +2,7 @@ using OpenCover.Framework.Model;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class ObjectPool<T> : MonoBehaviour
     where T : MonoBehaviour, IPoollable // iPoolable with methodes Activate deactivate
@@ -9,10 +10,18 @@ public class ObjectPool<T> : MonoBehaviour
     [SerializeField] private Transform _container;
     [SerializeField] private T _prefab;
 
+    private DiContainer _containerDi;
+
     private Queue<T> _pool;
     private HashSet<T> _activeObjects;
 
     public event Action<T> ObjectGeted;
+
+    [Inject]
+    public void Construct(DiContainer container)
+    {
+        _containerDi = container;
+    }
 
     private void Awake()
     {
@@ -24,25 +33,26 @@ public class ObjectPool<T> : MonoBehaviour
     {
         if (_pool.Count == 0)
         {
-            T newObject = Instantiate(_prefab);
-            newObject.Transform.parent = _container;
-            ObjectGeted?.Invoke(newObject);
+            //T newObject = Instantiate(_prefab);
+            T newObject = _containerDi
+                .InstantiatePrefabForComponent<T>(_prefab, _container);
 
+            newObject.Activate();
+
+            ObjectGeted?.Invoke(newObject);
             _activeObjects.Add(newObject);
 
             return newObject;
         }
 
         T objectFromPool = _pool.Dequeue();
-        // objectFromPool.gameObject.SetActive(true);
-
         objectFromPool.Activate();
-       ObjectGeted?.Invoke(objectFromPool);
 
+        ObjectGeted?.Invoke(objectFromPool);
         _activeObjects.Add(objectFromPool);
 
         return objectFromPool;
-    }
+    }      
 
     public void PutObject(T poolObject)
     {
@@ -50,6 +60,7 @@ public class ObjectPool<T> : MonoBehaviour
         _activeObjects.Remove(poolObject);
         // poolObject.gameObject.SetActive(false);
         poolObject.Deactivate();
+        poolObject.Transform.parent = _container.transform;
     }
 
     public void Restart()

@@ -5,21 +5,23 @@ using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
-using static CarDestroyer;
 
-public class LevelUpSystem : MonoBehaviour, ILevel
+
+public class LevelUpSystem : MonoBehaviour, ICarLevel
 {
     [SerializeField] private uint _currentLevel;
     [SerializeField] private uint _upgradesToLevelUp;
 
     [SerializeField] private LevelUpVeiw _view;
+    [SerializeField] private SceneLoadHandler _sceneLoadHandler;
 
     private List<IUpgradable> _upgradables;
 
     [Inject]
-    private void Construct(LevelUpVeiw view)
+    private void Construct(LevelUpVeiw view, SceneLoadHandler sceneLoadHandler)
     {
         _view = view;
+        _sceneLoadHandler = sceneLoadHandler;
     }
 
     private uint _currentUpgradesLevel => (uint)_upgradables.Sum(v => v.UpgradeLevel);
@@ -52,9 +54,34 @@ public class LevelUpSystem : MonoBehaviour, ILevel
         }
 
         _view.ButtonClicked += OnLevelUpButtonClicked;
+        _sceneLoadHandler.SceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        foreach (IUpgradable upgradable in _upgradables)
+        {
+            upgradable.Upgraded -= OnUpgraded;
+        }
+
+        _view.ButtonClicked -= OnLevelUpButtonClicked;
+        _sceneLoadHandler.SceneLoaded -= OnSceneLoaded;
+
+    }
+
+    private void OnSceneLoaded()
+    {
+       /* Debug.LogError("SceneLoaded" +
+            "invoke levelup");*/
+        InvokeChangeLevelEvent();
     }
 
     private void Start()
+    {
+        InvokeChangeLevelEvent();
+    }
+
+    private void InvokeChangeLevelEvent()
     {
         MessageBroker.Default.Publish(new LevelUp()
         {

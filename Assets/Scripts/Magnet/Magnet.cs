@@ -65,7 +65,8 @@ public class Magnet : ObservableUpgradePart
             {
                 _magnetField.AddToField(item);
 
-                item.Deactivate();
+               // item.Deactivate();
+               item.Collect();
                 _collectedObjects.Add(item);
             }
             else

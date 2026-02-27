@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class RuntimeCarFactory 
@@ -28,14 +28,14 @@ public class RuntimeCarFactory
     public CarConteiner CreateCar()
     {
         var car = _container.InstantiatePrefabForComponent<CarConteiner>(_currentPrefab);
-        _container.Inject(car);
+        //_container.Inject(car); !!!!!!!!!!!
 
         CurrentCar = car;
 
         _signalBus.Fire(new CarSpawnedSignal(car)
-        /*{
-            Car = car
-        }*/);       
+        {
+           // Car = car
+        });
 
         Debug.Log($"Created and rebound car: {car.name}");
         return car;

@@ -22,16 +22,22 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     [SerializeField] private S _view;
 
-    private ILevel _carLevel;
+    [SerializeField] private int CarLevel; // test 
+
+    private ICarLevel _carLevel;
 
     private uint _currentUpgradeLevel;
     private string _currentUpgradeLevelKey;
 
     [Inject]
-    private void Construct(S view, ILevel carLevel)
+    private void Construct(S view, ICarLevel carLevel)
     {
         _view = view;
         _carLevel = carLevel;
+
+
+        Debug.LogError($"In construct upgrader {carLevel.Value}");
+        CarLevel =(int) _carLevel.Value;
     }
 
     private T _currentUpgrade;
@@ -56,8 +62,6 @@ public class Upgrader<T, S, M> : MonoBehaviour
         // _carLevel = FindObjectOfType<Car>();
 
         _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
-
-
     }
 
     private void OnEnable()
@@ -82,6 +86,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
             ProcessUpgrade(upgrade);
         }
 
+      //  Debug.LogError(_carLevel == null);
         _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
         Debug.Log($"Upgrade name {_currentUpgrade.ToString()}");
 

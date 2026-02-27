@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 6501294690196684585}
   - component: {fileID: 3108509199173479672}
   m_Layer: 0
-  m_Name: Car
+  m_Name: Car 2 level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9788c14e6f51709468cadcab24ab6bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentLevel: 1
+  _currentLevel: 2
   _upgradesToLevelUp: 2
   _view: {fileID: 0}
   _sceneLoadHandler: {fileID: 0}

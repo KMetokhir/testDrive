@@ -27,7 +27,7 @@ public class Installer : MonoInstaller
         Container.BindInstance(_powerUpgraderView).AsSingle();
         Container.BindInstance(_upgradePanel).AsSingle();
 
-       Container.Bind<ILevel>().FromComponentInParents().AsSingle();
+      // Container.Bind<ICarLevel>().FromComponentInParents().AsSingle();
 
         
 

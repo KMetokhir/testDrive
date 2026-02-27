@@ -3,11 +3,14 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 
-public class CarConteiner : MonoBehaviour
+public class CarConteiner : MonoBehaviour, ICarLevel 
 {
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private CarDestroyer _carDestroier;   
- 
+    [SerializeField] private CarDestroyer _carDestroier;
+    [SerializeField] private LevelUpSystem _levelup;
+
+    public uint Value => _levelup.Value;
+
     public void Destroy()
     {       
         _carDestroier.Destroy();        

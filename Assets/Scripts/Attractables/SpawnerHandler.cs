@@ -13,7 +13,7 @@ public class SpawnerHandler<T> : MonoBehaviour
     [Inject]
     [SerializeField] private AttractablesSpawner<T> _spawner;
 
-    private void Start()
+    private void Awake()
     {
         _spawner.Spawn(AttractablesType.screw, _quadSpawnArias, _rowsPerQuad, _columnsPerQuad);
     }

@@ -58,7 +58,7 @@ public class CarSelection : MonoBehaviour
         // Test with other keys
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SelectCar(0);
+            SelectCar(1);
             SpawnCar();
         }
 

@@ -119,8 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f0154f09616ab47ab7677f7631e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iscollectable: 0
   _config: {fileID: 11400000, guid: 6c9e7b575447000419a8179bcfba0f60, type: 2}
   _view: {fileID: 7634368260710296684}
+  CARlevel: 0
 --- !u!114 &7634368260710296684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,4 +135,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40269e923ab7ff54e8aa8a81d4bb5233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 0

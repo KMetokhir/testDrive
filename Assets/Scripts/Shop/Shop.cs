@@ -16,25 +16,45 @@ public class Shop : MonoBehaviour
     {
         ISeller seller = other.gameObject.GetComponentInParent<ISeller>();
 
-        if (seller!=null)
+        if (seller != null)
         {
             _objs = seller.Buy();
 
-            foreach (IAttractable obj in _objs)
+           /* foreach (IAttractable obj in _objs)
             {
-                obj.Collect();
-            }
+                // obj.Collect();
+                obj.TransitToStore();
+            }*/
         }
     }
 
     private void FixedUpdate()
     {
-        foreach (var obj in _objs)
+        if (_objs.Count > 0)
         {
-            Debug.Log(obj.ToString());
-            Move(obj.Transform, transform.position, _moveSpeed, Time.fixedDeltaTime);
+            List<IAttractable> objectsToRemove = new List<IAttractable>();
 
+
+            foreach (var obj in _objs)
+            {
+                Debug.Log(obj.ToString());
+                Move(obj.Transform, transform.position, _moveSpeed, Time.fixedDeltaTime);
+
+
+                if (IsApproachPosition(transform.position, obj.Transform.position, 0.1f))
+                {
+                    objectsToRemove.Add(obj);
+                    obj.TransitToStore();
+                }
+            }
+
+            _objs.RemoveAll(obj => objectsToRemove.Contains(obj));
         }
+    }
+
+    private bool IsApproachPosition(Vector3 targetPostion, Vector3 objectPosition, float offset)
+    {
+        return (objectPosition - targetPostion).sqrMagnitude <= offset;
     }
 
     private void Move(Transform objTransform, Vector3 targetposition, float moveSpeed, float deltatIme)

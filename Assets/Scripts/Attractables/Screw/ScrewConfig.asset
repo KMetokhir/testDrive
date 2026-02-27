@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4645604c7d8dfb94c8253598e838a1db, type: 3}
   m_Name: ScrewConfig
   m_EditorClassIdentifier: 
-  _type: 0
   _weight: 1
   _cost: 1
-  _level: 1
+  _level: 2

@@ -27,7 +27,7 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
 
         foreach (var obj in _activeObjects)
         {
-            obj.Collected -= PutToPool;
+            obj.Stored -= PutToPool;
             _pool.PutObject(obj as T);
         }
 
@@ -44,12 +44,12 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
     {
         Debug.Log("IN Remover getted from poool " + attractable.Id);
         _activeObjects.Add(attractable);
-        attractable.Collected += PutToPool;
+        attractable.Stored += PutToPool;
     }
 
     private void PutToPool(Attractable attractable)
     {
-        attractable.Collected -= PutToPool;
+        attractable.Stored -= PutToPool;
         _activeObjects.Remove(attractable as T);
 
         Debug.Log("IN Remover object collected");

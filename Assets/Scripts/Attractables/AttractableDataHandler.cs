@@ -21,7 +21,7 @@ public class AttractableDataHandler<T> : MonoBehaviour
     private void Awake()
     {
         // _allObjectsIdKey += typeof(T);
-        Debug.LogError($"All objects key  {_allObjectsIdKey}");
+      //  Debug.LogError($"All objects key  {_allObjectsIdKey}");
         //_allId.Clear();
         LoadAllObjects();
     }
