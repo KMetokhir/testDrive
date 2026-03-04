@@ -1,5 +1,5 @@
 
-public class SpeedUpgrader : Upgrader<SpeedUpgrade, SpeedUpgraderView, ISpeedUpgradeData>
+public class SpeedUpgrader : Upgrader<SpeedUpgrade, SpeedUpgraderView, IDriveData>
 {
 
 }

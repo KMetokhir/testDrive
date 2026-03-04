@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MagnetUpgrade", menuName = "CarUpgrades/Magnet")]
-public class MagnetUpgrade : Upgrade, IMagnetUpgradeData
+public class MagnetUpgrade : Upgrade, IMagnetData
 {
     [SerializeField] private float _magnetRadius;
     public float MagnetRadius => _magnetRadius;

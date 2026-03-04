@@ -9,19 +9,22 @@ public class RuntimeCarFactory
 
     private CarConteiner CurrentCar { get;  set; } // not nessesary tmp
 
-    private MagnetSetingsProvider _magnetSetingsProvider;    
+    private MagnetSetingsProvider _magnetSetingsProvider;   
+    private DriveDataProvader _driveDataProvader;
 
     [Inject]
     public RuntimeCarFactory(
         DiContainer container,
         SignalBus signalBus,
         CarConteiner defaultPrefab,
-        MagnetSetingsProvider magnetSetingsProvider)
+        MagnetSetingsProvider magnetSetingsProvider,
+        DriveDataProvader driveDataProvader)
     {
         _container = container;
         _signalBus = signalBus;
         _currentPrefab = defaultPrefab;
         _magnetSetingsProvider = magnetSetingsProvider;
+        _driveDataProvader = driveDataProvader;
     }
 
     public void SetCarPrefab(CarConteiner newPrefab)
@@ -35,15 +38,23 @@ public class RuntimeCarFactory
 
         CurrentCar = car;
 
-        IMagnetUpgradeData magnetData = car.GetComponent<IMagnetUpgradeData>();
+        IMagnetData magnetData = car.GetComponent<IMagnetData>();
+        IDriveData driverData = car.GetComponent<IDriveData>();
 
         if (magnetData == null)
         {
-            Debug.LogError($"Car prefab does not contain {nameof(IMagnetUpgradeData)}!");
+            Debug.LogError($"Car prefab does not contain {nameof(IMagnetData)}!");
+            return car;
+        }
+
+        if (driverData == null)
+        {
+            Debug.LogError($"Car prefab does not contain {nameof(IDriveData)}!");
             return car;
         }
 
         _magnetSetingsProvider.Set(magnetData);
+        _driveDataProvader.Set(driverData);
 
         _signalBus.Fire(new CarSpawnedSignal(car)
         {

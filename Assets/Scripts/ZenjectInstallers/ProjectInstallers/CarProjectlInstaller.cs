@@ -20,7 +20,14 @@ public class CarProjectlInstaller : MonoInstaller
 
         MagnetSetingsProvider magnetSettingsProvider = new MagnetSetingsProvider();
         Container.Bind<MagnetSetingsProvider>().FromInstance(magnetSettingsProvider).AsSingle().WhenInjectedInto<RuntimeCarFactory>();
-        Container.Bind<IMagnetUpgradeData>().FromInstance(magnetSettingsProvider).AsSingle();
+        Container.Bind<IMagnetData>().FromInstance(magnetSettingsProvider).AsSingle();
+
+        DriveDataProvader driveDataProvader = new DriveDataProvader();
+        Container.Bind<DriveDataProvader>().FromInstance(driveDataProvader).AsSingle().WhenInjectedInto<RuntimeCarFactory>();
+        Container.Bind<ISpeedData>().FromInstance(driveDataProvader).AsSingle();
+        Container.Bind<IWheelRotationData>().FromInstance(driveDataProvader).AsSingle();
+
+
 
         Container.Bind<RuntimeCarFactory>().AsSingle().NonLazy();
     }  

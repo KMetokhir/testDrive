@@ -12,7 +12,7 @@ public class Magnet : ObservableUpgradePart
 
     [SerializeField] private bool _isWork;
 
-    [Inject] private IMagnetUpgradeData _magnetData;
+    [Inject] private IMagnetData _magnetData;
 
     public Transform ConnectionPoint => _connectionPoint; // to vector3 
 

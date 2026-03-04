@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetSetingsProvider : IMagnetUpgradeData
+public class MagnetSetingsProvider : IMagnetData
 {
-    private IMagnetUpgradeData _currentData;
+    private IMagnetData _currentData;
     public float MagnetRadius => _currentData.MagnetRadius;
 
-    public void Set(IMagnetUpgradeData magnetData)
+    public void Set(IMagnetData magnetData)
     {
         _currentData = magnetData ?? throw new System.Exception($"{nameof(magnetData)} is null"); 
     }

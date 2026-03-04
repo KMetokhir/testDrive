@@ -24,7 +24,7 @@ public class Speed : MonoBehaviour, ISpeed, IUpgradable
         _upgrader.UpgradeExecuted -= SetNewStats;
     }
 
-    private void SetNewStats(ISpeedUpgradeData data)
+    private void SetNewStats(IDriveData data)
     {
         _value = data.Acceleration;
         _maxSpeed = data.MaxSpeed;
