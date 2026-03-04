@@ -10,7 +10,7 @@ using static UnityEditor.Progress;
 public class CarPlacer : MonoBehaviour
 {
     [Inject]
-    private SceneLoadHandler _sceneLoadHandler; // added in CarPrefab but it allready excicts in AtrractablesSpaen System prefab use zenject
+    private SceneLoadHandler _sceneLoadHandler; 
    
     [SerializeField] private float _yOffset;
     //  [SerializeField] private CarCompositDestroier _carDestroier;

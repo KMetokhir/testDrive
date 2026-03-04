@@ -28,13 +28,15 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     private uint _currentUpgradeLevel;
     private string _currentUpgradeLevelKey;
+   
+    private DiContainer _container;
 
     [Inject]
-    private void Construct(S view, ICarLevel carLevel)
+    private void Construct(S view, ICarLevel carLevel, DiContainer container)
     {
+        _container = container;
         _view = view;
         _carLevel = carLevel;
-
 
         Debug.LogError($"In construct upgrader {carLevel.Value}");
         CarLevel =(int) _carLevel.Value;
@@ -171,7 +173,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
     {
         //List<UpgradePart> newParts = _currentUpgrade.Execute();
 
-        List<UpgradePart> newParts = upgrade.Execute();
+        List<UpgradePart> newParts = upgrade.Execute(_container);
         List<UpgradePart> installedParts = new List<UpgradePart>();
 
         SpawnParts(_spawners, newParts, installedParts);

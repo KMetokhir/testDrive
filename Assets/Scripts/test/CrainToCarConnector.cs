@@ -17,7 +17,7 @@ public class CrainToCarConnector : MonoBehaviour
 
     }
     private void OnCraneSpawned(Crane part)
-    { // crane update??
+    { 
         Crane crane = part;
 
         if (crane != null) {

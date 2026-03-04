@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Magnet : ObservableUpgradePart
 {
@@ -11,15 +12,20 @@ public class Magnet : ObservableUpgradePart
 
     [SerializeField] private bool _isWork;
 
+    [Inject] private IMagnetUpgradeData _magnetData;
+
     public Transform ConnectionPoint => _connectionPoint; // to vector3 
 
     public event Action<ICollectable> ObjectInMagnetAria;
 
     public List<IAttractable> _collectedObjects;
 
+    
+
     private void Awake()
     {
-        _collectedObjects = new List<IAttractable>();
+        _collectedObjects = new List<IAttractable>();   
+       
     }
 
     private void OnEnable()
@@ -74,5 +80,5 @@ public class Magnet : ObservableUpgradePart
                 return;
             }
         }
-    }
+    }   
 }

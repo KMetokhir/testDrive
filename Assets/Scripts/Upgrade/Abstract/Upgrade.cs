@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public abstract class Upgrade  : ScriptableObject
+public abstract class Upgrade : ScriptableObject
 {
     [SerializeField] private uint _cost;
     [SerializeField] private uint _carLevel;
@@ -13,7 +14,7 @@ public abstract class Upgrade  : ScriptableObject
     public uint CarLevel => _carLevel;
     public uint UpgradeLevel => _upgradeLevel;
 
-    public List<UpgradePart> Execute()
+    public List<UpgradePart> Execute(DiContainer container)
     {
         List<UpgradePart> upgradeParts = new List<UpgradePart>();
 
@@ -21,7 +22,11 @@ public abstract class Upgrade  : ScriptableObject
         {
             for (int i = 0; i < part.Count; i++)
             {
-                UpgradePart item = Instantiate(part);
+                // UpgradePart item = Instantiate(part);
+
+                UpgradePart item = container.InstantiatePrefabForComponent<UpgradePart>(
+                   part);
+
                 upgradeParts.Add(item);
             }
         }

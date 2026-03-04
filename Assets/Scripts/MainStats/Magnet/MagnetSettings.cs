@@ -3,18 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetSettings : MonoBehaviour
+public class MagnetSettings : MonoBehaviour, IMagnetUpgradeData
 {
     [SerializeField] private MagnetUpgrader _upgrader;
 
-    public float MagnetRadius { get; private set; }
-
-  
+    public float MagnetRadius { get; private set; }  
 
     private void OnEnable()
     {
         _upgrader.UpgradeExecuted += SetNewStats;
-
     }
 
     private void SetNewStats(IMagnetUpgradeData data)
