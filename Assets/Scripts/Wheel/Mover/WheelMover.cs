@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
+using Zenject;
 
 public class WheelMover : MonoBehaviour // from ground checker get the normal to surface and rotate direction in 90 degree to normal
 {
@@ -15,7 +16,8 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
     private Vector3 _direction;
     private Rigidbody _rigidbody;
 
-    private ISpeed _speed;
+    [Inject]
+    private ISpeedData _speedData;
 
     private int _lookDirection;
 
@@ -39,19 +41,19 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
 
     }
 
-    public void ForwardMove(ISpeed speed, Rigidbody rigidbody, Vector3 direction)
+    public void ForwardMove(Rigidbody rigidbody, Vector3 direction)
     {
         _lookDirection = ForwardDirection;
 
-        InitializeVAriables(speed, rigidbody, direction * _lookDirection);
+        InitializeVAriables(rigidbody, direction * _lookDirection);
     }
 
-    public void BackwardMove(ISpeed speed, Rigidbody rigidbody, Vector3 direction
+    public void BackwardMove(Rigidbody rigidbody, Vector3 direction
         )
     {
         _lookDirection = BackwardDirection;
 
-        InitializeVAriables(speed, rigidbody, direction * _lookDirection);
+        InitializeVAriables(rigidbody, direction * _lookDirection);
     }
 
     public void StopMoving()
@@ -61,12 +63,12 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
         _isMoving = false;
     }
 
-    private void InitializeVAriables(ISpeed speed, Rigidbody rigidbody, Vector3 direction)
+    private void InitializeVAriables(Rigidbody rigidbody, Vector3 direction)
     {
         _direction = direction;
         _isMoving = true;
         _rigidbody = rigidbody ?? throw new NullReferenceException(nameof(rigidbody));
-        _speed = speed ?? throw new NullReferenceException(nameof(speed));
+        //  _speedData = speed ?? throw new NullReferenceException(nameof(speed));
     }
 
     private void Move(float force, Rigidbody rigidbody, Vector3 direction)
@@ -76,16 +78,17 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
 
     private void FixedUpdate()
     {
+
         if (_isMoving && _groundChecker.IsGrounded())
         {
-            Move(_speed.Value, _rigidbody, _direction);
+            Move(_speedData.Acceleration, _rigidbody, _direction);
 
             RigidbodyMoving?.Invoke(_rigidbody.velocity.magnitude, _lookDirection, Time.fixedDeltaTime);
         }
 
-        if (_isMoving && _rigidbody.velocity.z > _speed.MaxSpeed)
+        if (_isMoving && _rigidbody.velocity.z > _speedData.MaxSpeed)
         {
-            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, _speed.MaxSpeed);
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, _speedData.MaxSpeed);
 
             RigidbodyMoving?.Invoke(_rigidbody.velocity.magnitude, _lookDirection, Time.fixedDeltaTime);
         }

@@ -22,12 +22,12 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     [SerializeField] private S _view;
 
-    [SerializeField] private int CarLevel; // test 
+  //  [SerializeField] private int CarLevel; // test 
 
     private ICarLevel _carLevel;
 
     private uint _currentUpgradeLevel;
-    private string _currentUpgradeLevelKey;
+  //  private string _currentUpgradeLevelKey;
    
     private DiContainer _container;
 
@@ -38,8 +38,8 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _view = view;
         _carLevel = carLevel;
 
-        Debug.LogError($"In construct upgrader {carLevel.Value}");
-        CarLevel =(int) _carLevel.Value;
+      //  Debug.LogError($"In construct upgrader {carLevel.Value}");
+     //   CarLevel =(int) _carLevel.Value;
     }
 
     private T _currentUpgrade;
@@ -49,21 +49,31 @@ public class Upgrader<T, S, M> : MonoBehaviour
     private void Start()
     {
 
+       // CarLevel = (int)_carLevel.Value;
+
         _compositePartSpawners = new List<UpgradePartSpawner>();
         _installedUpgradeParts = new List<UpgradePart>();
 
         //PlayerPrefs.DeleteAll();
 
-        _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
-        _currentUpgradeLevel = (uint)PlayerPrefsManager.LoadInt(_currentUpgradeLevelKey);
-        Debug.Log($"START UPLEVEL {_currentUpgradeLevel}");
+        _currentUpgradeLevel = (uint)CarDataManager.GetCarConfig(GetType().Name, _carLevel.Value);
 
+       /* _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
+        _currentUpgradeLevel = (uint)CarDataManager.LoadInt(_currentUpgradeLevelKey);*/
+        Debug.Log($"START UPLEVEL {_currentUpgradeLevel}");
 
         LoadUpgradesInOrder(_currentUpgradeLevel);
 
         // _carLevel = FindObjectOfType<Car>();
 
-        _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
+        if (_currentUpgrade != null)
+        {
+            _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
+        }
+        else 
+        {
+            throw new Exception($"No avalible upgarde for carLevel {_carLevel.Value}");
+        }
     }
 
     private void OnEnable()
@@ -90,12 +100,19 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
       //  Debug.LogError(_carLevel == null);
         _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
-        Debug.Log($"Upgrade name {_currentUpgrade.ToString()}");
 
-        //ProcessUpgrade(_currentUpgrade);
+        if (_currentUpgrade != null)
+        {
+            Debug.Log($"Upgrade name {_currentUpgrade.ToString()}");
 
-        UpgradeExecuted?.Invoke((M)_currentUpgrade);
-      
+            //ProcessUpgrade(_currentUpgrade);
+
+            UpgradeExecuted?.Invoke((M)_currentUpgrade);
+        }
+        else
+        {
+            throw new Exception($"No avalible upgarde for carLevel {_carLevel.Value}");
+        }
     }
 
     private void Upgrade()
@@ -128,7 +145,8 @@ public class Upgrader<T, S, M> : MonoBehaviour
                 _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
 
                 _currentUpgradeLevel = _currentUpgrade.UpgradeLevel;
-                PlayerPrefsManager.SaveInt(_currentUpgradeLevelKey, (int)_currentUpgradeLevel);
+                //  CarDataManager.SaveInt(_currentUpgradeLevelKey, (int)_currentUpgradeLevel);
+                CarDataManager.SaveCarConfig(GetType().Name, _carLevel.Value, _currentUpgradeLevel);
             }
         }
     }
@@ -182,7 +200,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         _installedUpgradeParts.AddRange(installedParts);
 
-
+        
         if (newParts.Count != 0)
         {
             foreach (var part in newParts)

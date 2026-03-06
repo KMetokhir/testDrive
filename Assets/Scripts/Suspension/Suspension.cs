@@ -13,16 +13,16 @@ public class Suspension : MonoBehaviour
     [SerializeField] private float _springDamping = 100f;
     [SerializeField] private float _springDistance = 0.3f;
 
+    [Inject]
     private ICarBody _carBody;
 
     private Rigidbody _wheelRb;
     private ConfigurableJoint _joint;
  
-    public void Activate(ICarBody carBody, Rigidbody wheelRb)
+    public void Activate( Rigidbody wheelRb)
     {
-        if (_carBody == null && _wheelRb == null)
-        {
-            _carBody = carBody;
+        if (_wheelRb == null)
+        {            
             _wheelRb = wheelRb;          
 
             CreateJoint();           

@@ -20,5 +20,8 @@ MonoBehaviour:
   - {fileID: 9205643665690870874, guid: 763f306f6a194eb45b055faf2d266592, type: 3}
   - {fileID: 4344676969812587729, guid: 621e35b974e588f4897089b87865d7ea, type: 3}
   - {fileID: -4153677366387139974, guid: 1e8e84b39390022409bd92668eb43f7d, type: 3}
-  _acceleration: 1000
+  _acceleration: 500
   _maxSpeed: 100
+  _rotationSpeed: 1
+  _maxAngle: 30
+  _AckermannMultiplier: 2

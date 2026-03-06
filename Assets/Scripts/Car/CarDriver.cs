@@ -7,8 +7,8 @@ using Zenject;
 public class CarDriver : MonoBehaviour
 {
     [SerializeField] private ScreenInput _screenInput;
-    [SerializeField] private Speed _speed; //ISpeed
-    [SerializeField] private Rotation _rotation;
+   // [SerializeField] private Speed _speed; //ISpeed delete ISpeed
+  //  [SerializeField] private Rotation _rotation;
 
     [SerializeField] private WheelBaseSpawner _wheelBaseSpawner;
 
@@ -19,14 +19,18 @@ public class CarDriver : MonoBehaviour
 
     private ICarBody _carBody;
 
+    private IWheelRotationData _rotationData;
+
     [Inject]
-    private void Construct(ScreenInput screenInput)
+    private void Construct(ScreenInput screenInput, IWheelRotationData rotationData )
     {
         _screenInput = screenInput;
+        _rotationData = rotationData;
     }
 
     private void Awake()
     {
+       
         _carBody = GetComponent<ICarBody>();
 
         _rotaryWheels = new List<RotaryWheel>();
@@ -108,7 +112,7 @@ public class CarDriver : MonoBehaviour
 
     private void SetWheel(IWheel wheel)
     {
-        wheel.Activate(_carBody);
+        wheel.Activate();
 
         if (wheel is DrivingWheel)
         {
@@ -143,17 +147,17 @@ public class CarDriver : MonoBehaviour
 
         if (Mathf.Abs(angle) <= maxInputAngle)
         {
-            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotation.MaxAngle);
+            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotationData.MaxAngle);
 
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.ForwardMove(_speed);
+                wheel.ForwardMove();
 
             }
 
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(angle, _rotation);
+                wheel.RotateWheel(angle);
             }
         }
         else
@@ -161,17 +165,17 @@ public class CarDriver : MonoBehaviour
             float sign = Mathf.Sign(angle);
             angle = sign * (180 - Mathf.Abs(angle));
 
-            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotation.MaxAngle);
+            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotationData.MaxAngle);
 
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.BackwardMove(_speed);
+                wheel.BackwardMove();
 
             }
 
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(angle, _rotation);
+                wheel.RotateWheel(angle);
             }
         }
     }
@@ -184,7 +188,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.ForwardMove(_speed);
+                wheel.ForwardMove();
 
             }
         }
@@ -202,7 +206,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
-                wheel.BackwardMove(_speed);
+                wheel.BackwardMove();
 
             }
         }
@@ -219,7 +223,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(90, _rotation);
+                wheel.RotateWheel(90);
             }
         }
 
@@ -235,7 +239,7 @@ public class CarDriver : MonoBehaviour
         {
             foreach (RotaryWheel wheel in _rotaryWheels)
             {
-                wheel.RotateWheel(-90, _rotation);
+                wheel.RotateWheel(-90);
             }
         }
 

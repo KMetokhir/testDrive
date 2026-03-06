@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Zenject;
 
 public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 {
@@ -9,7 +10,8 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
     private ICarDirection _carDirection;
 
-    private Rotation _rotation;
+   // [Inject]
+    private IWheelRotationData _rotationData;
 
     private bool _isRotating;
     private float _targetAngle;
@@ -19,11 +21,18 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
     public event Action<Vector3> DirectionChanged;
 
+    [Inject]
+    private void Construct(IWheelRotationData rotationData, ICarDirection carDirection)
+    {
+        _rotationData = rotationData;
+        _carDirection = carDirection;
+    }
+
     private void Awake()
     {
         _isRotating = false;
         // 
-        _carDirection = FindObjectOfType<Car>();// tmp        
+       // _carDirection = FindObjectOfType<Car>();// tmp        
         _wheelDirection = transform.forward;
         _targetAngle = 0;
 
@@ -31,9 +40,8 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     }
 
     // rotate - incorrrect naming
-    public void Rotate(Vector3 wheelDirection, float angle, Rotation rotation)
-    {
-        _rotation = rotation;
+    public void Rotate(Vector3 wheelDirection, float angle)
+    {      
 
         Vector3 wheelWorldDirection = transform.TransformDirection(wheelDirection);
         Vector3 carForwardDirection = _carDirection.ForwardDirection;
@@ -42,14 +50,14 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
         // Debug.Log(angle + " angle in "/* + currentRotationAngle + " " + gameObject.name*/);
 
-        _multiplier = GetMultiplier(currentRotationAngle, _rotation.AckermanMultiplier);
+        _multiplier = GetMultiplier(currentRotationAngle,_rotationData.AckermannMultiplier);
 
         _clockRotation = (int)Mathf.Sign(angle * _multiplier - currentRotationAngle);
 
         _wheelDirection = wheelDirection;
         _targetAngle = angle;
 
-        if (Approximately(currentRotationAngle, angle * _multiplier, _rotation.RotationSpeed * _multiplier))
+        if (Approximately(currentRotationAngle, angle * _multiplier, _rotationData.RotationSpeed * _multiplier))
         {
             _isRotating = false;
             return;
@@ -59,7 +67,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             _isRotating = true;
         }
 
-        if ((Approximately(currentRotationAngle, _rotation.MaxAngle * _multiplier * _clockRotation, _rotation.RotationSpeed * _multiplier)))
+        if ((Approximately(currentRotationAngle, _rotationData.MaxAngle * _multiplier * _clockRotation, _rotationData.RotationSpeed * _multiplier)))
         {
             _isRotating = false;
 
@@ -70,10 +78,10 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
             _isRotating = true;
         }
 
-        if (Mathf.Abs(currentRotationAngle) > _rotation.MaxAngle * _multiplier)
+        if (Mathf.Abs(currentRotationAngle) > _rotationData.MaxAngle * _multiplier)
         {
             _isRotating = true;
-            _clockRotation = (int)Mathf.Sign(_rotation.MaxAngle * _multiplier - currentRotationAngle);
+            _clockRotation = (int)Mathf.Sign(_rotationData.MaxAngle * _multiplier - currentRotationAngle);
         }
     }
 
@@ -89,13 +97,13 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         if (_isRotating)
         {
             RotateWheelDirection();
-            Rotate(_wheelDirection, _targetAngle, _rotation);
+            Rotate(_wheelDirection, _targetAngle);
         }
     }
 
     private void RotateWheelDirection()
     {
-        _wheelDirection = Quaternion.AngleAxis(_rotation.RotationSpeed * _multiplier * _clockRotation, Vector3.up) * _wheelDirection;
+        _wheelDirection = Quaternion.AngleAxis(_rotationData.RotationSpeed * _multiplier * _clockRotation, Vector3.up) * _wheelDirection;
         DirectionChanged?.Invoke(_wheelDirection);
     }
 

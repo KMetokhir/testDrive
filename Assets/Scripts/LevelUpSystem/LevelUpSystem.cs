@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
-
 public class LevelUpSystem : MonoBehaviour, ICarLevel
 {
     [SerializeField] private uint _currentLevel;
@@ -16,6 +15,8 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
     [SerializeField] private SceneLoadHandler _sceneLoadHandler;
 
     private List<IUpgradable> _upgradables;
+
+    public event Action Changed;
 
     [Inject]
     private void Construct(LevelUpVeiw view, SceneLoadHandler sceneLoadHandler)
@@ -32,7 +33,7 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
     {
         _upgradables = GetComponents<IUpgradable>().ToList();
 
-       // Debug.Log(_upgradables.Count);
+        // Debug.Log(_upgradables.Count);
 
         _view.ShowValue(_currentUpgradesLevel, _upgradesToLevelUp);
 
@@ -42,7 +43,7 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
         }
         else
         {
-            _view.DeactivateButton();           
+            _view.DeactivateButton();
         }
     }
 
@@ -71,24 +72,24 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
 
     private void OnSceneLoaded()
     {
-       /* Debug.LogError("SceneLoaded" +
-            "invoke levelup");*/
-        InvokeChangeLevelEvent();
+        /* Debug.LogError("SceneLoaded" +
+             "invoke levelup");*/
+        Changed?.Invoke();
     }
 
     private void Start()
     {
-        InvokeChangeLevelEvent();
+        Changed?.Invoke();
     }
 
-    private void InvokeChangeLevelEvent()
-    {
-        MessageBroker.Default.Publish(new LevelUp()
-        {
-            Level = _currentLevel
-        });
-    }
-
+    /* private void InvokeChangeLevelEvent()
+     {
+         MessageBroker.Default.Publish(new LevelUp()
+         {
+             Level = _currentLevel
+         });
+     }
+ */
     private void OnLevelUpButtonClicked()
     {
         Debug.Log("TO NEW LEVEL");
@@ -102,10 +103,10 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
         {
             _view.ActivateButton();
         }
-    }   
+    }
 }
 
-public struct LevelUp
+/*public struct LevelUp
 {
     public uint Level;
-}
+}*/

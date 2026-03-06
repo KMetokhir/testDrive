@@ -29,7 +29,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
 
         if (_directionChanger != null)
         {
-            _directionChanger.DirectionChanged += OnDirectionChanged; // subscribe on enable is not work after start abviously
+            _directionChanger.DirectionChanged += OnDirectionChanged; // subscribe on enable is not work after start obviously
         }
 
         // _spawner.NewWheelSpawned += ChangePhysicWheel;
@@ -73,29 +73,29 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         // _spawner.NewWheelSpawned -= ChangePhysicWheel;
     }
 
-    public void Activate(ICarBody carBody)
+    public void Activate()
     {
-        if (_isActivated == false)
+        if (_isActivated == false)// Activate directionChanger and ICarBody : IcarDirection
         {
             _isActivated = true;
-            _suspension.Activate(carBody, _rigidbody);
+            _suspension.Activate(_rigidbody);
         }
         else
         {
-            throw new Exception($"Wheel {this.gameObject} activated allready");
+           throw new Exception($"Wheel {this.gameObject} activated allready");
         }
     }
     
 
-    public void ForwardMove(ISpeed speed)
+    public void ForwardMove()
     {
-        _wheelMover.ForwardMove(speed, _rigidbody, LookDirection);
+        _wheelMover.ForwardMove(_rigidbody, LookDirection);
 
     }
 
-    public void BackwardMove(ISpeed speed)
+    public void BackwardMove()
     {
-        _wheelMover.BackwardMove(speed, _rigidbody, LookDirection);
+        _wheelMover.BackwardMove( _rigidbody, LookDirection);
     }
 
     public void StopMoving()

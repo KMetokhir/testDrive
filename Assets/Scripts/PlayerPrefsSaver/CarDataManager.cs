@@ -1,13 +1,36 @@
 
 using UnityEngine;
 
-public static class PlayerPrefsManager
+public static class CarDataManager
 {
+    private const string ConfigKeyPrefix = "CurrentConfig_";
+    private const char DataDivider = '_';
+
+
     /*private const string WebSessionKey = "WebGL_Session_ID";*/
 
     private const string XKey = "X";
     private const string YKey = "Y";
     private const string ZKey = "Z";
+
+    public static void SaveCarConfig(string upgraderType, uint carLevel, uint upgradeLevel)
+    {
+        string key = GenereteConfigKey(carLevel,upgraderType);
+
+        SaveInt(key, (int)upgradeLevel);        
+    }
+    
+    public static uint GetCarConfig(string upgraderType, uint carLevel, int defaultValue = 0)
+    {
+        string key = GenereteConfigKey(carLevel, upgraderType);
+
+        return (uint)LoadInt(key, defaultValue);
+    }
+
+    private static string GenereteConfigKey(uint carLevel,string upgraderType)
+    {
+        return ConfigKeyPrefix + DataDivider+ carLevel + DataDivider+ upgraderType;
+    }
 
     // Basic save
     public static void SaveInt(string key, int value)
