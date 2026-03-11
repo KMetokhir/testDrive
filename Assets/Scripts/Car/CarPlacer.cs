@@ -9,8 +9,10 @@ using static UnityEditor.Progress;
 
 public class CarPlacer : MonoBehaviour
 {
-    [Inject]
-    private SceneLoadHandler _sceneLoadHandler; 
+   
+    private SceneLoadHandler _sceneLoadHandler;
+    private ICarLevel _carLevel;
+    private ICarPositionSaver _positionSaver;
    
     [SerializeField] private float _yOffset;
     //  [SerializeField] private CarCompositDestroier _carDestroier;
@@ -23,6 +25,13 @@ public class CarPlacer : MonoBehaviour
     private Vector3 _defaultPosition;
     private Quaternion _defaultRotation;
 
+    [Inject]
+    private void Construct(SceneLoadHandler sceneLoadHandler, ICarLevel carLevel, ICarPositionSaver positionSaver)
+    {
+        _sceneLoadHandler = sceneLoadHandler;
+        _carLevel = carLevel;
+        _positionSaver = positionSaver;
+    }
 
     private void Awake()
     {        
@@ -66,24 +75,24 @@ public class CarPlacer : MonoBehaviour
         _sceneLoadHandler.SceneUnloaded -= SavePosition;
     }    
 
-    private string GenerateKey(string sceneName, string keyPrefix)  // to another class SpawnData
+  /*  private string GenerateKey(string sceneName, string keyPrefix)  // to another class SpawnData
     {
         string divider = "|";
 
         return keyPrefix + divider + sceneName;
-    }
+    }*/
 
     private void SetPosition()
     {      
 
-        string positionKey = GenerateKey(_sceneLoadHandler.SceneName, PositionKeyPrefix);
-        string rotationKey = GenerateKey(_sceneLoadHandler.SceneName, RotationKeyPrefix);
+       /* string positionKey = GenerateKey(_sceneLoadHandler.SceneName, PositionKeyPrefix);
+        string rotationKey = GenerateKey(_sceneLoadHandler.SceneName, RotationKeyPrefix);*/
 
         Vector3 yOffset = new Vector3(0, _yOffset, 0);
-        Vector3 startPosition = CarDataManager.GetVector3(positionKey, _defaultPosition);
+        Vector3 startPosition = _positionSaver.GetPosition(_carLevel.Value,_sceneLoadHandler.SceneName, _defaultPosition);
         startPosition += yOffset;
 
-        Vector3 eulerRotation = CarDataManager.GetVector3(rotationKey, _defaultRotation.eulerAngles);
+        Vector3 eulerRotation = _positionSaver.GetRotation(_carLevel.Value, _sceneLoadHandler.SceneName, _defaultRotation).eulerAngles;
         Quaternion startRotation = Quaternion.Euler(new Vector3(0, eulerRotation.y, 0));
 
         MessageBroker.Default.Publish(new CarStartSpawn
@@ -105,8 +114,8 @@ public class CarPlacer : MonoBehaviour
 
     private void SavePosition()
     {
-        CarDataManager.SaveVector3(GenerateKey(_sceneLoadHandler.SceneName, PositionKeyPrefix), _rigidbody.transform.position);
-        CarDataManager.SaveVector3(GenerateKey(_sceneLoadHandler.SceneName, RotationKeyPrefix), _rigidbody.transform.rotation.eulerAngles);
+        _positionSaver.SavePosition(_carLevel.Value,_sceneLoadHandler.SceneName, _rigidbody.transform.position);
+        _positionSaver.SaveRotation(_carLevel.Value, _sceneLoadHandler.SceneName, _rigidbody.transform.rotation);
     }
 }
 

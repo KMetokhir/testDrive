@@ -18,6 +18,7 @@ public class CarProjectlInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<MagnetSetingsProvider>().AsSingle();
         Container.BindInterfacesAndSelfTo<DriveDataProvader>().AsSingle();
         Container.BindInterfacesAndSelfTo<CarBodyProvider>().AsSingle();
+        Container.BindInterfacesAndSelfTo<CarDataSaver>().AsSingle();
 
         Container.Bind<RuntimeCarFactory>().AsSingle().NonLazy();
     }  

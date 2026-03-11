@@ -25,6 +25,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
   //  [SerializeField] private int CarLevel; // test 
 
     private ICarLevel _carLevel;
+    private ICarConfigSaver _configSaver;
 
     private uint _currentUpgradeLevel;
   //  private string _currentUpgradeLevelKey;
@@ -32,11 +33,12 @@ public class Upgrader<T, S, M> : MonoBehaviour
     private DiContainer _container;
 
     [Inject]
-    private void Construct(S view, ICarLevel carLevel, DiContainer container)
+    private void Construct(S view, ICarLevel carLevel, DiContainer container, ICarConfigSaver configSaver)
     {
         _container = container;
         _view = view;
         _carLevel = carLevel;
+        _configSaver = configSaver;
 
       //  Debug.LogError($"In construct upgrader {carLevel.Value}");
      //   CarLevel =(int) _carLevel.Value;
@@ -56,7 +58,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         //PlayerPrefs.DeleteAll();
 
-        _currentUpgradeLevel = (uint)CarDataManager.GetCarConfig(GetType().Name, _carLevel.Value);
+        _currentUpgradeLevel = _configSaver.GetCarConfig(GetType().Name, _carLevel.Value);
 
        /* _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
         _currentUpgradeLevel = (uint)CarDataManager.LoadInt(_currentUpgradeLevelKey);*/
@@ -146,7 +148,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
                 _currentUpgradeLevel = _currentUpgrade.UpgradeLevel;
                 //  CarDataManager.SaveInt(_currentUpgradeLevelKey, (int)_currentUpgradeLevel);
-                CarDataManager.SaveCarConfig(GetType().Name, _carLevel.Value, _currentUpgradeLevel);
+                _configSaver.SaveCarConfig(GetType().Name, _carLevel.Value, _currentUpgradeLevel);
             }
         }
     }
