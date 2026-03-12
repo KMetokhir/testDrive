@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 public abstract class UpgradePart : MonoBehaviour, IUpgradePart
@@ -12,9 +12,8 @@ public abstract class UpgradePart : MonoBehaviour, IUpgradePart
     public void DestroyObject()
     {
         MakeInDestroy();
-        
+
         Destroy(gameObject);
-        
     }
 
     protected abstract void MakeInDestroy();

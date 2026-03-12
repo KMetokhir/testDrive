@@ -1,5 +1,4 @@
-
-public interface IMagnetData : IUpgradeData
+﻿public interface IMagnetData : IUpgradeData
 {
     public float MagnetRadius { get; }
 }

@@ -1,5 +1,3 @@
-
-public class PowerUpgraderView : ButtonWithSliderView
+﻿public class PowerUpgraderView : ButtonWithSliderView
 {
-
 }

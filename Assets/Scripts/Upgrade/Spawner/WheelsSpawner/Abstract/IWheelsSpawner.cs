@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-public interface IWheelsSpawner   
+public interface IWheelsSpawner
 {
     public event Action<IWheelUpgrade> WheelSpawned;
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "SpeedUpgrade", menuName = "CarUpgrades/Speed")]
 public class SpeedUpgrade : Upgrade, IDriveData

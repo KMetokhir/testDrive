@@ -1,5 +1,3 @@
-
-public interface IUpgradeData
+﻿public interface IUpgradeData
 {
-
 }

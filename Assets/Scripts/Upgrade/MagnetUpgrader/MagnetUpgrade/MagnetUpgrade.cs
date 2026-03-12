@@ -1,5 +1,4 @@
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "MagnetUpgrade", menuName = "CarUpgrades/Magnet")]
 public class MagnetUpgrade : Upgrade, IMagnetData

@@ -1,4 +1,4 @@
-public enum AttractablesType
+﻿public enum AttractablesType
 {
     screw,
     wrench

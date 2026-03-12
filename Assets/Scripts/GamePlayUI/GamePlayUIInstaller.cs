@@ -1,17 +1,16 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class GamePlayUIInstaller : MonoInstaller
 {
-
     [SerializeField] private GamePlayUI _gamePlayUIPrefab;
 
     private GamePlayUI _gamePlayUIInstance;
 
     private TrunkView _trunkView;
-    private MoneyView _moneyView; 
+    private MoneyView _moneyView;
     private ScreenInput _screenInput;
     private UpgradePanel _upgradePanel;
     private LevelUpVeiw _levelUpView;
@@ -21,7 +20,6 @@ public class GamePlayUIInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-
         if (_gamePlayUIInstance == null)
         {
             _gamePlayUIInstance = Instantiate(_gamePlayUIPrefab);

@@ -9,10 +9,10 @@ public class CarProjectlInstaller : MonoInstaller
     public override void InstallBindings()
     {
         SignalBusInstaller.Install(Container);
-        Container.DeclareSignal<CarSpawnedSignal>();         
+        Container.DeclareSignal<CarSpawnedSignal>();
 
         Container.Bind<CarConteiner>().FromInstance(_carPrefab)
-            .WhenInjectedInto<RuntimeCarFactory>();     
+            .WhenInjectedInto<RuntimeCarFactory>();
 
         Container.BindInterfacesAndSelfTo<CarLevelProvider>().AsSingle();
         Container.BindInterfacesAndSelfTo<MagnetSetingsProvider>().AsSingle();
@@ -21,5 +21,5 @@ public class CarProjectlInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<CarDataSaver>().AsSingle();
 
         Container.Bind<RuntimeCarFactory>().AsSingle().NonLazy();
-    }  
+    }
 }

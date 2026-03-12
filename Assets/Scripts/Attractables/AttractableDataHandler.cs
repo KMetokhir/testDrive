@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ public class AttractableDataHandler<T> : MonoBehaviour
     private void Awake()
     {
         // _allObjectsIdKey += typeof(T);
-      //  Debug.LogError($"All objects key  {_allObjectsIdKey}");
+        //  Debug.LogError($"All objects key  {_allObjectsIdKey}");
         //_allId.Clear();
         LoadAllObjects();
     }
@@ -29,6 +29,7 @@ public class AttractableDataHandler<T> : MonoBehaviour
     public void RegisterObject(T attractable, string sceneName, int rows, int columns)
     {
         if (attractable == null)
+
             throw new System.Exception($"{nameof(attractable)}  is null");
 
         string dataId = GenerateDataId(attractable.Id, sceneName);
@@ -41,7 +42,6 @@ public class AttractableDataHandler<T> : MonoBehaviour
         }
         else
         {
-
             AttractableData data = new AttractableData(dataId, attractable.transform.position, sceneName, rows, columns);
             string key = $"{ObjectKeyPrefix}{dataId}";
             PlayerPrefs.SetString(key, data.ToString());
@@ -71,6 +71,7 @@ public class AttractableDataHandler<T> : MonoBehaviour
             RemoveData(data.Id);
         }
     }
+
     public void RemoveById(string id, string sceneName)
     {
         string dataId = GenerateDataId(id, sceneName);
@@ -92,7 +93,6 @@ public class AttractableDataHandler<T> : MonoBehaviour
         PlayerPrefs.Save();
         UpdateObjectList();
         Debug.Log($"Removed object: {data.Id}");
-
     }
 
     public List<Vector3> GetPositionsOnScene(string sceneName, int rows, int columns)
@@ -220,6 +220,7 @@ public class AttractableData
                 }
             }
         }
+
         catch (Exception e)
         {
             Debug.LogError($"Error parsing SceneObjectData: {e.Message}");
@@ -231,4 +232,4 @@ public class AttractableData
         return $"{Id}|{Position.x}&{Position.y}&{Position.z}|{SceneName}|{Rows}|{Columns}";
     }
 }
-
+

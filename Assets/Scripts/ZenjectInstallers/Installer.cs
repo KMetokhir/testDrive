@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,17 +27,10 @@ public class Installer : MonoInstaller
         Container.BindInstance(_powerUpgraderView).AsSingle();
         Container.BindInstance(_upgradePanel).AsSingle();
 
-      // Container.Bind<ICarLevel>().FromComponentInParents().AsSingle();
+        // Container.Bind<ICarLevel>().FromComponentInParents().AsSingle();
 
-        
+        // Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_prefab);
 
-       // Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_prefab);
-
-        
         //   Container.BindFactory<Money, Money.Factory>().FromComponentInNewPrefab(_Prefab);
-
-
-
-
     }
 }

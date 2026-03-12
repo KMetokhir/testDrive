@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
@@ -45,14 +45,8 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         }*/
     }
 
-    private void MoveView(float speed, int clockRotation, float deltaTime)
-    {
-        _wheelView.Move(Mathf.Abs(speed), clockRotation, deltaTime, transform.TransformDirection(LookDirection));
-    }
-
     /* private void ChangePhysicWheel(WheelUpgrade upgrade)
      {
-
          if (upgrade is PhysicWheel)
          {
              _physicWheel = upgrade as PhysicWheel;
@@ -61,6 +55,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
          {
              throw new Exception(" PhysicWheel does not implement WheelUpgrade");
          }
+
      }*/
 
     private void OnDisable()
@@ -73,6 +68,11 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         // _spawner.NewWheelSpawned -= ChangePhysicWheel;
     }
 
+    private void MoveView(float speed, int clockRotation, float deltaTime)
+    {
+        _wheelView.Move(Mathf.Abs(speed), clockRotation, deltaTime, transform.TransformDirection(LookDirection));
+    }
+
     public void Activate()
     {
         if (_isActivated == false)// Activate directionChanger and ICarBody : IcarDirection
@@ -82,26 +82,23 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         }
         else
         {
-           throw new Exception($"Wheel {this.gameObject} activated allready");
+            throw new Exception($"Wheel {this.gameObject} activated allready");
         }
     }
-    
 
     public void ForwardMove()
     {
         _wheelMover.ForwardMove(_rigidbody, LookDirection);
-
     }
 
     public void BackwardMove()
     {
-        _wheelMover.BackwardMove( _rigidbody, LookDirection);
+        _wheelMover.BackwardMove(_rigidbody, LookDirection);
     }
 
     public void StopMoving()
     {
         _wheelMover.StopMoving();
-
     }
 
     protected virtual void UseInAwake()
@@ -119,9 +116,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
 
         _wheelMover.SetDirection(direction);
 
-
         _wheelView.RotateTo(transform.TransformDirection(LookDirection));
-
     }
 
     private void OnDrawGizmos()

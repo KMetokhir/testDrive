@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class AttractionPoint
@@ -43,6 +43,7 @@ public class AttractionPoint
     private bool CheckDistance()
     {
         float toleranceDistance = 0.001f;
+
         return (_surfacePoint.WordPosition - AttractableObject.Transform.position).sqrMagnitude <= toleranceDistance;
     }
 }

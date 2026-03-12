@@ -1,12 +1,11 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class CameraFollower : MonoBehaviour
-{  
-
+{
     private CarConteiner _car;
     private SignalBus _signalBus;
 
@@ -34,7 +33,9 @@ public class CameraFollower : MonoBehaviour
     /*void LateUpdate()
     {
         if (_car != null) {
+
             _car.DoSmth();
         }      
+
     }*/
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class Money : MonoBehaviour
@@ -6,13 +6,13 @@ public class Money : MonoBehaviour
     [SerializeField] private uint _stratValue;
     [SerializeField] private MoneyView _view;
 
+    public uint Value { get; private set; }
+
     [Inject]
     private void Construct(MoneyView view)
     {
         _view = view;
     }
-
-    public uint Value { get; private set; }
 
     private void Start()
     {

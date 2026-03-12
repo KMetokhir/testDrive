@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +9,13 @@ public class Crane : CompositePart
 {
     [SerializeField] private MagnetSpawner _spawner;
     [SerializeField] private Rope _rope;
-   // [SerializeField] private Rigidbody _rigidbody;
+    // [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private Magnet _magnet; // magnetUpgrade not magnet
 
     private FixedJoint _fixedJoint;
 
-  //  public Rigidbody Rigidbody => _rigidbody;
+    //  public Rigidbody Rigidbody => _rigidbody;
 
     public event Action<Magnet> MagnetSpawned;
     public event Action<Magnet> MagnetDestroied;
@@ -25,30 +25,14 @@ public class Crane : CompositePart
         _fixedJoint = GetComponentInChildren<FixedJoint>();
     }
 
-    private void Start()
-    {
-       
-        _spawner = GetComponentInChildren<MagnetSpawner>();       
-
-    }
-
-    public void ConnectToBody(Rigidbody rigidbody)
-    {
-        if (_fixedJoint == null)
-        {
-            Debug.LogError("JOINT == null");
-
-        }
-        else
-        {
-            _fixedJoint.connectedBody = rigidbody;
-        }
-    }
-
-
     private void OnEnable()
     {
         _spawner.PartSpawned += OnMagnetSpawned;
+    }
+
+    private void Start()
+    {
+        _spawner = GetComponentInChildren<MagnetSpawner>();
     }
 
     private void OnDisable()
@@ -59,11 +43,23 @@ public class Crane : CompositePart
         }
     }
 
+    public void ConnectToBody(Rigidbody rigidbody)
+    {
+        if (_fixedJoint == null)
+        {
+            Debug.LogError("JOINT == null");
+        }
+        else
+        {
+            _fixedJoint.connectedBody = rigidbody;
+        }
+    }
+
     private void OnMagnetSpawned(Magnet magnet)
-    {        
+    {
         Debug.Log("MagnetSpawned");
 
-      //  _rope.transform.position = magnet.transform.position+ Vector3.up;
+        //  _rope.transform.position = magnet.transform.position+ Vector3.up;
 
         _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet.ConnectionPoint); // get it fro magnet variable
 
@@ -88,9 +84,7 @@ public class Crane : CompositePart
     {
         _magnet.Destroied -= OnMagnetDestoied;
         _magnet.DestroyObject();
-
     }
-
 
     private void OnMagnetDestoied(ObservableUpgradePart part)
     {

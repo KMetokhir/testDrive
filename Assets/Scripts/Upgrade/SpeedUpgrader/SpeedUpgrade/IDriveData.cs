@@ -1,7 +1,5 @@
+﻿using UnityEngine;
 
-using UnityEngine;
-
-public interface IDriveData : IUpgradeData, ISpeedData , IWheelRotationData
+public interface IDriveData : IUpgradeData, ISpeedData, IWheelRotationData
 {
-   
 }

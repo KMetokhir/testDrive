@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -22,25 +22,12 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _currentAngle = float.MaxValue;
     }
 
-    public void OnPointerEnter(PointerEventData pointerEventData)
-    {
-        _isPointerUnderPanel = true;
-       // Debug.Log("Pointer under p[anel");
-    }
-
-    public void OnPointerExit(PointerEventData pointerEventData)
-    {
-        _isPointerUnderPanel = false;
-         MouseUp?.Invoke();
-    }
-
     void Update()
     {
         if (_isPointerUnderPanel)
         {
             if (Input.GetMouseButton(0))
             {
-
                 Vector2 mousePos = Input.mousePosition;
                 Vector2 localPoint;
 
@@ -62,7 +49,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     _currentAngle = newAngle;
                     AngleChanged?.Invoke(newAngle);
 
-                   // Debug.Log("Control panel input angle changed");
+                    // Debug.Log("Control panel input angle changed");
                 }
             }
 
@@ -71,6 +58,18 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 MouseUp?.Invoke();
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        _isPointerUnderPanel = true;
+        // Debug.Log("Pointer under p[anel");
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        _isPointerUnderPanel = false;
+        MouseUp?.Invoke();
     }
 
     private float CalculateAngle(Vector3 vectorA, Vector3 vectorB, Vector3 normal) // same method in rotator

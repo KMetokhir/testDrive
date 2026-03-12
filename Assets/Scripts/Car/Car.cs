@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
@@ -9,7 +9,7 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
     [SerializeField] private Trunk _trunk;
     [SerializeField] private Money _money;
 
-    //[SerializeField] private FixedJoint _joint; убрать перенести на кран
+    //[SerializeField] private FixedJoint _joint; пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 
     [SerializeField] private CraneSpawner _craneSpawner;
 
@@ -30,9 +30,38 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
         _craneSpawner.PartSpawned += OnCraneSpawned;
     }
 
+    private void OnEnable()
+    {
+        if (_magnet != null) // tmp
+        {
+            _magnet.ObjectInMagnetAria += OnObjectInMagnetAria;
+        }
+
+        _trunk.MaxWeightChanged += OnMaxWeightChanged;
+    }
+
+    private void Start()
+    {
+        if (_magnet != null)
+        {
+            _magnet.StartWorke();
+        }
+
+        //  Level = 1; // tmp
+    }
+
+    private void OnDisable()
+    {
+        if (_magnet != null)
+        {
+            _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
+            _trunk.MaxWeightChanged -= OnMaxWeightChanged;
+        }
+    }
+
     private void OnCraneSpawned(Crane crane)
     {
-      //  _joint.connectedBody = crane.Rigidbody; // tmp
+        //  _joint.connectedBody = crane.Rigidbody; // tmp
 
         SubscribeToCrane(crane);
     }
@@ -42,7 +71,6 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
         crane.Destroied += OnCraineDestroied;
         crane.MagnetSpawned += OnMagnetSpawned;
         crane.MagnetDestroied += OnMagnetDestroied;
-
     }
 
     private void UnsubscribeFromCrane(Crane crane)
@@ -80,39 +108,9 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
 
     private void OnMagnetSpawned(Magnet magnet)
     {
-
         _magnet = magnet;
         _magnet.ObjectInMagnetAria += OnObjectInMagnetAria;
         _magnet.StartWorke();
-    }
-
-    private void Start()
-    {
-        if (_magnet != null)
-        {
-            _magnet.StartWorke();
-        }
-
-        //  Level = 1; // tmp
-    }
-
-    private void OnEnable()
-    {
-        if (_magnet != null) // tmp
-        {
-            _magnet.ObjectInMagnetAria += OnObjectInMagnetAria;
-        }
-
-        _trunk.MaxWeightChanged += OnMaxWeightChanged;
-    }
-
-    private void OnDisable()
-    {
-        if (_magnet != null)
-        {
-            _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
-            _trunk.MaxWeightChanged -= OnMaxWeightChanged;
-        }
     }
 
     private void OnMaxWeightChanged()
@@ -126,7 +124,6 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
 
     private void OnObjectInMagnetAria(ICollectable collectable)
     {
-
         if (_trunk.TryAdd(collectable) == false)
         {
             _magnet.Stop();

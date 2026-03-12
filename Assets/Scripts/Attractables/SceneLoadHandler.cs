@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,10 +6,10 @@ public class SceneLoadHandler : MonoBehaviour
 {
     private string _sceneName;
 
-    public string SceneName => _sceneName;
-
     public event Action SceneUnloaded;
     public event Action SceneLoaded;
+
+    public string SceneName => _sceneName;
 
     void OnEnable()
     {
@@ -18,17 +18,17 @@ public class SceneLoadHandler : MonoBehaviour
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
     private void OnSceneUnloaded(Scene arg0)
     {
         Debug.Log("Scene Unloaded");
 
         SceneUnloaded?.Invoke();
-    }
-
-    void OnDisable()
-    {      
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;    
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

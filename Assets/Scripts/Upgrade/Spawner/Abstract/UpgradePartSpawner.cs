@@ -1,12 +1,12 @@
-using UniRx.Triggers;
+﻿using UniRx.Triggers;
 using UnityEngine;
 
 public abstract class UpgradePartSpawner : MonoBehaviour
-{   
+{
     [SerializeField] private Transform _spawnPosition;
     [SerializeField] private Transform _parent;
 
-    public virtual  UpgradePart LastSpawnedPart { get; private set; }
+    public virtual UpgradePart LastSpawnedPart { get; private set; }
 
     public virtual bool TrySpawn(UpgradePart part)
     {
@@ -14,7 +14,7 @@ public abstract class UpgradePartSpawner : MonoBehaviour
         {
             part.transform.position = _spawnPosition.TransformPoint(part.SpawnPosition);
             part.transform.rotation = _spawnPosition.transform.rotation;
-            part.transform.parent = _parent; 
+            part.transform.parent = _parent;
 
             LastSpawnedPart = part;
 
@@ -22,7 +22,7 @@ public abstract class UpgradePartSpawner : MonoBehaviour
         }
 
         return false;
-    }    
+    }
 
     public abstract bool IsSpawnPossible(UpgradePart part);
 }

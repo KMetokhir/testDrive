@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
@@ -14,5 +14,5 @@ public class Rope : MonoBehaviour
 
         _joint.anchor = transform.InverseTransformPoint(_connectPoint.position);
         _joint.connectedAnchor = target.transform.InverseTransformPoint(targetPoint);
-    }   
+    }
 }

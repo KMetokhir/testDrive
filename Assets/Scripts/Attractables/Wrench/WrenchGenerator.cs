@@ -1,6 +1,3 @@
-
-
-public class WrenchGenerator : AttractableGenerator<Wrench>
+﻿public class WrenchGenerator : AttractableGenerator<Wrench>
 {
-   
 }

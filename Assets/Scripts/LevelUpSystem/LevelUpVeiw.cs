@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +22,7 @@ public class LevelUpVeiw : MonoBehaviour
             throw new NullReferenceException(nameof(_upgradeButton));
         }
     }
-    
+
     private void OnEnable()
     {
         _upgradeButton.onClick.AddListener(OnButtonClick);

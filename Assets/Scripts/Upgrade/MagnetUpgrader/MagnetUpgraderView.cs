@@ -1,4 +1,3 @@
-
-public class MagnetUpgraderView : ButtonWithSliderView
+﻿public class MagnetUpgraderView : ButtonWithSliderView
 {
 }

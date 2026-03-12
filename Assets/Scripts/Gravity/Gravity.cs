@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]  //add animation curve/ more speed more down force
 public class Gravity : MonoBehaviour

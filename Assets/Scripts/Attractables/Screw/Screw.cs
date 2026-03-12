@@ -1,5 +1,3 @@
-
-public class Screw : Attractable
+﻿public class Screw : Attractable
 {
-   
 }

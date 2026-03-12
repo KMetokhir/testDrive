@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -9,13 +9,12 @@ public abstract class GenericObservableSpawner<T> : GenericUpgradeSpawner<T>
     public override bool TrySpawn(UpgradePart part)
     {
         if (base.TrySpawn(part))
-        {               
-
-            PartSpawned?.Invoke(part as T);          
+        {
+            PartSpawned?.Invoke(part as T);
 
             return true;
         }
 
         return false;
-    }    
+    }
 }

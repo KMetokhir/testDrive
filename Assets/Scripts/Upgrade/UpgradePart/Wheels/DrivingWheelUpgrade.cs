@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DrivingWheelUpgrade : WheelUpgradePart  
+public class DrivingWheelUpgrade : WheelUpgradePart
 {
-   
 }

@@ -1,9 +1,4 @@
-//using System;
-using System;
-using System.Collections;
-using UniRx;
-using UnityEngine;
-
+﻿using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -18,21 +13,20 @@ public class Suspension : MonoBehaviour
 
     private Rigidbody _wheelRb;
     private ConfigurableJoint _joint;
- 
-    public void Activate( Rigidbody wheelRb)
+
+    public void Activate(Rigidbody wheelRb)
     {
         if (_wheelRb == null)
-        {            
-            _wheelRb = wheelRb;          
+        {
+            _wheelRb = wheelRb;
 
-            CreateJoint();           
+            CreateJoint();
         }
         else
         {
             throw new System.Exception($"Suspension on wheel {this.gameObject} already Activated");
         }
     }
-   
 
     private void CreateJoint()
     {
@@ -44,10 +38,8 @@ public class Suspension : MonoBehaviour
 
     private void SetSpringSettings()
     {
-       
         if (_joint != null)
         {
-
             _joint.xMotion = ConfigurableJointMotion.Locked;
             _joint.yMotion = ConfigurableJointMotion.Limited;
             _joint.zMotion = ConfigurableJointMotion.Locked;
@@ -69,7 +61,6 @@ public class Suspension : MonoBehaviour
             _joint.angularXMotion = ConfigurableJointMotion.Locked;
             _joint.angularYMotion = ConfigurableJointMotion.Locked;
             _joint.angularZMotion = ConfigurableJointMotion.Locked;
-
         }
-    }      
+    }
 }

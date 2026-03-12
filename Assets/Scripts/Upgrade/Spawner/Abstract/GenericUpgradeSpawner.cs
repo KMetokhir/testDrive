@@ -1,5 +1,4 @@
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GenericUpgradeSpawner<T> : UpgradePartSpawner
     where T : class, IUpgradePart

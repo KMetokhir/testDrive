@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -11,7 +11,7 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
     [SerializeField] private AttractableDataHandler<T> _dataHandler;
 
     [Inject]
-     private SceneLoadHandler _sceneLoadHanddler; // INJECT!
+    private SceneLoadHandler _sceneLoadHanddler; // INJECT!
 
     private List<T> _activeObjects = new List<T>();
 
@@ -19,6 +19,12 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
     {
         _pool.ObjectGeted += OnObjectGetted;
         _sceneLoadHanddler.SceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        _pool.ObjectGeted -= OnObjectGetted;
+        _sceneLoadHanddler.SceneUnloaded -= OnSceneUnloaded;
     }
 
     private void OnSceneUnloaded()
@@ -32,12 +38,6 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
         }
 
         _activeObjects.Clear();
-    }
-
-    private void OnDisable()
-    {
-        _pool.ObjectGeted -= OnObjectGetted;
-        _sceneLoadHanddler.SceneUnloaded -= OnSceneUnloaded;
     }
 
     private void OnObjectGetted(T attractable)
@@ -57,4 +57,4 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
         _pool.PutObject(attractable as T);
     }
 }
-
+

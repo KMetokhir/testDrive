@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,27 +7,24 @@ using Zenject;
 
 public class AttractablesSpawner<T> : MonoBehaviour
     where T : Attractable
-{   
+{
     [SerializeField] private AttractableDataHandler<T> _dataHandler;
     [SerializeField] private AttractableGenerator<T> _generator;
     [SerializeField] private float _yOffSet;
 
     private int _rowsPerQuad;
     private int _columnsPerQuad;
-   
+
+    public event Action<T> AttractableSpawned;
 
     private string _currentSceneName => SceneManager.GetActiveScene().name; // use sceneload handler
- 
-
-    public event Action<T> AttractableSpawned;   
-
 
     public void Spawn(AttractablesType type, List<QuadSpawnArea> _quadSpawnArias, int rows, int columns)
     {
         _rowsPerQuad = rows;
         _columnsPerQuad = columns;
 
-        List<Vector3> spawnPoints = _dataHandler.GetPositionsOnScene(_currentSceneName,  _rowsPerQuad, _columnsPerQuad);
+        List<Vector3> spawnPoints = _dataHandler.GetPositionsOnScene(_currentSceneName, _rowsPerQuad, _columnsPerQuad);
         _dataHandler.RemoveAllDataOnScene(_currentSceneName);
 
         if (spawnPoints.Count != 0)
@@ -57,8 +54,7 @@ public class AttractablesSpawner<T> : MonoBehaviour
         attractable.transform.position = spawnPoint;
 
         _dataHandler.RegisterObject(attractable, _currentSceneName, _rowsPerQuad, _columnsPerQuad);
-       
-    }   
+    }
 
     private List<Vector3> GenerateQuadSpawnPoints(QuadSpawnArea quad)
     {
@@ -69,7 +65,7 @@ public class AttractablesSpawner<T> : MonoBehaviour
 
         List<Vector3> spawnPoints = new List<Vector3>();
 
-       // float yOffset = 0.1f;
+        // float yOffset = 0.1f;
 
         float quadHalfWidth = quad.SizeX / 2f;
         float quadHalfHeight = quad.SizeY / 2f;

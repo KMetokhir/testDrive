@@ -1,19 +1,23 @@
-using System;
+﻿using System;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLevel
 {
-    public bool iscollectable; // TMP
-
     [SerializeField] private AttractableConfig _config;
     [SerializeField] private AttractableView _view;
     [SerializeField] private int CARlevel;// tmp
+    public bool iscollectable; // TMP
 
     private ICarLevel _carLevel;
 
     private AttractableModel _model;
+    // public AttractablesType Type => _model.Type;
+
+    public event Action<Attractable> Deactivated;
+    public event Action<Attractable> Collected;
+    public event Action<Attractable> Stored;
 
     public bool IsActive => _model.IsActive;
     public bool IsPossibleToCollect => _model.IsPossibleToCollect;
@@ -23,27 +27,20 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
     public uint Cost => _model.Cost;
     public uint Level => _model.Level;
     public string Id => _model.Id;
-    // public AttractablesType Type => _model.Type;
-
-    public event Action<Attractable> Deactivated;
-    public event Action<Attractable> Collected;
-    public event Action<Attractable> Stored;
 
     //private SignalBus _signalBus;
 
     [Inject]
     private void Construct(/*SignalBus signalBus,*/ ICarLevel carLevel)
     {
-       // _signalBus = signalBus;
+        // _signalBus = signalBus;
         _carLevel = carLevel;
 
         //   Debug.LogError( $" {_carLevel == null} in attractanble");
     }
 
-
     private void Awake()
     {
-
         // CARlevel =(int) _carLevel.Value;
 
         _model = new AttractableModel(_config);
@@ -54,12 +51,12 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         }*/
 
         // Debug.LogError("Subsribe to level up");
-/*
-        MessageBroker.Default  // unsubscribe on CompositDisposable in disable?
-            .Receive<LevelUp>()
-             .Subscribe(msg =>
-             _model.ProcessCollectorLevel((int)msg.Level))
-             .AddTo(this);*/
+        /*
+                MessageBroker.Default  // unsubscribe on CompositDisposable in disable?
+                    .Receive<LevelUp>()
+                     .Subscribe(msg =>
+                     _model.ProcessCollectorLevel((int)msg.Level))
+                     .AddTo(this);*/
 
         iscollectable = _model.IsPossibleToCollect;// test
     }
@@ -73,7 +70,19 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         _model.Stored += OnStored;
 
         _carLevel.Changed += OnCarLevelChanged;
-      /*  _signalBus.Subscribe<CarSpawnedSignal>(OnCarSpawned);*/
+        /*  _signalBus.Subscribe<CarSpawnedSignal>(OnCarSpawned);*/
+    }
+
+    private void OnDisable()
+    {
+        _model.Activated -= OnActivated;
+        _model.Deactivated -= OnDeactivated;
+        _model.BecameAvalible -= OnBacameAvalible;
+        _model.Collected -= OnCollected;
+        _model.Stored -= OnStored;
+        _carLevel.Changed -= OnCarLevelChanged;
+
+        /*  _signalBus.Unsubscribe<CarSpawnedSignal>(OnCarSpawned);*/
     }
 
     private void OnCarLevelChanged()
@@ -86,38 +95,24 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         Stored?.Invoke(this);
     }
 
-    private void OnDisable()
-    {
-        _model.Activated -= OnActivated;
-        _model.Deactivated -= OnDeactivated;
-        _model.BecameAvalible -= OnBacameAvalible;
-        _model.Collected -= OnCollected;
-        _model.Stored -= OnStored;
-        _carLevel.Changed -= OnCarLevelChanged;
-
-
-        /*  _signalBus.Unsubscribe<CarSpawnedSignal>(OnCarSpawned);*/
-
-    }
     public void TransitToStore()
     {
         _model.TransitToStore();
     }
 
-   /* private void OnCarSpawned(CarSpawnedSignal signal)
-    {
-        //  Debug.LogError("Car Spawned In Attracrable");
+    /* private void OnCarSpawned(CarSpawnedSignal signal)
+     {
+         //  Debug.LogError("Car Spawned In Attracrable");
 
-        CARlevel = (int)signal.Car.Value;
-        _model.ProcessCollectorLevel(CARlevel);
-    }*/
+         CARlevel = (int)signal.Car.Value;
+         _model.ProcessCollectorLevel(CARlevel);
+     }*/
 
     private void OnCollected()
     {
         Collected?.Invoke(this);
         iscollectable = _model.IsPossibleToCollect;// test
     }
-
 
     private void OnActivated()
     {
@@ -156,5 +151,4 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         iscollectable = _model.IsPossibleToCollect; // test
     }
 }
-
-  
+

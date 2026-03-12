@@ -4,13 +4,10 @@ using UnityEngine;
 using Zenject;
 using static CarDestroyer;
 
-
 public class CarPlaceObserver : MonoBehaviour
 {
-
     private void Awake()
     {
-
         MessageBroker.Default
               .Receive<CarStartSpawn>()
                .Subscribe(msg =>

@@ -1,5 +1,3 @@
-
-public class RightRotaryWheelUpgrade : RotaryWheelUpgrade
+﻿public class RightRotaryWheelUpgrade : RotaryWheelUpgrade
 {
-
 }

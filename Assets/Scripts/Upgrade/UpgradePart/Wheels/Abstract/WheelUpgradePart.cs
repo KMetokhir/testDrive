@@ -1,5 +1,4 @@
-
-using UnityEngine.UIElements;
+﻿using UnityEngine.UIElements;
 
 public abstract class WheelUpgradePart : ObservableUpgradePart, IWheelUpgrade
 {
@@ -8,5 +7,5 @@ public abstract class WheelUpgradePart : ObservableUpgradePart, IWheelUpgrade
     private void Awake()
     {
         Wheel = GetComponent<IWheel>();
-    }   
+    }
 }

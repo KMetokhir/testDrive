@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 
-public interface ICarLevel 
+public interface ICarLevel
 {
-
     public event Action Changed;
-   public uint Value { get; }
+    public uint Value { get; }
 }

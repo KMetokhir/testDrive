@@ -1,5 +1,4 @@
-
-public interface ICollectable : IPoollable
+﻿public interface ICollectable : IPoollable
 {
     public void Collect();
     public uint Weight { get; }

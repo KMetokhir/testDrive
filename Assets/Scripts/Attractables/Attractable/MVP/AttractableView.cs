@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttractableView : MonoBehaviour
 {
@@ -21,7 +21,6 @@ public class AttractableView : MonoBehaviour
 
     public void BecameAvalible()
     {
-
     }
 
     public void BecameUnavailable()

@@ -1,5 +1,3 @@
-
-public abstract class RotaryWheelUpgrade : WheelUpgradePart
+﻿public abstract class RotaryWheelUpgrade : WheelUpgradePart
 {
-   
 }

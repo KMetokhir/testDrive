@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
@@ -18,16 +18,16 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
 
     public event Action Changed;
 
+    private uint _currentUpgradesLevel => (uint)_upgradables.Sum(v => v.UpgradeLevel);
+
+    public uint Value => _currentLevel;
+
     [Inject]
     private void Construct(LevelUpVeiw view, SceneLoadHandler sceneLoadHandler)
     {
         _view = view;
         _sceneLoadHandler = sceneLoadHandler;
     }
-
-    private uint _currentUpgradesLevel => (uint)_upgradables.Sum(v => v.UpgradeLevel);
-
-    public uint Value => _currentLevel;
 
     private void Awake()
     {
@@ -58,6 +58,11 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
         _sceneLoadHandler.SceneLoaded += OnSceneLoaded;
     }
 
+    private void Start()
+    {
+        Changed?.Invoke();
+    }
+
     private void OnDisable()
     {
         foreach (IUpgradable upgradable in _upgradables)
@@ -67,18 +72,12 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
 
         _view.ButtonClicked -= OnLevelUpButtonClicked;
         _sceneLoadHandler.SceneLoaded -= OnSceneLoaded;
-
     }
 
     private void OnSceneLoaded()
     {
         /* Debug.LogError("SceneLoaded" +
              "invoke levelup");*/
-        Changed?.Invoke();
-    }
-
-    private void Start()
-    {
         Changed?.Invoke();
     }
 
@@ -89,6 +88,7 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
              Level = _currentLevel
          });
      }
+
  */
     private void OnLevelUpButtonClicked()
     {

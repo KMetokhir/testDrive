@@ -1,5 +1,3 @@
-
-public class AttractablePool : ObjectPool<Attractable>
+﻿public class AttractablePool : ObjectPool<Attractable>
 {
-
 }

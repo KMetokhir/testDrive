@@ -1,5 +1,3 @@
-
-public class SpeedUpgraderView : ButtonWithSliderView
+﻿public class SpeedUpgraderView : ButtonWithSliderView
 {
-   
 }

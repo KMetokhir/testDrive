@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISeller 
+public interface ISeller
 {
-    public List<IAttractable> Buy();    
+    public List<IAttractable> Buy();
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +9,7 @@ public class TrunkView : MonoBehaviour
     private void Awake()
     {
         _slider = GetComponent<Slider>();
+
         if (_slider == null)
         {
             throw new NullReferenceException(nameof(_slider));

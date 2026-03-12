@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,11 +18,19 @@ public class MagnetField : MonoBehaviour
     private void Awake()
     {
         _cubeSize = PhysicCube.localScale;
-   
+
         _attractionPoints = new List<AttractionPoint>();
         _surfacePoints = new List<SurfacePoint>();
 
         GenerateSurfacePoints(_cubeSize);
+    }
+
+    private void FixedUpdate()
+    {
+        foreach (AttractionPoint point in _attractionPoints)
+        {
+            point.Attract(_moveSpeed, _rotationSpeed, Time.fixedDeltaTime);
+        }
     }
 
     public void AddToField(IAttractable attractable) // TEMP
@@ -63,18 +71,10 @@ public class MagnetField : MonoBehaviour
 
             SurfacePoint surfacePoint = GetClosestPoint(obj.Transform.position);
 
-            AttractionPoint point = new AttractionPoint(surfacePoint, obj, transform);           
+            AttractionPoint point = new AttractionPoint(surfacePoint, obj, transform);
 
             _attractionPoints.Add(point);
             _surfacePoints.Remove(surfacePoint);
-        }       
-    }
-
-    private void FixedUpdate()
-    {
-        foreach (AttractionPoint point in _attractionPoints)
-        {
-            point.Attract(_moveSpeed, _rotationSpeed, Time.fixedDeltaTime);
         }
     }
 

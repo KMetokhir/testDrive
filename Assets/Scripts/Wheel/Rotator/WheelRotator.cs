@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
@@ -10,7 +10,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
     private ICarDirection _carDirection;
 
-   // [Inject]
+    // [Inject]
     private IWheelRotationData _rotationData;
 
     private bool _isRotating;
@@ -32,17 +32,25 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     {
         _isRotating = false;
         // 
-       // _carDirection = FindObjectOfType<Car>();// tmp        
+        // _carDirection = FindObjectOfType<Car>();// tmp        
         _wheelDirection = transform.forward;
         _targetAngle = 0;
 
         DirectionChanged?.Invoke(_wheelDirection);
     }
 
+    private void FixedUpdate()
+    {
+        if (_isRotating)
+        {
+            RotateWheelDirection();
+            Rotate(_wheelDirection, _targetAngle);
+        }
+    }
+
     // rotate - incorrrect naming
     public void Rotate(Vector3 wheelDirection, float angle)
-    {      
-
+    {
         Vector3 wheelWorldDirection = transform.TransformDirection(wheelDirection);
         Vector3 carForwardDirection = _carDirection.ForwardDirection;
 
@@ -50,7 +58,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
         // Debug.Log(angle + " angle in "/* + currentRotationAngle + " " + gameObject.name*/);
 
-        _multiplier = GetMultiplier(currentRotationAngle,_rotationData.AckermannMultiplier);
+        _multiplier = GetMultiplier(currentRotationAngle, _rotationData.AckermannMultiplier);
 
         _clockRotation = (int)Mathf.Sign(angle * _multiplier - currentRotationAngle);
 
@@ -60,6 +68,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         if (Approximately(currentRotationAngle, angle * _multiplier, _rotationData.RotationSpeed * _multiplier))
         {
             _isRotating = false;
+
             return;
         }
         else
@@ -91,15 +100,6 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     }
 
     public abstract float GetMultiplier(float currentRotationAngle, float ackermanMultiplier);
-
-    private void FixedUpdate()
-    {
-        if (_isRotating)
-        {
-            RotateWheelDirection();
-            Rotate(_wheelDirection, _targetAngle);
-        }
-    }
 
     private void RotateWheelDirection()
     {

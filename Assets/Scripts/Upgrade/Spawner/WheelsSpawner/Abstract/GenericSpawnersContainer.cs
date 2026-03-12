@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,13 +7,13 @@ public class GenericSpawnersContainer<T, M> : GenericObservableSpawner<T>
    where T : UpgradePart
     where M : GenericUpgradeSpawner<T>
 {
-    [SerializeField] private  List<M> _wheelSpawners;
+    [SerializeField] private List<M> _wheelSpawners;
 
     private M _currentSpawner;
 
-    public override UpgradePart LastSpawnedPart => _currentSpawner.LastSpawnedPart;
-
     public override event Action<T> PartSpawned;
+
+    public override UpgradePart LastSpawnedPart => _currentSpawner.LastSpawnedPart;
 
     private void OnValidate()
     {
@@ -40,9 +40,9 @@ public class GenericSpawnersContainer<T, M> : GenericObservableSpawner<T>
             {
                 throw new System.Exception("Wheel spawners not enough");
             }
-            
+
             PartSpawned?.Invoke(part as T);
-        }       
+        }
 
         _currentSpawner = GetNextSpawner();
 
@@ -68,6 +68,7 @@ public class GenericSpawnersContainer<T, M> : GenericObservableSpawner<T>
         int index = _wheelSpawners.IndexOf(_currentSpawner);
 
         if (index == -1)
+
             throw new ArgumentException("Element not found in list");
 
         int nextIndex = (index + 1) % _wheelSpawners.Count;

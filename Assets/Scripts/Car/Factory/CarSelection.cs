@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -10,14 +10,38 @@ public class CarSelection : MonoBehaviour
 {
     [SerializeField] private CarConteiner[] _carPrefabs;
 
-    private RuntimeCarFactory _carFactory;
+    [SerializeField] private CarConteiner _carConteiner;
 
-    [SerializeField] private CarConteiner _carConteiner;  
+    private RuntimeCarFactory _carFactory;
 
     [Inject]
     private void Construct(RuntimeCarFactory carFactory)
     {
         _carFactory = carFactory;
+    }
+
+    // Test with right mouse button
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            SelectCar(0);
+            SpawnCar();
+        }
+
+        // Test with other keys
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectCar(1);
+            SpawnCar();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectCar(1);
+            SpawnCar();
+        }
     }
 
     // Call this from UI buttons
@@ -33,10 +57,11 @@ public class CarSelection : MonoBehaviour
     public void SpawnCar()
     {
         // Destroy previous car if exists
+
         if (_carConteiner != null)
         {
             _carConteiner.Destroy();
-           // Destroy(_carConteiner.gameObject);
+            // Destroy(_carConteiner.gameObject);
             _carConteiner = null;
         }
 
@@ -44,28 +69,5 @@ public class CarSelection : MonoBehaviour
         _carConteiner = _carFactory.CreateCar();
         _carConteiner.transform.parent = null;
         Debug.Log($"Spawned car: {_carConteiner.name}");
-    }
-
-    // Test with right mouse button
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            SelectCar(0);
-            SpawnCar();
-        }
-
-        // Test with other keys
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SelectCar(1);
-            SpawnCar();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SelectCar(1);
-            SpawnCar();
-        }
     }
 }

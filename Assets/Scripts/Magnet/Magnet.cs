@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -14,18 +14,15 @@ public class Magnet : ObservableUpgradePart
 
     [Inject] private IMagnetData _magnetData;
 
-    public Transform ConnectionPoint => _connectionPoint; // to vector3 
+    public List<IAttractable> _collectedObjects;
 
     public event Action<ICollectable> ObjectInMagnetAria;
 
-    public List<IAttractable> _collectedObjects;
-
-    
+    public Transform ConnectionPoint => _connectionPoint; // to vector3 
 
     private void Awake()
     {
-        _collectedObjects = new List<IAttractable>();   
-       
+        _collectedObjects = new List<IAttractable>();
     }
 
     private void OnEnable()
@@ -52,7 +49,7 @@ public class Magnet : ObservableUpgradePart
 
     public List<IAttractable> GetAttractedObjects()
     {
-        List<IAttractable> obgects = new List<IAttractable> (_collectedObjects);
+        List<IAttractable> obgects = new List<IAttractable>(_collectedObjects);
         _collectedObjects.Clear();
         _magnetField.Clear();
 
@@ -71,8 +68,8 @@ public class Magnet : ObservableUpgradePart
             {
                 _magnetField.AddToField(item);
 
-               // item.Deactivate();
-               item.Collect();
+                // item.Deactivate();
+                item.Collect();
                 _collectedObjects.Add(item);
             }
             else
@@ -80,5 +77,5 @@ public class Magnet : ObservableUpgradePart
                 return;
             }
         }
-    }   
+    }
 }

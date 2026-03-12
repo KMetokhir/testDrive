@@ -1,7 +1,6 @@
-﻿
-using System;
+﻿using System;
 
-public class RightRotaryWheelSpawnersContainer : GenericSpawnersContainer<RightRotaryWheelUpgrade,RightRotaryWheelSpawner>, IWheelSpawnersContainer
+public class RightRotaryWheelSpawnersContainer : GenericSpawnersContainer<RightRotaryWheelUpgrade, RightRotaryWheelSpawner>, IWheelSpawnersContainer
 {
     event Action<WheelUpgradePart> IWheelSpawnersContainer.PartSpawned
     {

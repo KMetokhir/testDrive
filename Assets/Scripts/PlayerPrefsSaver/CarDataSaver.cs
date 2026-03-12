@@ -1,14 +1,12 @@
-
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
-public class CarDataSaver: ICarPositionSaver, ICarConfigSaver
+public class CarDataSaver : ICarPositionSaver, ICarConfigSaver
 {
     private const string ConfigKeyPrefix = "CurrentConfig";
     private const string PositionKeyPrefix = "CurrentPosition";
     private const string RotationPrefixKey = "CurrentRotation";
     private const char DataDivider = '_';
-
 
     /*private const string WebSessionKey = "WebGL_Session_ID";*/
 
@@ -72,9 +70,7 @@ public class CarDataSaver: ICarPositionSaver, ICarConfigSaver
 
         foreach (string item in items)
         {
-
             key += (item + dataDivider);
-
         }
 
         Debug.LogError(key);
@@ -90,7 +86,6 @@ public class CarDataSaver: ICarPositionSaver, ICarConfigSaver
 
         SaveVector3(key, euler);
     }
-
 
     public Quaternion GetRotation(uint carLevel, string sceneName, Quaternion defaultValue = default)
     {

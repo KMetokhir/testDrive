@@ -1,5 +1,4 @@
-
-public class CarSpawnedSignal
+﻿public class CarSpawnedSignal
 {
     public readonly CarConteiner Car;
 

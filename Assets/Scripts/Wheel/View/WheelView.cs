@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WheelView : MonoBehaviour
 {
@@ -10,17 +10,14 @@ public class WheelView : MonoBehaviour
 
     private Quaternion rRotation;
 
-    public void Move( float speed, int clockRotation, float deltaTime, Vector3 lookAtDirection)
+    public void Move(float speed, int clockRotation, float deltaTime, Vector3 lookAtDirection)
     {
-
         if (_mover == null)
         {
             return;
         }
 
-        _mover.Move( speed * _rotationSpeedModifier, clockRotation, deltaTime);
-
-
+        _mover.Move(speed * _rotationSpeedModifier, clockRotation, deltaTime);
     }
 
     private void OnDrawGizmos()
@@ -32,7 +29,6 @@ public class WheelView : MonoBehaviour
 
     public void RotateTo(Vector3 targetDirection)
     {
-
         if (_rotator == null)
         {
             return;

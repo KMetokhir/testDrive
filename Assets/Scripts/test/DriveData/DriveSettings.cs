@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class DriveSettings : MonoBehaviour, IDriveData
 {
-
     [SerializeField] private SpeedUpgrader _upgrader;
 
     public event Action Upgraded;
@@ -19,7 +18,6 @@ public class DriveSettings : MonoBehaviour, IDriveData
     public float MaxAngle { get; private set; }
 
     public float AckermannMultiplier { get; private set; }
-
 
     private void OnEnable()
     {

@@ -1,3 +1,3 @@
-public class RightRotaryWheel : RotaryWheel
-{  
+﻿public class RightRotaryWheel : RotaryWheel
+{
 }

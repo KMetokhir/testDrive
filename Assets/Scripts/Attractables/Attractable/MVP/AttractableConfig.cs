@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Attractable Config")]
@@ -9,7 +9,7 @@ public class AttractableConfig : ScriptableObject
     [SerializeField] private uint _cost;
     [SerializeField] private uint _level;
 
-   // public AttractablesType Type => _type;
+    // public AttractablesType Type => _type;
     public uint Weight => _weight;
     public uint Cost => _cost;
     public uint Level => _level;
@@ -25,5 +25,5 @@ public class AttractableConfig : ScriptableObject
         {
             throw new Exception("Cost = 0");
         }
-    }   
+    }
 }

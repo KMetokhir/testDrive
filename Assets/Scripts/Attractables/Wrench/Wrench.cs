@@ -1,5 +1,3 @@
-
-public class Wrench : Attractable
+﻿public class Wrench : Attractable
 {
-  
 }

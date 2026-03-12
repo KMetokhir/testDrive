@@ -1,20 +1,10 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using UnityEngine;
 
 public class AttractableModel
 {
-    public string Id { get; }
-    // public AttractablesType Type { get; }
-    public uint Weight { get; }
-    public uint Cost { get; }
-    public uint Level { get; }
-
     private int _collectorLevel;
-
-    public bool IsActive { get; private set; }
-    public bool IsAvalibleToCollector { get { return (Level <= _collectorLevel); } }
-    public bool IsPossibleToCollect { get { return IsAvalibleToCollector && IsActive && _isCollected == false; } }
 
     private bool _isCollected;
 
@@ -23,6 +13,15 @@ public class AttractableModel
     public event Action Collected;
     public event Action BecameAvalible;
     public event Action Stored;
+    public string Id { get; }
+    // public AttractablesType Type { get; }
+    public uint Weight { get; }
+    public uint Cost { get; }
+    public uint Level { get; }
+
+    public bool IsActive { get; private set; }
+    public bool IsAvalibleToCollector { get { return (Level <= _collectorLevel); } }
+    public bool IsPossibleToCollect { get { return IsAvalibleToCollector && IsActive && _isCollected == false; } }
 
     public AttractableModel(AttractableConfig config)
     {
@@ -32,9 +31,11 @@ public class AttractableModel
         Level = config.Level;
 
         if (Weight == 0)
+
             throw new Exception("Weight = 0");
 
         if (Cost == 0)
+
             throw new Exception("Cost = 0");
 
         Id = GenerateUniqueId();
@@ -55,6 +56,7 @@ public class AttractableModel
     public void Activate()
     {
         if (IsActive)
+
             return;
 
         IsActive = true;
@@ -78,6 +80,7 @@ public class AttractableModel
     public void Deactivate()
     {
         if (!IsActive)
+
             return;
 
         IsActive = false;
@@ -107,15 +110,14 @@ public class AttractableModel
         {
             _isCollected = true;
             Collected?.Invoke();
-            
         }
-
     }
 
     private string GenerateUniqueId()
     {
         string time = DateTime.Now.Ticks.ToString();
         string random = UnityEngine.Random.Range(1000, 9999).ToString();
+
         return $"{time}_{random}";
     }
 }

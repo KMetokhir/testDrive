@@ -1,5 +1,3 @@
-
-public class LeftRotaryWheelSpawner : GenericUpgradeSpawner<LeftRotaryWheelUpgrade> //WheelUpgradeSpawner<LeftRotaryWheelUpgrade>
+﻿public class LeftRotaryWheelSpawner : GenericUpgradeSpawner<LeftRotaryWheelUpgrade> //WheelUpgradeSpawner<LeftRotaryWheelUpgrade>
 {
-
 }

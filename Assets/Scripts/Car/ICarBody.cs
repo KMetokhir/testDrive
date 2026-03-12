@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface ICarBody: ICarDirection
+public interface ICarBody : ICarDirection
 {
     public Rigidbody Rigidbody { get; }
 }

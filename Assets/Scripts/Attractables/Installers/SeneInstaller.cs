@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -9,7 +9,6 @@ using Zenject;
 
 public class SeneInstaller : MonoInstaller
 {
-
     //[SerializeField] private AttractablesSpawner _spawner;
     //[SerializeField] SpawnerLoader spawnerLoader;
 
@@ -26,10 +25,9 @@ public class SeneInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-
-       /* Container.Bind<SpawnerLoader>()
-           .FromInstance(spawnerLoader)
-           .AsSingle()
-           .NonLazy();*/
+        /* Container.Bind<SpawnerLoader>()
+            .FromInstance(spawnerLoader)
+            .AsSingle()
+            .NonLazy();*/
     }
 }

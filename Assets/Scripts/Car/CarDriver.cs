@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.WSA;
@@ -7,8 +7,8 @@ using Zenject;
 public class CarDriver : MonoBehaviour
 {
     [SerializeField] private ScreenInput _screenInput;
-   // [SerializeField] private Speed _speed; //ISpeed delete ISpeed
-  //  [SerializeField] private Rotation _rotation;
+    // [SerializeField] private Speed _speed; //ISpeed delete ISpeed
+    //  [SerializeField] private Rotation _rotation;
 
     [SerializeField] private WheelBaseSpawner _wheelBaseSpawner;
 
@@ -22,7 +22,7 @@ public class CarDriver : MonoBehaviour
     private IWheelRotationData _rotationData;
 
     [Inject]
-    private void Construct(ScreenInput screenInput, IWheelRotationData rotationData )
+    private void Construct(ScreenInput screenInput, IWheelRotationData rotationData)
     {
         _screenInput = screenInput;
         _rotationData = rotationData;
@@ -30,166 +30,26 @@ public class CarDriver : MonoBehaviour
 
     private void Awake()
     {
-       
         _carBody = GetComponent<ICarBody>();
 
         _rotaryWheels = new List<RotaryWheel>();
         _drivingWheels = new List<DrivingWheel>();
     }
+
     private void OnEnable()
     {
         _wheelBaseSpawner.PartSpawned += SubcribeToBase;
-
-    }
-
-    private void OnDisable()
-    {
-        _wheelBaseSpawner.PartSpawned -= SubcribeToBase;
-        UnsubscribeInput();
-    }
-
-    private void SubscribeInput()
-    {
-        _screenInput.AngleChanged += OnAngleChanged;
-        _screenInput.MouseUp += OnMouseEventUp;
-
-    }
-
-    private void UnsubscribeInput()
-    {
-        _screenInput.AngleChanged -= OnAngleChanged;
-        _screenInput.MouseUp -= OnMouseEventUp;
-
-    }
-
-    private void SubcribeToBase(WheelBase wheelBase)
-    {      
-        wheelBase.WheelSpawned += SetWheel;
-        wheelBase.WheelDestroied += RemoveWheel;
-        wheelBase.Destroied += OnBaseDestroied; // destroyObject method avalible
-
-        SubscribeInput();
-    }
-
-    private void UnsubscribeFrombase(WheelBase wheelBase)
-    {
-        wheelBase.WheelSpawned -= SetWheel;
-        wheelBase.WheelDestroied -= RemoveWheel;
-        wheelBase.Destroied -= OnBaseDestroied;
-
-    }
-
-    private void RemoveWheel(IWheel wheel)
-    {
-
-        if (wheel is DrivingWheel)
-        {
-            _drivingWheels.Remove(wheel as DrivingWheel);
-        }
-
-        if (wheel is RotaryWheel)
-        {
-            _rotaryWheels.Remove(wheel as RotaryWheel);
-        }
-    }
-
-    private void OnBaseDestroied(UpgradePart part)
-    {
-
-        UnsubscribeInput();
-
-        WheelBase wheelBase = (WheelBase)part;
-
-        if (wheelBase == null)
-        {
-            throw new Exception("Upgrade  not WheelBase type");
-        }
-
-        UnsubscribeFrombase(wheelBase);
-        _drivingWheels.Clear();
-        _rotaryWheels.Clear();
-    }
-
-    private void SetWheel(IWheel wheel)
-    {
-        wheel.Activate();
-
-        if (wheel is DrivingWheel)
-        {
-            _drivingWheels.Add(wheel as DrivingWheel);
-
-        }
-
-        if (wheel is RotaryWheel)
-        {
-            _rotaryWheels.Add(wheel as RotaryWheel);
-        }
-    }
-
-    private void OnMouseEventUp()
-    {
-        foreach (DrivingWheel wheel in _drivingWheels)
-        {
-            wheel.StopMoving();
-
-        }
-
-        foreach (RotaryWheel wheel in _rotaryWheels)
-        {
-            wheel.StopRotation();
-        }
-    }
-
-    private void OnAngleChanged(float angle)
-    {
-        float maxInputAngle = 90;
-
-
-        if (Mathf.Abs(angle) <= maxInputAngle)
-        {
-            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotationData.MaxAngle);
-
-            foreach (DrivingWheel wheel in _drivingWheels)
-            {
-                wheel.ForwardMove();
-
-            }
-
-            foreach (RotaryWheel wheel in _rotaryWheels)
-            {
-                wheel.RotateWheel(angle);
-            }
-        }
-        else
-        {
-            float sign = Mathf.Sign(angle);
-            angle = sign * (180 - Mathf.Abs(angle));
-
-            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotationData.MaxAngle);
-
-            foreach (DrivingWheel wheel in _drivingWheels)
-            {
-                wheel.BackwardMove();
-
-            }
-
-            foreach (RotaryWheel wheel in _rotaryWheels)
-            {
-                wheel.RotateWheel(angle);
-            }
-        }
     }
 
     private void Update()
     {
-
         #region "TestInput"
+
         if (Input.GetKeyDown("w"))
         {
             foreach (DrivingWheel wheel in _drivingWheels)
             {
                 wheel.ForwardMove();
-
             }
         }
 
@@ -198,7 +58,6 @@ public class CarDriver : MonoBehaviour
             foreach (DrivingWheel wheel in _drivingWheels)
             {
                 wheel.StopMoving();
-
             }
         }
 
@@ -207,7 +66,6 @@ public class CarDriver : MonoBehaviour
             foreach (DrivingWheel wheel in _drivingWheels)
             {
                 wheel.BackwardMove();
-
             }
         }
 
@@ -250,7 +108,135 @@ public class CarDriver : MonoBehaviour
                 wheel.StopRotation();
             }
         }
-        #endregion
 
+        #endregion
+    }
+
+    private void OnDisable()
+    {
+        _wheelBaseSpawner.PartSpawned -= SubcribeToBase;
+        UnsubscribeInput();
+    }
+
+    private void SubscribeInput()
+    {
+        _screenInput.AngleChanged += OnAngleChanged;
+        _screenInput.MouseUp += OnMouseEventUp;
+    }
+
+    private void UnsubscribeInput()
+    {
+        _screenInput.AngleChanged -= OnAngleChanged;
+        _screenInput.MouseUp -= OnMouseEventUp;
+    }
+
+    private void SubcribeToBase(WheelBase wheelBase)
+    {
+        wheelBase.WheelSpawned += SetWheel;
+        wheelBase.WheelDestroied += RemoveWheel;
+        wheelBase.Destroied += OnBaseDestroied; // destroyObject method avalible
+
+        SubscribeInput();
+    }
+
+    private void UnsubscribeFrombase(WheelBase wheelBase)
+    {
+        wheelBase.WheelSpawned -= SetWheel;
+        wheelBase.WheelDestroied -= RemoveWheel;
+        wheelBase.Destroied -= OnBaseDestroied;
+    }
+
+    private void RemoveWheel(IWheel wheel)
+    {
+        if (wheel is DrivingWheel)
+        {
+            _drivingWheels.Remove(wheel as DrivingWheel);
+        }
+
+        if (wheel is RotaryWheel)
+        {
+            _rotaryWheels.Remove(wheel as RotaryWheel);
+        }
+    }
+
+    private void OnBaseDestroied(UpgradePart part)
+    {
+        UnsubscribeInput();
+
+        WheelBase wheelBase = (WheelBase)part;
+
+        if (wheelBase == null)
+        {
+            throw new Exception("Upgrade  not WheelBase type");
+        }
+
+        UnsubscribeFrombase(wheelBase);
+        _drivingWheels.Clear();
+        _rotaryWheels.Clear();
+    }
+
+    private void SetWheel(IWheel wheel)
+    {
+        wheel.Activate();
+
+        if (wheel is DrivingWheel)
+        {
+            _drivingWheels.Add(wheel as DrivingWheel);
+        }
+
+        if (wheel is RotaryWheel)
+        {
+            _rotaryWheels.Add(wheel as RotaryWheel);
+        }
+    }
+
+    private void OnMouseEventUp()
+    {
+        foreach (DrivingWheel wheel in _drivingWheels)
+        {
+            wheel.StopMoving();
+        }
+
+        foreach (RotaryWheel wheel in _rotaryWheels)
+        {
+            wheel.StopRotation();
+        }
+    }
+
+    private void OnAngleChanged(float angle)
+    {
+        float maxInputAngle = 90;
+
+        if (Mathf.Abs(angle) <= maxInputAngle)
+        {
+            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotationData.MaxAngle);
+
+            foreach (DrivingWheel wheel in _drivingWheels)
+            {
+                wheel.ForwardMove();
+            }
+
+            foreach (RotaryWheel wheel in _rotaryWheels)
+            {
+                wheel.RotateWheel(angle);
+            }
+        }
+        else
+        {
+            float sign = Mathf.Sign(angle);
+            angle = sign * (180 - Mathf.Abs(angle));
+
+            angle = InputDataCorrector.Correct(angle, maxInputAngle, _rotationData.MaxAngle);
+
+            foreach (DrivingWheel wheel in _drivingWheels)
+            {
+                wheel.BackwardMove();
+            }
+
+            foreach (RotaryWheel wheel in _rotaryWheels)
+            {
+                wheel.RotateWheel(angle);
+            }
+        }
     }
 }

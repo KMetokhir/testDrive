@@ -1,4 +1,4 @@
-public class RightWheelRotator : WheelRotator
+﻿public class RightWheelRotator : WheelRotator
 {
     public override float GetMultiplier(float currentRotationAngle, float ackermannMultiplier)
     {

@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Follower : MonoBehaviour
 {
-    [SerializeField] private Transform _objToFollow;    
+    [SerializeField] private Transform _objToFollow;
 
     private void Update()
     {

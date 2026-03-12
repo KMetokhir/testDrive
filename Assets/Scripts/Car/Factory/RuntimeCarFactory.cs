@@ -40,6 +40,7 @@ public class RuntimeCarFactory
         });
 
         Debug.Log($"Created car: {car.name}");
+
         return car;
     }
 }

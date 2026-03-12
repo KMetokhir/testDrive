@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-public  class UpgradeMenu : MonoBehaviour
+public class UpgradeMenu : MonoBehaviour
 {
     [SerializeField] private UpgradePanel _upgraderPanel;
 

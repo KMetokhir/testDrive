@@ -1,5 +1,4 @@
-
-public interface IWheelUpgrade : IUpgradePart
+﻿public interface IWheelUpgrade : IUpgradePart
 {
-    public IWheel Wheel {get;}
+    public IWheel Wheel { get; }
 }

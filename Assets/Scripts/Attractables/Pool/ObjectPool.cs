@@ -1,4 +1,4 @@
-using OpenCover.Framework.Model;
+﻿using OpenCover.Framework.Model;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,7 +52,7 @@ public class ObjectPool<T> : MonoBehaviour
         _activeObjects.Add(objectFromPool);
 
         return objectFromPool;
-    }      
+    }
 
     public void PutObject(T poolObject)
     {

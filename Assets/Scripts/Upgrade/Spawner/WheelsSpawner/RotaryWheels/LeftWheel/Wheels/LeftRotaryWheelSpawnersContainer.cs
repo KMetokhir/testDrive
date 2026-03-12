@@ -1,5 +1,4 @@
-
-using System;
+﻿using System;
 
 public class LeftRotaryWheelSpawnersContainer : GenericSpawnersContainer<LeftRotaryWheelUpgrade, LeftRotaryWheelSpawner>, IWheelSpawnersContainer
 {

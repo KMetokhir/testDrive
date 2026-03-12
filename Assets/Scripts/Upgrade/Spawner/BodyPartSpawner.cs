@@ -1,4 +1,3 @@
-
-public class BodyPartSpawner : GenericUpgradeSpawner<BodyPart>
-{   
+﻿public class BodyPartSpawner : GenericUpgradeSpawner<BodyPart>
+{
 }

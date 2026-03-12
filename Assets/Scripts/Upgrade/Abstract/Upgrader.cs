@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -10,7 +10,7 @@ public class Upgrader<T, S, M> : MonoBehaviour
     where M : IUpgradeData
     where T : Upgrade, M
 {
-    [SerializeField] private  List<T> _upgrades;
+    [SerializeField] private List<T> _upgrades;
     [SerializeField] private List<UpgradePartSpawner> _spawners;
 
     [SerializeField] private Money _money;
@@ -22,15 +22,19 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     [SerializeField] private S _view;
 
-  //  [SerializeField] private int CarLevel; // test 
+    //  [SerializeField] private int CarLevel; // test 
 
     private ICarLevel _carLevel;
     private ICarConfigSaver _configSaver;
 
     private uint _currentUpgradeLevel;
-  //  private string _currentUpgradeLevelKey;
-   
+    //  private string _currentUpgradeLevelKey;
+
     private DiContainer _container;
+
+    private T _currentUpgrade;
+
+    public event Action<M> UpgradeExecuted;
 
     [Inject]
     private void Construct(S view, ICarLevel carLevel, DiContainer container, ICarConfigSaver configSaver)
@@ -40,18 +44,18 @@ public class Upgrader<T, S, M> : MonoBehaviour
         _carLevel = carLevel;
         _configSaver = configSaver;
 
-      //  Debug.LogError($"In construct upgrader {carLevel.Value}");
-     //   CarLevel =(int) _carLevel.Value;
+        //  Debug.LogError($"In construct upgrader {carLevel.Value}");
+        //   CarLevel =(int) _carLevel.Value;
     }
 
-    private T _currentUpgrade;
-
-    public event Action<M> UpgradeExecuted;
+    private void OnEnable()
+    {
+        _view.UpgradeButtonClicked += Upgrade;
+    }
 
     private void Start()
     {
-
-       // CarLevel = (int)_carLevel.Value;
+        // CarLevel = (int)_carLevel.Value;
 
         _compositePartSpawners = new List<UpgradePartSpawner>();
         _installedUpgradeParts = new List<UpgradePart>();
@@ -60,8 +64,8 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         _currentUpgradeLevel = _configSaver.GetCarConfig(GetType().Name, _carLevel.Value);
 
-       /* _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
-        _currentUpgradeLevel = (uint)CarDataManager.LoadInt(_currentUpgradeLevelKey);*/
+        /* _currentUpgradeLevelKey = $"{GetType().Name}_{nameof(_currentUpgradeLevel)}";
+         _currentUpgradeLevel = (uint)CarDataManager.LoadInt(_currentUpgradeLevelKey);*/
         Debug.Log($"START UPLEVEL {_currentUpgradeLevel}");
 
         LoadUpgradesInOrder(_currentUpgradeLevel);
@@ -72,15 +76,10 @@ public class Upgrader<T, S, M> : MonoBehaviour
         {
             _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
         }
-        else 
+        else
         {
             throw new Exception($"No avalible upgarde for carLevel {_carLevel.Value}");
         }
-    }
-
-    private void OnEnable()
-    {
-        _view.UpgradeButtonClicked += Upgrade;
     }
 
     private void OnDisable()
@@ -96,11 +95,10 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         foreach (T upgrade in upgrades)
         {
-
             ProcessUpgrade(upgrade);
         }
 
-      //  Debug.LogError(_carLevel == null);
+        //  Debug.LogError(_carLevel == null);
         _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
 
         if (_currentUpgrade != null)
@@ -178,7 +176,6 @@ public class Upgrader<T, S, M> : MonoBehaviour
                         newParts.RemoveAt(i);
 
                         break;
-
                     }
                     else
                     {
@@ -202,7 +199,6 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
         _installedUpgradeParts.AddRange(installedParts);
 
-        
         if (newParts.Count != 0)
         {
             foreach (var part in newParts)
@@ -226,7 +222,6 @@ public class Upgrader<T, S, M> : MonoBehaviour
 
     private void RemoveObservablePart(ObservableUpgradePart part)
     {
-
         // _observableParts.Remove(part);
 
         _installedUpgradeParts.Remove(part);

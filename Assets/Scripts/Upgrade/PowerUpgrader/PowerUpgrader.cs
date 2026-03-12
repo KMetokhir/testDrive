@@ -1,4 +1,3 @@
-
-public class PowerUpgrader : Upgrader<PowerUpgrade, PowerUpgraderView, IPowerUpgradeData>
+﻿public class PowerUpgrader : Upgrader<PowerUpgrade, PowerUpgraderView, IPowerUpgradeData>
 {
 }

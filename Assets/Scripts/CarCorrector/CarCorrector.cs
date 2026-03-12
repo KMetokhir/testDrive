@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 // wheell ground checker for all 4 wheels, another forse for x fliip and z fleep, method to calculate angle
 
@@ -55,6 +55,7 @@ public class CarCorrector : MonoBehaviour
         float denom = Vector3.Dot(planeNormal, planeNormal);
 
         if (denom == 0f)
+
             return v;
 
         return v - (Vector3.Dot(v, planeNormal) / denom) * planeNormal;
