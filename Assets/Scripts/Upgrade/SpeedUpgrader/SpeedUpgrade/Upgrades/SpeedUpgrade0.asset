@@ -24,4 +24,4 @@ MonoBehaviour:
   _maxSpeed: 100
   _rotationSpeed: 1
   _maxAngle: 30
-  _AckermannMultiplier: 2
+  _ackermannMultiplier: 1.5

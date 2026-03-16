@@ -7,13 +7,15 @@ public class MagnetField : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
 
+    [SerializeField] private float _gap = 1f;
+    [SerializeField] private Transform PhysicCube;
+    [SerializeField] private List<SurfacePoint> _surfacePoints;
+
     private List<IAttractable> _attractedObjects;
     private List<AttractionPoint> _attractionPoints;
+    private Vector3 _cubeSize;
 
-    public float _gap = 1f; // interval between points    
-    public Vector3 _cubeSize;
-    public Transform PhysicCube;
-    public List<SurfacePoint> _surfacePoints;
+   
 
     private void Awake()
     {
@@ -111,7 +113,7 @@ public class MagnetField : MonoBehaviour
         {
             foreach (SurfacePoint point in _surfacePoints)
             {
-                Gizmos.DrawRay(point.WordPosition, (point.Normal /*transform.TransformDirection(point._localNormal)*/) * 2);
+                Gizmos.DrawRay(point.WordPosition, (point.Normal) * 2);
             }
         }
     }

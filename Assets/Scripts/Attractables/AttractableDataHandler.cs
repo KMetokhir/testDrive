@@ -11,18 +11,13 @@ public class AttractableDataHandler<T> : MonoBehaviour
 {
     private const string ObjectKeyPrefix = "Object_";
 
-    private readonly string _allObjectsIdKey = "AllObjects" + typeof(T);
+    private readonly string _allObjectsIdKey = "AllObjects" + typeof(T);    
 
-    //  private Dictionary<string, List<AttractableData>> _allScenesAttractables = new Dictionary<string, List<AttractableData>>(); // IattractableData to methods
-
-    private List<AttractableData> _alldata = new List<AttractableData>();
+    private List<AttractableData> _alldata = new List<AttractableData>(); 
     private List<string> _allId => _alldata.Select(val => val.Id).ToList();
 
     private void Awake()
-    {
-        // _allObjectsIdKey += typeof(T);
-        //  Debug.LogError($"All objects key  {_allObjectsIdKey}");
-        //_allId.Clear();
+    {        
         LoadAllObjects();
     }
 
@@ -152,10 +147,9 @@ public class AttractableDataHandler<T> : MonoBehaviour
 public class AttractableData
 {
     public readonly string Id;
-    public readonly Vector3 Position;
-    // public readonly AttractablesType Type;
-    public readonly string SceneName;
-    public readonly int Rows;
+    public readonly Vector3 Position;   
+    public readonly string SceneName; 
+    public readonly int Rows; 
     public readonly int Columns;
 
     public AttractableData(string id, Vector3 pos, string scene, int rows, int columns)
@@ -166,8 +160,7 @@ public class AttractableData
         }
 
         Id = id;
-        Position = pos;
-        // Type = type;
+        Position = pos;       
         SceneName = scene;
         Rows = rows;
         Columns = columns;
@@ -188,16 +181,7 @@ public class AttractableData
                     float.Parse(position[0]),
                     float.Parse(position[1]),
                     float.Parse(position[2])
-                );
-
-                /* if (Enum.TryParse(parts[2], out AttractablesType type))
-                 {
-                     Type = type;
-                 }
-                 else
-                 {
-                     throw new Exception($"type {parts[2]} doesn't excist");
-                 }*/
+                );                
 
                 SceneName = parts[2];
 
@@ -232,4 +216,3 @@ public class AttractableData
         return $"{Id}|{Position.x}&{Position.y}&{Position.z}|{SceneName}|{Rows}|{Columns}";
     }
 }
-

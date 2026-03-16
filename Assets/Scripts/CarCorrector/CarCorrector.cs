@@ -5,7 +5,7 @@
 /*ENABLED!!!!! need state machine to enable corrector in upgrade state*/
 public class CarCorrector : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private float _maxAngleXRotation = 10f;
     [SerializeField] private float _correctionForceXRotation = 10f;
     [SerializeField] private float _maxAngleZRotation = 10f;
@@ -25,7 +25,7 @@ public class CarCorrector : MonoBehaviour
         if (Mathf.Abs(angle) > _maxAngleZRotation && _wheel.IsGrounded() == false)
         {
             float torqueDirection = angle > 0 ? 1 : -1;
-            rb.AddTorque(rb.transform.forward * torqueDirection * _correctionForceZRotation);
+            _rigidbody.AddTorque(_rigidbody.transform.forward * torqueDirection * _correctionForceZRotation);
         }
     }
 
@@ -36,7 +36,7 @@ public class CarCorrector : MonoBehaviour
         if (Mathf.Abs(angle) > _maxAngleXRotation && _wheel.IsGrounded() == false)
         {
             float torqueDirection = angle > 0 ? 1 : -1;
-            rb.AddTorque(rb.transform.right * torqueDirection * _correctionForceXRotation);
+            _rigidbody.AddTorque(_rigidbody.transform.right * torqueDirection * _correctionForceXRotation);
         }
     }
 

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class AttractionPoint
 {
-    public readonly IAttractable AttractableObject;// get only transform
+    public readonly ITransformContainer AttractableObject;
 
     private SurfacePoint _surfacePoint;
 
-    public AttractionPoint(SurfacePoint surfacePoint, IAttractable attractable, Transform owner)
+    public AttractionPoint(SurfacePoint surfacePoint, ITransformContainer attractable, Transform owner)
     {
         _surfacePoint = surfacePoint ?? throw new ArgumentNullException(nameof(surfacePoint));
         AttractableObject = attractable ?? throw new ArgumentNullException(nameof(attractable));

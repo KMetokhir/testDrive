@@ -1,15 +1,20 @@
-﻿using UnityEditor.Rendering;
+﻿using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 
 public class CarConteiner : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private CarDestroyer _carDestroier;
-    [SerializeField] private LevelUpSystem _levelup;
+    private CarDestroyer _carDestroier;
 
-    // public uint Value => _levelup.Value;
+    private void Awake()
+    {
+        if (TryGetComponent<CarDestroyer>(out _carDestroier) == false)
+        {
+            throw new NullReferenceException($"{nameof(_carDestroier)} = null");
+        }
+    }
 
     public void Destroy()
     {

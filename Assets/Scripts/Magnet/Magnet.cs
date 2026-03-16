@@ -14,11 +14,11 @@ public class Magnet : ObservableUpgradePart
 
     [Inject] private IMagnetData _magnetData;
 
-    public List<IAttractable> _collectedObjects;
+    private List<IAttractable> _collectedObjects;
 
     public event Action<ICollectable> ObjectInMagnetAria;
 
-    public Transform ConnectionPoint => _connectionPoint; // to vector3 
+    public Transform ConnectionPoint => _connectionPoint;
 
     private void Awake()
     {
@@ -68,7 +68,6 @@ public class Magnet : ObservableUpgradePart
             {
                 _magnetField.AddToField(item);
 
-                // item.Deactivate();
                 item.Collect();
                 _collectedObjects.Add(item);
             }

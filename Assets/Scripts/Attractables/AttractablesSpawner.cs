@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using Zenject;
 
 public class AttractablesSpawner<T> : MonoBehaviour
     where T : Attractable
@@ -13,9 +11,7 @@ public class AttractablesSpawner<T> : MonoBehaviour
     [SerializeField] private float _yOffSet;
 
     private int _rowsPerQuad;
-    private int _columnsPerQuad;
-
-    public event Action<T> AttractableSpawned;
+    private int _columnsPerQuad;   
 
     private string _currentSceneName => SceneManager.GetActiveScene().name; // use sceneload handler
 
