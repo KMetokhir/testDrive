@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class SeneInstaller : MonoInstaller
+public class SceneEmptyInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {

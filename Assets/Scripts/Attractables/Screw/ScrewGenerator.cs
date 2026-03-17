@@ -1,3 +1,3 @@
-﻿public class ScrewGenerator : AttractableGenerator<Screw>
+﻿public class ScrewGenerator : PoolableGenerator<Screw>
 {
 }

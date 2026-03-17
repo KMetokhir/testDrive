@@ -2,8 +2,8 @@
 using UnityEngine;
 using Zenject;
 
-public abstract class AttractableRemover<T> : MonoBehaviour 
-    where T : Attractable // used only onCollected and ID => Icollectable instead
+public abstract class PoollableRemover<T> : MonoBehaviour 
+    where T : MonoBehaviour,IPoollable // Attractable // used only onCollected and ID => Icollectable instead
 {
     [SerializeField] private ObjectPool<T> _pool;
     [SerializeField] private AttractableDataHandler<T> _dataHandler;

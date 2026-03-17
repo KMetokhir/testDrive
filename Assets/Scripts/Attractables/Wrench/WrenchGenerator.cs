@@ -1,3 +1,3 @@
-﻿public class WrenchGenerator : AttractableGenerator<Wrench>
+﻿public class WrenchGenerator : PoolableGenerator<Wrench>
 {
 }

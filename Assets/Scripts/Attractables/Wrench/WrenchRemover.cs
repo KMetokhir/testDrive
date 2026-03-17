@@ -1,3 +1,3 @@
-﻿public class WrenchRemover : AttractableRemover<Wrench>
+﻿public class WrenchRemover : PoollableRemover<Wrench>
 {
 }

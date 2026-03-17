@@ -7,7 +7,7 @@ public class AttractablesSpawner<T> : MonoBehaviour
     where T : Attractable
 {
     [SerializeField] private AttractableDataHandler<T> _dataHandler;
-    [SerializeField] private AttractableGenerator<T> _generator;
+    [SerializeField] private PoolableGenerator<T> _generator;
     [SerializeField] private float _yOffSet;
 
     private int _rowsPerQuad;
