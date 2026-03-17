@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +14,6 @@ public class SpawnerHandler<T> : MonoBehaviour
 
     private void Awake()
     {
-        _spawner.Spawn(AttractablesType.screw, _quadSpawnArias, _rowsPerQuad, _columnsPerQuad);
+        _spawner.Spawn(_quadSpawnArias, _rowsPerQuad, _columnsPerQuad);
     }
 }

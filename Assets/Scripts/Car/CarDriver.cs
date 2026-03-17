@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 using Zenject;
 
 public class CarDriver : MonoBehaviour
 {
     [SerializeField] private ScreenInput _screenInput;
-    // [SerializeField] private Speed _speed; //ISpeed delete ISpeed
-    //  [SerializeField] private Rotation _rotation;
-
     [SerializeField] private WheelBaseSpawner _wheelBaseSpawner;
 
     [SerializeField] private List<RotaryWheel> _rotaryWheels;

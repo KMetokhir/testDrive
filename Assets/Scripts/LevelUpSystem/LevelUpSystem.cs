@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -32,8 +31,6 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
     private void Awake()
     {
         _upgradables = GetComponents<IUpgradable>().ToList();
-
-        // Debug.Log(_upgradables.Count);
 
         _view.ShowValue(_currentUpgradesLevel, _upgradesToLevelUp);
 
@@ -75,21 +72,10 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
     }
 
     private void OnSceneLoaded()
-    {
-        /* Debug.LogError("SceneLoaded" +
-             "invoke levelup");*/
+    {       
         Changed?.Invoke();
     }
-
-    /* private void InvokeChangeLevelEvent()
-     {
-         MessageBroker.Default.Publish(new LevelUp()
-         {
-             Level = _currentLevel
-         });
-     }
-
- */
+    
     private void OnLevelUpButtonClicked()
     {
         Debug.Log("TO NEW LEVEL");
@@ -105,8 +91,3 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
         }
     }
 }
-
-/*public struct LevelUp
-{
-    public uint Level;
-}*/

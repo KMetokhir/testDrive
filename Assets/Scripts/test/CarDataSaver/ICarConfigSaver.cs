@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public interface ICarConfigSaver
+﻿public interface ICarConfigSaver
 {
     public void SaveCarConfig(string upgraderType, uint carLevel, uint upgradeLevel);
 

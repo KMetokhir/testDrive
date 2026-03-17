@@ -1,5 +1,4 @@
-﻿using UniRx.Triggers;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class UpgradePartSpawner : MonoBehaviour
 {

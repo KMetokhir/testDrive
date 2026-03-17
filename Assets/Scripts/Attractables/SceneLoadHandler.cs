@@ -12,8 +12,7 @@ public class SceneLoadHandler : MonoBehaviour
     public string SceneName => _sceneName;
 
     void OnEnable()
-    {
-        // Subscribe to the sceneLoaded event
+    {       
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }

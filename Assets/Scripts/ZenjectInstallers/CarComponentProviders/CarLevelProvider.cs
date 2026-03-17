@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
 public class CarLevelProvider : CarComponentProvider<ICarLevel>, ICarLevel
@@ -10,6 +7,16 @@ public class CarLevelProvider : CarComponentProvider<ICarLevel>, ICarLevel
     public uint Value => Component.Value;
 
     public CarLevelProvider(SignalBus signalBus) : base(signalBus) { }
+
+    public override void Dispose()
+    {
+        if (Component != null)
+        {
+            Component.Changed -= OnComponentValueChanged;
+        }
+
+        base.Dispose();
+    }
 
     protected override bool TryGetComponent(CarConteiner car, out ICarLevel component)
     {
@@ -31,15 +38,5 @@ public class CarLevelProvider : CarComponentProvider<ICarLevel>, ICarLevel
     private void OnComponentValueChanged()
     {
         Changed?.Invoke();
-    }
-
-    public override void Dispose()
-    {
-        if (Component != null)
-        {
-            Component.Changed -= OnComponentValueChanged;
-        }
-
-        base.Dispose();
     }
 }

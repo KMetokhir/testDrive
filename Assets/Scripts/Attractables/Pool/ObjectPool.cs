@@ -1,11 +1,10 @@
-﻿using OpenCover.Framework.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class ObjectPool<T> : MonoBehaviour
-    where T : MonoBehaviour, IPoollable // iPoolable with methodes Activate deactivate
+    where T : MonoBehaviour, IPoollable
 {
     [SerializeField] private Transform _container;
     [SerializeField] private T _prefab;
@@ -32,8 +31,7 @@ public class ObjectPool<T> : MonoBehaviour
     public T GetObject()
     {
         if (_pool.Count == 0)
-        {
-            //T newObject = Instantiate(_prefab);
+        {           
             T newObject = _containerDi
                 .InstantiatePrefabForComponent<T>(_prefab, _container);
 
@@ -57,8 +55,7 @@ public class ObjectPool<T> : MonoBehaviour
     public void PutObject(T poolObject)
     {
         _pool.Enqueue(poolObject);
-        _activeObjects.Remove(poolObject);
-        // poolObject.gameObject.SetActive(false);
+        _activeObjects.Remove(poolObject);      
         poolObject.Deactivate();
         poolObject.Transform.parent = _container.transform;
     }

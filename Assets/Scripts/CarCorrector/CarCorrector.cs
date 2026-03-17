@@ -18,6 +18,18 @@ public class CarCorrector : MonoBehaviour
         CorrectXFlip();
     }
 
+    public static Vector3 ProjectOntoPlaneNoNormalize(Vector3 vector, Vector3 planeNormal)
+    {
+        float denom = Vector3.Dot(planeNormal, planeNormal);
+
+        if (denom == 0f)
+        {
+            return vector;
+        }
+
+        return vector - (Vector3.Dot(vector, planeNormal) / denom) * planeNormal;
+    }
+
     private void CorrectZFlip()
     {
         float angle = CalculateAngleInPlane(transform.up, Vector3.up, transform.forward);
@@ -48,16 +60,5 @@ public class CarCorrector : MonoBehaviour
         float sign = Mathf.Sign(Vector3.Dot(normal, Vector3.Cross(vectorA, vectorB)));
 
         return Vector3.Angle(vectorA, vectorB) * sign;
-    }
-
-    public static Vector3 ProjectOntoPlaneNoNormalize(Vector3 v, Vector3 planeNormal)
-    {
-        float denom = Vector3.Dot(planeNormal, planeNormal);
-
-        if (denom == 0f)
-
-            return v;
-
-        return v - (Vector3.Dot(v, planeNormal) / denom) * planeNormal;
     }
 }

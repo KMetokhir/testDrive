@@ -6,8 +6,6 @@ using UnityEngine;
 public class WheelBase : CompositePart
 {
     [SerializeField] private List<IWheelSpawnersContainer> _spawners;
-    //[SerializeField] private List<WheelsSpanwersContainer> _spawners;
-    // [SerializeField] private List<WheelUpgradePart> _wheelPrefabs;
 
     private List<WheelUpgradePart> _dependentUpgradeParts;
 
@@ -46,7 +44,7 @@ public class WheelBase : CompositePart
         return spawners;
     }
 
-    protected override void DestroyDependentParts()/// invoke that wheel destroid
+    protected override void DestroyDependentParts()
     {
         foreach (var part in _dependentUpgradeParts)
         {
@@ -54,11 +52,6 @@ public class WheelBase : CompositePart
             part.DestroyObject();
         }
     }
-
-    /*public List<IWheel> GetWheels()
-    {
-        return _wheels;
-    }*/
 
     private void OnWheelUpgradeDestroied(ObservableUpgradePart part)
     {

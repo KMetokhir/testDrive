@@ -1,5 +1,3 @@
-﻿using UnityEngine;
-
-public class MagnetUpgrader : Upgrader<MagnetUpgrade, MagnetUpgraderView, IMagnetData>
+﻿public class MagnetUpgrader : Upgrader<MagnetUpgrade, MagnetUpgraderView, IMagnetData>
 {
 }

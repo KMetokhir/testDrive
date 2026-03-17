@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Assertions.Comparers;
 using Zenject;
 
 public class WheelMover : MonoBehaviour // from ground checker get the normal to surface and rotate direction in 90 degree to normal
@@ -82,8 +81,7 @@ public class WheelMover : MonoBehaviour // from ground checker get the normal to
     {
         _direction = direction;
         _isMoving = true;
-        _rigidbody = rigidbody ?? throw new NullReferenceException(nameof(rigidbody));
-        //  _speedData = speed ?? throw new NullReferenceException(nameof(speed));
+        _rigidbody = rigidbody ?? throw new NullReferenceException(nameof(rigidbody));       
     }
 
     private void Move(float force, Rigidbody rigidbody, Vector3 direction)

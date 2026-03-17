@@ -3,23 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class MagnetAria : MonoBehaviour
 {
     [SerializeField] private float _detectInterval = 0.2f;
-    private MagnetSettings _magnetSettings;
+
+    [Inject] private IMagnetData _magnetSettings;
 
     private Coroutine _detectCoroutine;
     private bool _isWork = false;
 
-    public event Action<List<IAttractable>> AttractableObjectsFound;
-
-    private void Awake()
-    {
-        _magnetSettings = FindObjectOfType<MagnetSettings>(); // tmp
-
-        //StartDetecting();
-    }
+    public event Action<List<IAttractable>> AttractableObjectsFound;   
 
     private void OnDisable()
     {

@@ -1,6 +1,4 @@
-﻿using UnityEngine.UIElements;
-
-public abstract class WheelUpgradePart : ObservableUpgradePart, IWheelUpgrade
+﻿public abstract class WheelUpgradePart : ObservableUpgradePart, IWheelUpgrade
 {
     public IWheel Wheel { get; private set; }
 

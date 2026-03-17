@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
-public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
+public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection 
 {
     [SerializeField] private Magnet _magnet;
     [SerializeField] private Trunk _trunk;
     [SerializeField] private Money _money;
 
-    //[SerializeField] private FixedJoint _joint; ������ ��������� �� ����
-
     [SerializeField] private CraneSpawner _craneSpawner;
 
     private Rigidbody _rigidbody;
-
-    /* private ILevel _level;*/
-    // public uint Level { get; private set; }
 
     public Rigidbody Rigidbody => _rigidbody;
 
@@ -45,24 +39,29 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
         if (_magnet != null)
         {
             _magnet.StartWorke();
-        }
-
-        //  Level = 1; // tmp
+        }        
     }
 
     private void OnDisable()
     {
         if (_magnet != null)
         {
-            _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;
-            _trunk.MaxWeightChanged -= OnMaxWeightChanged;
+            _magnet.ObjectInMagnetAria -= OnObjectInMagnetAria;          
         }
+
+        _trunk.MaxWeightChanged -= OnMaxWeightChanged;
+    }
+
+    public List<IAttractable> Buy()
+    {
+        uint money = _trunk.GetSum();
+        _money.Increase(money);
+
+        return _magnet.GetAttractedObjects();
     }
 
     private void OnCraneSpawned(Crane crane)
     {
-        //  _joint.connectedBody = crane.Rigidbody; // tmp
-
         SubscribeToCrane(crane);
     }
 
@@ -128,13 +127,5 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection //, ILevel
         {
             _magnet.Stop();
         }
-    }
-
-    public List<IAttractable> Buy()
-    {
-        uint money = _trunk.GetSum();
-        _money.Increase(money);
-
-        return _magnet.GetAttractedObjects();
     }
 }

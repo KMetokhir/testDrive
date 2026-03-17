@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class CarSelection : MonoBehaviour
@@ -27,9 +22,7 @@ public class CarSelection : MonoBehaviour
         {
             SelectCar(0);
             SpawnCar();
-        }
-
-        // Test with other keys
+        }       
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -44,30 +37,23 @@ public class CarSelection : MonoBehaviour
         }
     }
 
-    // Call this from UI buttons
     public void SelectCar(int index)
     {
         if (index >= 0 && index < _carPrefabs.Length)
         {
-            _carFactory.SetCarPrefab(_carPrefabs[index]);
-            Debug.Log($"Selected car: {_carPrefabs[index].name}");
+            _carFactory.SetCarPrefab(_carPrefabs[index]);           
         }
     }
 
     public void SpawnCar()
     {
-        // Destroy previous car if exists
-
         if (_carConteiner != null)
         {
-            _carConteiner.Destroy();
-            // Destroy(_carConteiner.gameObject);
+            _carConteiner.Destroy();           
             _carConteiner = null;
         }
-
-        // Create new car
+    
         _carConteiner = _carFactory.CreateCar();
-        _carConteiner.transform.parent = null;
-        Debug.Log($"Spawned car: {_carConteiner.name}");
+        _carConteiner.transform.parent = null;      
     }
 }

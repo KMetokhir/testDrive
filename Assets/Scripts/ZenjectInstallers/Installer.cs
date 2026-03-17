@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class Installer : MonoInstaller
@@ -25,12 +22,6 @@ public class Installer : MonoInstaller
         Container.BindInstance(_speedUpgraderView).AsSingle();
         Container.BindInstance(_magnetUpgrader).AsSingle();
         Container.BindInstance(_powerUpgraderView).AsSingle();
-        Container.BindInstance(_upgradePanel).AsSingle();
-
-        // Container.Bind<ICarLevel>().FromComponentInParents().AsSingle();
-
-        // Container.BindFactory<CarConteiner, CarConteiner.Factory>().FromComponentInNewPrefab(_prefab);
-
-        //   Container.BindFactory<Money, Money.Factory>().FromComponentInNewPrefab(_Prefab);
+        Container.BindInstance(_upgradePanel).AsSingle();       
     }
 }

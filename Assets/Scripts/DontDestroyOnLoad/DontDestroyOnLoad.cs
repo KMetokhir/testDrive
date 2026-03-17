@@ -1,21 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class DontDestroyOnLoad : MonoBehaviour
 {
     private void Awake()
     {
-        //   PlayerPrefs.DeleteAll();
-
         DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L)) // test
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("NextScene");
         }
     }
 }
-

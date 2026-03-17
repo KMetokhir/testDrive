@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class RuntimeCarFactory
@@ -34,10 +33,7 @@ public class RuntimeCarFactory
 
         CurrentCar = car;
 
-        _signalBus.Fire(new CarSpawnedSignal(car)
-        {
-            // Car = car
-        });
+        _signalBus.Fire(new CarSpawnedSignal(car));
 
         Debug.Log($"Created car: {car.name}");
 

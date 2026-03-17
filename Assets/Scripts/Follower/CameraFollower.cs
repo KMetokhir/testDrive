@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-public class CameraFollower : MonoBehaviour
+public class CameraFollower : MonoBehaviour // test
 {
     private CarConteiner _car;
     private SignalBus _signalBus;
@@ -28,14 +25,5 @@ public class CameraFollower : MonoBehaviour
     private void OnCarSpawned(CarSpawnedSignal signal)
     {
         _car = signal.Car;
-    }
-
-    /*void LateUpdate()
-    {
-        if (_car != null) {
-
-            _car.DoSmth();
-        }      
-
-    }*/
+    }   
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Zenject;
 
 public class CarConteiner : MonoBehaviour
 {

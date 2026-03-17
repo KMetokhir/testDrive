@@ -1,7 +1,5 @@
-﻿using System;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
-using Zenject;
 using static CarDestroyer;
 
 public class CarPlaceObserver : MonoBehaviour

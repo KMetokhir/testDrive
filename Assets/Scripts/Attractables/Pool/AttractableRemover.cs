@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 using Zenject;
 
-public abstract class AttractableRemover<T> : MonoBehaviour // 
+public abstract class AttractableRemover<T> : MonoBehaviour 
     where T : Attractable // used only onCollected and ID => Icollectable instead
 {
     [SerializeField] private ObjectPool<T> _pool;
     [SerializeField] private AttractableDataHandler<T> _dataHandler;
 
     [Inject]
-    private SceneLoadHandler _sceneLoadHanddler; // INJECT!
+    private SceneLoadHandler _sceneLoadHanddler;
 
     private List<T> _activeObjects = new List<T>();
 
@@ -57,4 +55,3 @@ public abstract class AttractableRemover<T> : MonoBehaviour //
         _pool.PutObject(attractable as T);
     }
 }
-

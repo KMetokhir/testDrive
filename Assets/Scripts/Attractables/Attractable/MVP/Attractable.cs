@@ -57,6 +57,26 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         _carLevel.Changed -= OnCarLevelChanged;
     }
 
+    public void TransitToStore()
+    {
+        _model.TransitToStore();
+    }
+
+    public void Collect()
+    {
+        _model.Collect();
+    }
+
+    public void Activate()
+    {
+        _model.Activate();
+    }
+
+    public void Deactivate()
+    {
+        _model.Deactivate();
+    }
+
     private void OnCarLevelChanged()
     {
         _model.ProcessCollectorLevel((int)_carLevel.Value);
@@ -67,52 +87,24 @@ public abstract class Attractable : MonoBehaviour, IAttractable, IAttractableLev
         Stored?.Invoke(this);
     }
 
-    public void TransitToStore()
-    {
-        _model.TransitToStore();
-    }
-
     private void OnCollected()
     {
         Collected?.Invoke(this);
-
     }
 
     private void OnActivated()
     {
         _view.Activate();
-
     }
 
     private void OnDeactivated()
     {
         _view.Deactivate();
         Deactivated?.Invoke(this);
-
     }
 
     private void OnBacameAvalible()
     {
         _view.BecameAvalible();
-
-    }
-
-    public void Collect()
-    {
-        _model.Collect();
-
-    }
-
-    public void Activate()
-    {
-        _model.Activate();
-
-    }
-
-    public void Deactivate()
-    {
-        _model.Deactivate();
-
     }
 }
-

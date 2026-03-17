@@ -22,7 +22,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _currentAngle = float.MaxValue;
     }
 
-    void Update()
+    private void Update()
     {
         if (_isPointerUnderPanel)
         {

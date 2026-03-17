@@ -38,9 +38,5 @@ public class Money : MonoBehaviour
     {
         Value += value;
         _view.Show(Value);
-    }
-
-    /*public class Factory : PlaceholderFactory<Money>
-    {
-    }*/
+    }   
 }

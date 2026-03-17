@@ -1,7 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Remover : AttractableRemover<Attractable>
+﻿public class Remover : AttractableRemover<Attractable>
 {
 }

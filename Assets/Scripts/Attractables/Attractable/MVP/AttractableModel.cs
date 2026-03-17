@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using UnityEngine;
 
 public class AttractableModel
 {
     private int _collectorLevel;
-
     private bool _isCollected;
 
     public event Action Activated;
@@ -13,8 +10,7 @@ public class AttractableModel
     public event Action Collected;
     public event Action BecameAvalible;
     public event Action Stored;
-    public string Id { get; }
-    // public AttractablesType Type { get; }
+    public string Id { get; } 
     public uint Weight { get; }
     public uint Cost { get; }
     public uint Level { get; }
@@ -24,8 +20,7 @@ public class AttractableModel
     public bool IsPossibleToCollect { get { return IsAvalibleToCollector && IsActive && _isCollected == false; } }
 
     public AttractableModel(AttractableConfig config)
-    {
-        //  Type = config.Type;
+    {     
         Weight = config.Weight;
         Cost = config.Cost;
         Level = config.Level;
@@ -45,12 +40,6 @@ public class AttractableModel
 
         IsActive = true;
         _isCollected = false;
-    }
-
-    private void Reload()
-    {
-        _isCollected = false;
-        ProcessCollectorLevel(_collectorLevel);
     }
 
     public void Activate()
@@ -111,6 +100,12 @@ public class AttractableModel
             _isCollected = true;
             Collected?.Invoke();
         }
+    }
+
+    private void Reload()
+    {
+        _isCollected = false;
+        ProcessCollectorLevel(_collectorLevel);
     }
 
     private string GenerateUniqueId()

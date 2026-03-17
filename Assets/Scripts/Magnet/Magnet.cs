@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class Magnet : ObservableUpgradePart
 {
@@ -10,9 +9,7 @@ public class Magnet : ObservableUpgradePart
 
     [SerializeField] private Transform _connectionPoint;
 
-    [SerializeField] private bool _isWork;
-
-    [Inject] private IMagnetData _magnetData;
+    [SerializeField] private bool _isWork;  
 
     private List<IAttractable> _collectedObjects;
 

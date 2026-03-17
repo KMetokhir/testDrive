@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class AttractableDataHandler<T> : MonoBehaviour
     where T : Attractable
 {
     private const string ObjectKeyPrefix = "Object_";
 
-    private readonly string _allObjectsIdKey = "AllObjects" + typeof(T);    
+    private readonly string _allObjectsIdKey = "AllObjects" + typeof(T);
 
-    private List<AttractableData> _alldata = new List<AttractableData>(); 
+    private List<AttractableData> _alldata = new List<AttractableData>();
     private List<string> _allId => _alldata.Select(val => val.Id).ToList();
 
     private void Awake()
-    {        
+    {
         LoadAllObjects();
     }
 
@@ -74,22 +71,6 @@ public class AttractableDataHandler<T> : MonoBehaviour
         RemoveData(dataId);
     }
 
-    private void RemoveData(string dataId)
-    {
-        AttractableData data = _alldata.FirstOrDefault(val => val.Id == dataId);
-
-        if (data == null)
-        {
-            throw new Exception($"attractable does not in list");
-        }
-
-        _alldata.Remove(data);
-        PlayerPrefs.DeleteKey($"{ObjectKeyPrefix}{data.Id}");
-        PlayerPrefs.Save();
-        UpdateObjectList();
-        Debug.Log($"Removed object: {data.Id}");
-    }
-
     public List<Vector3> GetPositionsOnScene(string sceneName, int rows, int columns)
     {
         List<Vector3> positions = new List<Vector3>();
@@ -135,6 +116,22 @@ public class AttractableDataHandler<T> : MonoBehaviour
         }
     }
 
+    private void RemoveData(string dataId)
+    {
+        AttractableData data = _alldata.FirstOrDefault(val => val.Id == dataId);
+
+        if (data == null)
+        {
+            throw new Exception($"attractable does not in list");
+        }
+
+        _alldata.Remove(data);
+        PlayerPrefs.DeleteKey($"{ObjectKeyPrefix}{data.Id}");
+        PlayerPrefs.Save();
+        UpdateObjectList();
+        Debug.Log($"Removed object: {data.Id}");
+    }
+
     private string GenerateDataId(string id, string sceneName)
     {
         char divider = '_';
@@ -147,9 +144,9 @@ public class AttractableDataHandler<T> : MonoBehaviour
 public class AttractableData
 {
     public readonly string Id;
-    public readonly Vector3 Position;   
-    public readonly string SceneName; 
-    public readonly int Rows; 
+    public readonly Vector3 Position;
+    public readonly string SceneName;
+    public readonly int Rows;
     public readonly int Columns;
 
     public AttractableData(string id, Vector3 pos, string scene, int rows, int columns)
@@ -160,7 +157,7 @@ public class AttractableData
         }
 
         Id = id;
-        Position = pos;       
+        Position = pos;
         SceneName = scene;
         Rows = rows;
         Columns = columns;
@@ -181,7 +178,7 @@ public class AttractableData
                     float.Parse(position[0]),
                     float.Parse(position[1]),
                     float.Parse(position[2])
-                );                
+                );
 
                 SceneName = parts[2];
 

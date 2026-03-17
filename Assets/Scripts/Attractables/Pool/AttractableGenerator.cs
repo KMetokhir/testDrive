@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class AttractableGenerator<T> : MonoBehaviour // 
+public abstract class AttractableGenerator<T> : MonoBehaviour
  where T : Attractable
 {
     [SerializeField] private ObjectPool<T> _pool;
@@ -12,4 +12,3 @@ public abstract class AttractableGenerator<T> : MonoBehaviour //
         return attractable;
     }
 }
-

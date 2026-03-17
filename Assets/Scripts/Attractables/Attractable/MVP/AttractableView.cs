@@ -21,11 +21,12 @@ public class AttractableView : MonoBehaviour
 
     public void BecameAvalible()
     {
+        //becom active color
     }
 
     public void BecameUnavailable()
     {
-        // Example: gray out or disable collider
+      // become gray
         GetComponent<Collider>().enabled = false;
     }
 }

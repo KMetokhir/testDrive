@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
 public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
 {
-    // [SerializeField] private WheelSpawner _spawner;
 
     [SerializeField] private WheelView _wheelView;
     [SerializeField] private PhysicWheel _physicWheel;
@@ -29,34 +28,15 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
 
         if (_directionChanger != null)
         {
-            _directionChanger.DirectionChanged += OnDirectionChanged; // subscribe on enable is not work after start obviously
+            _directionChanger.DirectionChanged += OnDirectionChanged;
         }
-
-        // _spawner.NewWheelSpawned += ChangePhysicWheel;
     }
 
     private void OnEnable()
     {
         _wheelMover.RigidbodyMoving += MoveView;
-
-        /*if (_directionChanger != null)
-        {
-            _directionChanger.DirectionChanged += OnDirectionChanged;
-        }*/
     }
 
-    /* private void ChangePhysicWheel(WheelUpgrade upgrade)
-     {
-         if (upgrade is PhysicWheel)
-         {
-             _physicWheel = upgrade as PhysicWheel;
-         }
-         else
-         {
-             throw new Exception(" PhysicWheel does not implement WheelUpgrade");
-         }
-
-     }*/
 
     private void OnDisable()
     {
@@ -64,18 +44,11 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         {
             _directionChanger.DirectionChanged -= OnDirectionChanged;
         }
-
-        // _spawner.NewWheelSpawned -= ChangePhysicWheel;
-    }
-
-    private void MoveView(float speed, int clockRotation, float deltaTime)
-    {
-        _wheelView.Move(Mathf.Abs(speed), clockRotation, deltaTime, transform.TransformDirection(LookDirection));
     }
 
     public void Activate()
     {
-        if (_isActivated == false)// Activate directionChanger and ICarBody : IcarDirection
+        if (_isActivated == false)
         {
             _isActivated = true;
             _suspension.Activate(_rigidbody);
@@ -108,6 +81,11 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         LookDirection = transform.forward;
         _directionChanger = GetComponent<IDirectionChanger>();
         _suspension = GetComponent<Suspension>();
+    }
+
+    private void MoveView(float speed, int clockRotation, float deltaTime)
+    {
+        _wheelView.Move(Mathf.Abs(speed), clockRotation, deltaTime, transform.TransformDirection(LookDirection));
     }
 
     private void OnDirectionChanged(Vector3 direction)

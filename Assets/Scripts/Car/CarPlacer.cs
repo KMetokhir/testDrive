@@ -1,16 +1,11 @@
 ﻿using System;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
-using static CarDestroyer;
-using static UnityEditor.Progress;
 
 public class CarPlacer : MonoBehaviour
 {
     [SerializeField] private float _yOffset;
-    //  [SerializeField] private CarCompositDestroier _carDestroier;
     [SerializeField] private Rigidbody _rigidbody;
 
     private SceneLoadHandler _sceneLoadHandler;
@@ -32,8 +27,7 @@ public class CarPlacer : MonoBehaviour
     }
 
     private void Awake()
-    {
-        // _rigidbody = GetComponent<Rigidbody>();
+    {  
         _defaultPosition = Vector3.zero + new Vector3(0, _yOffset, 0);
         _defaultRotation = Quaternion.identity;
     }
@@ -57,28 +51,13 @@ public class CarPlacer : MonoBehaviour
         _sceneLoadHandler.SceneUnloaded -= SavePosition;
     }
 
-    void OnApplicationFocus(bool hasFocus)
-    {
-        SavePosition();
-    }
-
     private void OnSceneLoaded()
     {
         SetPosition();
-    }
-
-    /*  private string GenerateKey(string sceneName, string keyPrefix)  // to another class SpawnData
-      {
-          string divider = "|";
-
-          return keyPrefix + divider + sceneName;
-      }*/
+    }   
 
     private void SetPosition()
     {
-        /* string positionKey = GenerateKey(_sceneLoadHandler.SceneName, PositionKeyPrefix);
-         string rotationKey = GenerateKey(_sceneLoadHandler.SceneName, RotationKeyPrefix);*/
-
         Vector3 yOffset = new Vector3(0, _yOffset, 0);
         Vector3 startPosition = _positionSaver.GetPosition(_carLevel.Value, _sceneLoadHandler.SceneName, _defaultPosition);
         startPosition += yOffset;
@@ -107,6 +86,11 @@ public class CarPlacer : MonoBehaviour
         _positionSaver.SavePosition(_carLevel.Value, _sceneLoadHandler.SceneName, _rigidbody.transform.position);
         _positionSaver.SaveRotation(_carLevel.Value, _sceneLoadHandler.SceneName, _rigidbody.transform.rotation);
     }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        SavePosition();
+    }
 }
 
 public struct CarStartSpawn
@@ -118,4 +102,3 @@ public struct CarEndSpawn
 {
     public Rigidbody CarRigidbody;
 }
-

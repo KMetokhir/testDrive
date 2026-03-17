@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UniRx;
 using UnityEngine;
 
 public class Crane : CompositePart
 {
     [SerializeField] private MagnetSpawner _spawner;
     [SerializeField] private Rope _rope;
-    // [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private Magnet _magnet; // magnetUpgrade not magnet
 
     private FixedJoint _fixedJoint;
-
-    //  public Rigidbody Rigidbody => _rigidbody;
 
     public event Action<Magnet> MagnetSpawned;
     public event Action<Magnet> MagnetDestroied;
@@ -55,19 +49,6 @@ public class Crane : CompositePart
         }
     }
 
-    private void OnMagnetSpawned(Magnet magnet)
-    {
-        Debug.Log("MagnetSpawned");
-
-        //  _rope.transform.position = magnet.transform.position+ Vector3.up;
-
-        _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet.ConnectionPoint); // get it fro magnet variable
-
-        MagnetSpawned?.Invoke(magnet);
-        _magnet = magnet;
-        _magnet.Destroied += OnMagnetDestoied;
-    }
-
     public override List<UpgradePartSpawner> GetSpawners()
     {
         List<UpgradePartSpawner> spawners = new List<UpgradePartSpawner>();
@@ -84,6 +65,17 @@ public class Crane : CompositePart
     {
         _magnet.Destroied -= OnMagnetDestoied;
         _magnet.DestroyObject();
+    }
+
+    private void OnMagnetSpawned(Magnet magnet)
+    {
+        Debug.Log("MagnetSpawned");
+
+        _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet.ConnectionPoint);
+
+        MagnetSpawned?.Invoke(magnet);
+        _magnet = magnet;
+        _magnet.Destroied += OnMagnetDestoied;
     }
 
     private void OnMagnetDestoied(ObservableUpgradePart part)

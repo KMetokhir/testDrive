@@ -11,11 +11,11 @@ public class AttractablesSpawner<T> : MonoBehaviour
     [SerializeField] private float _yOffSet;
 
     private int _rowsPerQuad;
-    private int _columnsPerQuad;   
+    private int _columnsPerQuad;
 
     private string _currentSceneName => SceneManager.GetActiveScene().name; // use sceneload handler
 
-    public void Spawn(AttractablesType type, List<QuadSpawnArea> _quadSpawnArias, int rows, int columns)
+    public void Spawn(List<QuadSpawnArea> _quadSpawnArias, int rows, int columns)
     {
         _rowsPerQuad = rows;
         _columnsPerQuad = columns;
@@ -61,22 +61,23 @@ public class AttractablesSpawner<T> : MonoBehaviour
 
         List<Vector3> spawnPoints = new List<Vector3>();
 
-        // float yOffset = 0.1f;
+        float halfDivider = 2f;
+        int additionalOne = 1;
 
-        float quadHalfWidth = quad.SizeX / 2f;
-        float quadHalfHeight = quad.SizeY / 2f;
+        float quadHalfWidth = quad.SizeX / halfDivider;
+        float quadHalfHeight = quad.SizeY / halfDivider;
 
-        float rowSpacing = quad.SizeY / (_rowsPerQuad + 1);
+        float rowSpacing = quad.SizeY / (_rowsPerQuad + additionalOne);
 
         for (int row = 0; row < _rowsPerQuad; row++)
         {
-            float rowZ = quad.Center.z - quadHalfHeight + (row + 1) * rowSpacing;
+            float rowZ = quad.Center.z - quadHalfHeight + (row + additionalOne) * rowSpacing;
 
-            float pointSpacing = quad.SizeX / (_columnsPerQuad + 1);
+            float pointSpacing = quad.SizeX / (_columnsPerQuad + additionalOne);
 
             for (int point = 0; point < _columnsPerQuad; point++)
             {
-                float pointX = quad.Center.x - quadHalfWidth + (point + 1) * pointSpacing;
+                float pointX = quad.Center.x - quadHalfWidth + (point + additionalOne) * pointSpacing;
 
                 Vector3 spawnPoint = new Vector3(
                     pointX,
@@ -91,7 +92,7 @@ public class AttractablesSpawner<T> : MonoBehaviour
         return spawnPoints;
     }
 
-    private void VisualizeSpawnPoints(List<Vector3> spawnPoints, Transform parent)
+    private void VisualizeSpawnPoints(List<Vector3> spawnPoints, Transform parent) //for tests
     {
         foreach (Vector3 point in spawnPoints)
         {

@@ -1,5 +1,3 @@
-﻿using UnityEngine;
-
-public class LeftRotaryWheelUpgrade : RotaryWheelUpgrade
+﻿public class LeftRotaryWheelUpgrade : RotaryWheelUpgrade
 {
 }

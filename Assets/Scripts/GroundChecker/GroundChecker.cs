@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GroundChecker : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private int _rayDegreeOffset;
     [SerializeField] private int _countOfPositiveRays;
 
-    private ICarDirection _carDirection;
+    [Inject]
+    private ICarDirection _carDirection; //change to wheel direction for rotation wheel
 
     private ISphereShape _owner;
 
@@ -18,7 +20,6 @@ public class GroundChecker : MonoBehaviour
     private void Start()
     {
         _owner = GetComponent<ISphereShape>();
-        _carDirection = FindObjectOfType<Car>();// tmp
     }
 
     public bool IsGrounded()
@@ -52,7 +53,7 @@ public class GroundChecker : MonoBehaviour
 
         List<Ray> rays = new List<Ray>();
 
-        Vector3 startDirection = _carDirection.DownDirection;//-ownerTransform.up;
+        Vector3 startDirection = _carDirection.DownDirection;
         Vector3 rayDirection;
         int positiveRotation = 1;
         int negativeRotation = -1;

@@ -4,8 +4,7 @@ using UnityEngine;
 using Zenject;
 
 public class Trunk : MonoBehaviour // same as speed upgrader add trunk settings 
-{
-    // [SerializeField] private TrunkView _view;
+{    
     [SerializeField] private PowerUpgrader _upgrader;
 
     [SerializeField] private TrunkView _view;
@@ -83,9 +82,5 @@ public class Trunk : MonoBehaviour // same as speed upgrader add trunk settings
         _view.ShowValue(_currentWeight, (int)_maxWeight);
 
         MaxWeightChanged?.Invoke();
-    }
-
-    /*public class Factory : PlaceholderFactory<Trunk>
-    {
-    }*/
+    }   
 }

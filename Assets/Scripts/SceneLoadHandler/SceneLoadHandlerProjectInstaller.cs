@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class SceneLoadHandlerProjectInstaller : MonoInstaller
@@ -9,8 +7,8 @@ public class SceneLoadHandlerProjectInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<SceneLoadHandler>()
-  .FromComponentInNewPrefab(_sceneLoadHandlerPrefab)
-  .AsSingle()
-  .NonLazy();
+            .FromComponentInNewPrefab(_sceneLoadHandlerPrefab)
+            .AsSingle()
+            .NonLazy();
     }
 }

@@ -22,8 +22,6 @@ public abstract class Upgrade : ScriptableObject
         {
             for (int i = 0; i < part.Count; i++)
             {
-                // UpgradePart item = Instantiate(part);
-
                 UpgradePart item = container.InstantiatePrefabForComponent<UpgradePart>(
                    part);
 

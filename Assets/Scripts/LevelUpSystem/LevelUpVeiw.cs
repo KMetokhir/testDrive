@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class LevelUpVeiw : MonoBehaviour
 {
     [SerializeField] private Button _upgradeButton;
-
     [SerializeField] private Slider _slider;
 
     public event Action ButtonClicked;

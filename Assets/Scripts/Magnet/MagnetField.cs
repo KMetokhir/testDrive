@@ -15,8 +15,6 @@ public class MagnetField : MonoBehaviour
     private List<AttractionPoint> _attractionPoints;
     private Vector3 _cubeSize;
 
-   
-
     private void Awake()
     {
         _cubeSize = PhysicCube.localScale;
@@ -63,11 +61,13 @@ public class MagnetField : MonoBehaviour
             throw new NullReferenceException(nameof(attractables));
         }
 
+        float gapAboveCubeSurface = 0.5f;
+
         foreach (IAttractable obj in attractables)
         {
             if (_surfacePoints.Count == 0)
             {
-                _cubeSize += new Vector3(0.5f, 0.5f, 0.5f); // add variable gap2
+                _cubeSize += new Vector3(gapAboveCubeSurface, gapAboveCubeSurface, gapAboveCubeSurface);
                 GenerateSurfacePoints(_cubeSize);
             }
 

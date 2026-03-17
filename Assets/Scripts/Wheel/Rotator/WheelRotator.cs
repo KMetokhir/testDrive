@@ -1,16 +1,11 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 {
-    //  [SerializeField] private Transform _wheelTransform;
-    // [SerializeField] private Transform _carBodyTransform;
-
     private ICarDirection _carDirection;
 
-    // [Inject]
     private IWheelRotationData _rotationData;
 
     private bool _isRotating;
@@ -31,8 +26,7 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
     private void Awake()
     {
         _isRotating = false;
-        // 
-        // _carDirection = FindObjectOfType<Car>();// tmp        
+              
         _wheelDirection = transform.forward;
         _targetAngle = 0;
 
@@ -48,15 +42,12 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
         }
     }
 
-    // rotate - incorrrect naming
     public void Rotate(Vector3 wheelDirection, float angle)
     {
         Vector3 wheelWorldDirection = transform.TransformDirection(wheelDirection);
         Vector3 carForwardDirection = _carDirection.ForwardDirection;
 
-        float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, -_carDirection.DownDirection);
-
-        // Debug.Log(angle + " angle in "/* + currentRotationAngle + " " + gameObject.name*/);
+        float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, -_carDirection.DownDirection); 
 
         _multiplier = GetMultiplier(currentRotationAngle, _rotationData.AckermannMultiplier);
 
