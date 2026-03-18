@@ -3,27 +3,14 @@ using Zenject;
 
 public class CameraFollower : MonoBehaviour // test
 {
-    private CarConteiner _car;
-    private SignalBus _signalBus;
-
     [Inject]
-    void Construct(SignalBus signalBus)
-    {
-        _signalBus = signalBus;
-    }
+    private ICarBody _car;
 
-    void OnEnable()
+    private void FixedUpdate()
     {
-        _signalBus.Subscribe<CarSpawnedSignal>(OnCarSpawned);
+        if (_car.Rigidbody != null)
+        {
+           // Debug.LogError("Worke");
+        }
     }
-
-    void OnDisable()
-    {
-        _signalBus.Unsubscribe<CarSpawnedSignal>(OnCarSpawned);
-    }
-
-    private void OnCarSpawned(CarSpawnedSignal signal)
-    {
-        _car = signal.Car;
-    }   
 }

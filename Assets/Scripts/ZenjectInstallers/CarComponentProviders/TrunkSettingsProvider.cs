@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using Zenject;
 
-public class CarLevelProvider : CarComponentProvider<ICarLevel>, ICarLevel
+public class TrunkSettingsProvider : CarComponentProvider<ITrunkData>, ITrunkData
 {
     public event Action Changed;
-    public uint Value => Component?.Value ?? 0;
+    public uint MaxWeight => Component?.MaxWeight ?? 0;
 
-    public CarLevelProvider(SignalBus signalBus) : base(signalBus) { }
+    public TrunkSettingsProvider(SignalBus signalBus) : base(signalBus) { }
 
     public override void Dispose()
     {
@@ -18,7 +18,7 @@ public class CarLevelProvider : CarComponentProvider<ICarLevel>, ICarLevel
         base.Dispose();
     }
 
-    protected override bool TryGetComponent(CarConteiner car, out ICarLevel component)
+    protected override bool TryGetComponent(CarConteiner car, out ITrunkData component)
     {
         if (base.TryGetComponent(car, out component))
         {

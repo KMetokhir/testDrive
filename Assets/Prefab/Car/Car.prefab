@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 6501294690196684585}
   - component: {fileID: 3108509199173479672}
   - component: {fileID: 255161240762247756}
+  - component: {fileID: 3020853447331403283}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -115,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1328fe659debb34aa4cdfc7c96dad07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgrader: {fileID: 265386682347966667}
   _view: {fileID: 0}
 --- !u!114 &1283719126719638185
 MonoBehaviour:
@@ -172,9 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5df0ea225c46e42bb2b7dc35c2d0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 4081951971108951258}
-  _carDestroier: {fileID: 6501294690196684585}
-  _levelup: {fileID: 2084522706290703757}
 --- !u!114 &878905240026034215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +223,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upgrader: {fileID: 6994620413937247093}
+--- !u!114 &3020853447331403283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2792060018726625395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6a5a8f18423d44ebadccdd99dfdd9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgrader: {fileID: 265386682347966667}
 --- !u!1 &3081590145264812773
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +474,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5551963133857338318}
   - component: {fileID: 1037121065284625193}
-  - component: {fileID: 301956056408137669}
   m_Layer: 0
   m_Name: WheelBaseSpawn
   m_TagString: Untagged
@@ -502,19 +511,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPosition: {fileID: 5551963133857338318}
   _parent: {fileID: 5551963133857338318}
---- !u!114 &301956056408137669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5905371433795199000}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160bae3c018919d4682906ae7360ca7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objToFollow: {fileID: 2365791277606744616}
 --- !u!1 &7193610734501663291
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +520,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8414148466243517221}
-  - component: {fileID: 8390419240092396583}
   - component: {fileID: 7939075979764286457}
   m_Layer: 0
   m_Name: CraneSpawner
@@ -550,19 +545,6 @@ Transform:
   - {fileID: 4622183298637589719}
   m_Father: {fileID: 2365791277606744616}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8390419240092396583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7193610734501663291}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160bae3c018919d4682906ae7360ca7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objToFollow: {fileID: 2365791277606744616}
 --- !u!114 &7939075979764286457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,7 +614,6 @@ MonoBehaviour:
   _compositePartSpawners: []
   _installedUpgradeParts: []
   _view: {fileID: 0}
-  CarLevel: 0
 --- !u!114 &6994620413937247093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +637,6 @@ MonoBehaviour:
   _compositePartSpawners: []
   _installedUpgradeParts: []
   _view: {fileID: 0}
-  CarLevel: 0
 --- !u!114 &265386682347966667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,12 +651,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgrades:
   - {fileID: 11400000, guid: 574d8db4a5a03044e93bb6b6a7d3fd69, type: 2}
+  - {fileID: 11400000, guid: 0a72f865219a3be41b2995be6457ebc8, type: 2}
   _spawners: []
   _money: {fileID: 1283719126719638185}
   _compositePartSpawners: []
   _installedUpgradeParts: []
   _view: {fileID: 0}
-  CarLevel: 0
 --- !u!1 &9133296035443208221
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82790fb2a5d28144db8460124662674f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 4081951971108951258}
+  _rigidbody: {fileID: 0}
   _maxAngleXRotation: 10
   _correctionForceXRotation: 2000
   _maxAngleZRotation: 10

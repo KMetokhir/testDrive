@@ -14,7 +14,7 @@ public class Shop : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_objs.Count > 0)
+        if (_objs.Count > 0) // make it in coroutine with time offset for each object
         {
             List<IAttractable> objectsToRemove = new List<IAttractable>();
 
