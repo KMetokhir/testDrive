@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TrunkSettings : MonoBehaviour, ITrunkData
+public class TrunkSettings : MonoBehaviour, ITrunkData // need base class for setings
 {
     [SerializeField] private PowerUpgrader _upgrader;
 

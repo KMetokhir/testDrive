@@ -4,34 +4,47 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _curveHeight;
+    [SerializeField] private float _moveDelay;
 
     private List<IAttractable> _objs;
+
+    private CurveMover _mover;
 
     private void Awake()
     {
         _objs = new List<IAttractable>();
+
+        _mover = new CurveMover(transform, this, _curveHeight, _moveSpeed, _moveDelay);
+    }
+
+    private void OnEnable()
+    {
+        _mover.ReachEnd += OnObjectReachedEnd;
+    }
+
+    private void OnDisable()
+    {
+        _mover.ReachEnd -= OnObjectReachedEnd;
+    }
+
+    private void OnObjectReachedEnd(IAttractable obj)
+    {
+
+        if (_objs.Contains(obj))
+        {
+            _objs.Remove(obj);
+            obj.TransitToStore();
+        }
+        else
+        {
+            Debug.LogWarning($"Object {obj} not found in shop");
+        }
     }
 
     private void FixedUpdate()
     {
-        if (_objs.Count > 0) // make it in coroutine with time offset for each object
-        {
-            List<IAttractable> objectsToRemove = new List<IAttractable>();
-
-            foreach (var obj in _objs)
-            {
-                Debug.Log(obj.ToString());
-                Move(obj.Transform, transform.position, _moveSpeed, Time.fixedDeltaTime);
-
-                if (IsApproachPosition(transform.position, obj.Transform.position, 0.1f))
-                {
-                    objectsToRemove.Add(obj);
-                    obj.TransitToStore();
-                }
-            }
-
-            _objs.RemoveAll(obj => objectsToRemove.Contains(obj));
-        }
+        _mover.Update();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,17 +53,10 @@ public class Shop : MonoBehaviour
 
         if (seller != null)
         {
-            _objs = seller.Buy();          
+            var newObjects = seller.Buy();
+
+            _objs.AddRange(newObjects);
+            _mover.MoveObjects(newObjects);
         }
-    }
-
-    private bool IsApproachPosition(Vector3 targetPostion, Vector3 objectPosition, float offset)
-    {
-        return (objectPosition - targetPostion).sqrMagnitude <= offset;
-    }
-
-    private void Move(Transform objTransform, Vector3 targetposition, float moveSpeed, float deltatIme)
-    {
-        objTransform.position = Vector3.MoveTowards(objTransform.position, targetposition, moveSpeed * deltatIme);
     }
 }
