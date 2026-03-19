@@ -1,26 +1,12 @@
-using System;
 using UnityEngine;
 
-public class TrunkSettings : MonoBehaviour, ITrunkData // need base class for setings
+public class TrunkSettings : Settings<PowerUpgrader, IPowerUpgradeData>, ITrunkData
 {
-    [SerializeField] private PowerUpgrader _upgrader;
-
-    public event Action Changed;
-
     public uint MaxWeight { get; private set; }
-    private void OnEnable()
-    {
-        _upgrader.UpgradeExecuted += SetNewStats;
-    }
 
-    private void OnDisable()
-    {
-        _upgrader.UpgradeExecuted -= SetNewStats;
-    }
-
-    private void SetNewStats(IPowerUpgradeData data)
+    protected override void ApplyUpgrade(IPowerUpgradeData data)
     {
         MaxWeight = data.MaxWeight;
-        Changed?.Invoke();
+        Debug.Log($"TrunkSettings: MaxWeight updated to {MaxWeight}");
     }
 }

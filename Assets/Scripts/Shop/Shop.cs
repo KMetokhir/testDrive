@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _curveHeight;
-    [SerializeField] private float _moveDelay;
-
-    private List<IAttractable> _objs;
+    private List<IAttractable> _activeObjects;
 
     private CurveMover _mover;
 
     private void Awake()
     {
-        _objs = new List<IAttractable>();
+        _activeObjects = new List<IAttractable>();
 
-        _mover = new CurveMover(transform, this, _curveHeight, _moveSpeed, _moveDelay);
+        _mover = new CurveMover(transform, this);
     }
 
     private void OnEnable()
@@ -26,25 +23,37 @@ public class Shop : MonoBehaviour
     private void OnDisable()
     {
         _mover.ReachEnd -= OnObjectReachedEnd;
+        StopAllCoroutines();
     }
 
-    private void OnObjectReachedEnd(IAttractable obj)
+    private void OnObjectReachedEnd(ITransformContainer obj)
     {
+        IAttractable attractableObject = obj as IAttractable;
 
-        if (_objs.Contains(obj))
+        if (attractableObject != null)
         {
-            _objs.Remove(obj);
-            obj.TransitToStore();
+            if (_activeObjects.Contains(attractableObject))
+            {
+                _activeObjects.Remove(attractableObject);
+                attractableObject.TransitToStore();
+            }
+            else
+            {
+                throw new System.Exception($"Object {obj} not found in shop");
+            }
         }
         else
         {
-            Debug.LogWarning($"Object {obj} not found in shop");
+            throw new System.Exception($"Object {obj}is not IAttractable type");
         }
     }
 
     private void FixedUpdate()
     {
-        _mover.Update();
+        if (_activeObjects.Count > 0)
+        {
+            _mover.Update();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,8 +64,10 @@ public class Shop : MonoBehaviour
         {
             var newObjects = seller.Buy();
 
-            _objs.AddRange(newObjects);
-            _mover.MoveObjects(newObjects);
+            _activeObjects.AddRange(newObjects);
+
+            List<ITransformContainer> containerList = newObjects.Cast<ITransformContainer>().ToList();
+            _mover.MoveObjects(containerList, seller.SellerTransform);
         }
     }
 }

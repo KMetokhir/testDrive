@@ -30,10 +30,10 @@ public class AttractionPoint
         }
     }
 
-    public void Clear()
+   /* public void Clear()
     {
         AttractableObject.Transform.parent = null;
-    }
+    }*/
 
     private void Move(Transform objTransform, Vector3 targetposition, float moveSpeed, float deltatIme)
     {

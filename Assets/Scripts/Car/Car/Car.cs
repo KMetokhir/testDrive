@@ -15,8 +15,9 @@ public class Car : MonoBehaviour, ISeller, ICarBody, ICarDirection
     public Rigidbody Rigidbody => _rigidbody;
 
     public Vector3 ForwardDirection => transform.forward;
-
     public Vector3 DownDirection => -transform.up;
+
+    public Transform SellerTransform => _magnet.transform;
 
     private void Awake()
     {

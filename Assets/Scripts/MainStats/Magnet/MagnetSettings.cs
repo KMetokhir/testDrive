@@ -1,23 +1,11 @@
 ﻿using UnityEngine;
-
-public class MagnetSettings : MonoBehaviour, IMagnetData
+public class MagnetSettings : Settings<MagnetUpgrader, IMagnetData>, IMagnetData
 {
-    [SerializeField] private MagnetUpgrader _upgrader;
-
     public float MagnetRadius { get; private set; }
 
-    private void OnEnable()
-    {
-        _upgrader.UpgradeExecuted += SetNewStats;
-    }
-
-    private void OnDisable()
-    {
-        _upgrader.UpgradeExecuted -= SetNewStats;
-    }
-
-    private void SetNewStats(IMagnetData data)
+    protected override void ApplyUpgrade(IMagnetData data)
     {
         MagnetRadius = data.MagnetRadius;
+        Debug.Log($"MagnetSettings: MagnetRadius updated to {MagnetRadius}");
     }
 }

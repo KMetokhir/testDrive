@@ -1,12 +1,5 @@
-﻿using System;
-using UnityEngine;
-
-public class DriveSettings : MonoBehaviour, IDriveData
+﻿public class DriveSettings : Settings<SpeedUpgrader, IDriveData>, IDriveData
 {
-    [SerializeField] private SpeedUpgrader _upgrader;
-
-    public event Action Upgraded;
-
     public uint UpgradeLevel { get; private set; }
     public uint Acceleration { get; private set; }
     public uint MaxSpeed { get; private set; }
@@ -14,17 +7,7 @@ public class DriveSettings : MonoBehaviour, IDriveData
     public float MaxAngle { get; private set; }
     public float AckermannMultiplier { get; private set; }
 
-    private void OnEnable()
-    {
-        _upgrader.UpgradeExecuted += SetNewStats;
-    }
-
-    private void OnDisable()
-    {
-        _upgrader.UpgradeExecuted -= SetNewStats;
-    }
-    
-    private void SetNewStats(IDriveData data)
+    protected override void ApplyUpgrade(IDriveData data)
     {
         UpgradeLevel = data.UpgradeLevel;
         Acceleration = data.Acceleration;
@@ -32,7 +15,5 @@ public class DriveSettings : MonoBehaviour, IDriveData
         RotationSpeed = data.RotationSpeed;
         MaxAngle = data.MaxAngle;
         AckermannMultiplier = data.AckermannMultiplier;
-
-        Upgraded?.Invoke();
     }
 }

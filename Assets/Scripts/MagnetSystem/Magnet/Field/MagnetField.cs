@@ -33,51 +33,38 @@ public class MagnetField : MonoBehaviour
         }
     }
 
-    public void AddToField(IAttractable attractable) // TEMP
+    public void AddToField(IAttractable attractable)
     {
-        List<IAttractable> attractables = new List<IAttractable>();
-        attractables.Add(attractable);
-        AddToField(attractables);
+        float gapAboveCubeSurface = 0.5f;
+
+
+        if (_surfacePoints.Count == 0)
+        {
+            _cubeSize += new Vector3(gapAboveCubeSurface, gapAboveCubeSurface, gapAboveCubeSurface);
+            GenerateSurfacePoints(_cubeSize);
+        }
+
+        SurfacePoint surfacePoint = GetClosestPoint(attractable.Transform.position);
+
+        AttractionPoint point = new AttractionPoint(surfacePoint, attractable, transform);
+
+        _attractionPoints.Add(point);
+        _surfacePoints.Remove(surfacePoint);
+
     }
 
     public void Clear()
     {
-        foreach (AttractionPoint point in _attractionPoints)
+       /* foreach (AttractionPoint point in _attractionPoints)
         {
             point.Clear();
-        }
+        }*/
 
         _attractionPoints.Clear();
         _surfacePoints.Clear();
 
         _cubeSize = PhysicCube.localScale;
         GenerateSurfacePoints(_cubeSize);
-    }
-
-    public void AddToField(List<IAttractable> attractables)
-    {
-        if (attractables == null || attractables.Count == 0)
-        {
-            throw new NullReferenceException(nameof(attractables));
-        }
-
-        float gapAboveCubeSurface = 0.5f;
-
-        foreach (IAttractable obj in attractables)
-        {
-            if (_surfacePoints.Count == 0)
-            {
-                _cubeSize += new Vector3(gapAboveCubeSurface, gapAboveCubeSurface, gapAboveCubeSurface);
-                GenerateSurfacePoints(_cubeSize);
-            }
-
-            SurfacePoint surfacePoint = GetClosestPoint(obj.Transform.position);
-
-            AttractionPoint point = new AttractionPoint(surfacePoint, obj, transform);
-
-            _attractionPoints.Add(point);
-            _surfacePoints.Remove(surfacePoint);
-        }
     }
 
     private SurfacePoint GetClosestPoint(Vector3 objectPosition)

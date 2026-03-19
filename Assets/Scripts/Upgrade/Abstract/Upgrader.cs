@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class Upgrader<T, S, M> : MonoBehaviour
+public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
     where S : ButtonWithSliderView
     where M : IUpgradeData
     where T : Upgrade, M

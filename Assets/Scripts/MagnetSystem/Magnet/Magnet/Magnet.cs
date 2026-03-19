@@ -15,7 +15,7 @@ public class Magnet : ObservableUpgradePart
 
     public event Action<ICollectable> ObjectInMagnetAria;
 
-    public Transform ConnectionPoint => _connectionPoint;
+    public Transform ConnectionPoint => _connectionPoint;   
 
     private void Awake()
     {
