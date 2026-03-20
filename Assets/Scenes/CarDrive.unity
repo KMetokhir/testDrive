@@ -1536,9 +1536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7dffef0d97c00645b0f922a985b5d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 2
-  _curveHeight: 20
-  _moveDelay: 0.2
 --- !u!65 &1516858352
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1693,10 +1690,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car
       objectReference: {fileID: 0}
-    - target: {fileID: 2792060018726625395, guid: e68b6726b00b07f4fa5ddfb18220d998, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6388499950769235419, guid: e68b6726b00b07f4fa5ddfb18220d998, type: 3}
       propertyPath: m_LocalPosition.x
       value: -72.73686
@@ -1737,9 +1730,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 301956056408137669, guid: e68b6726b00b07f4fa5ddfb18220d998, type: 3}
-    - {fileID: 8390419240092396583, guid: e68b6726b00b07f4fa5ddfb18220d998, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
