@@ -9,7 +9,7 @@ public class Shop : MonoBehaviour
     private CurveMover _mover;
 
     private void Awake()
-    {
+    {  
         _activeObjects = new List<IAttractable>();
 
         _mover = new CurveMover(transform, this);
