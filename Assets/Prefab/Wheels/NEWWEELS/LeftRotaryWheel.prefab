@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 3919677728649258337}
   - component: {fileID: 6274041625154262177}
   - component: {fileID: 8708943899652676866}
-  - component: {fileID: 7651213189477556387}
   - component: {fileID: 4054066836031002633}
-  - component: {fileID: 5147379840346834951}
   - component: {fileID: 8398654433755929789}
   - component: {fileID: 4344676969812587729}
   - component: {fileID: 3873527881646777942}
@@ -124,19 +122,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _maxGravityForce: 30
---- !u!114 &7651213189477556387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480110279948610271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2675ee323779ee4dabb6c36d0615436, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _groundChecker: {fileID: 8398654433755929789}
 --- !u!114 &4054066836031002633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,18 +136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wheelView: {fileID: 8065986514729408142}
   _physicWheel: {fileID: 75959243952148661}
---- !u!114 &5147379840346834951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480110279948610271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8538f253a0b383442908450ff8e7144e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8398654433755929789
 MonoBehaviour:
   m_ObjectHideFlags: 0

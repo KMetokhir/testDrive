@@ -6,19 +6,27 @@ using Zenject;
 public class GroundChecker : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _rayLengthOffset;
-    [SerializeField] private int _rayDegreeOffset;
-    [SerializeField] private int _countOfPositiveRays;
+    [SerializeField] private float _rayLengthOffset = 0.1f;
+    [SerializeField] private int _rayDegreeOffset = 15;
+    [SerializeField] private int _countOfPositiveRays = 2;
+
+    private PhysicWheel _wheel; // tmp
+    private DrivingWheel _drWheel; //tmp
 
     [Inject]
-    private ICarDirection _carDirection; //change to wheel direction for rotation wheel
+    private ICarDirection _carDirection;
 
     private ISphereShape _owner;
-
     private List<Ray> _rays;
+
+    public Vector3 GroundNormal { get; private set; }
 
     private void Start()
     {
+        GroundNormal = Vector3.up;
+
+        _drWheel = GetComponent<DrivingWheel>();
+        _wheel = GetComponentInChildren<PhysicWheel>();
         _owner = GetComponent<ISphereShape>();
     }
 
@@ -26,47 +34,52 @@ public class GroundChecker : MonoBehaviour
     {
         float rayLength = _owner.Radius + _rayLengthOffset;
 
-        List<Ray> rays = GetGroundCheckRays(_owner.Transform.position, _countOfPositiveRays, _rayDegreeOffset);
-        _rays = rays;
+        List<Ray> rays = GetGroundCheckRays(
+            _owner.Transform.position,
+            _countOfPositiveRays,
+            _rayDegreeOffset
+        );
 
-        bool isGrounded = false;
+        _rays = rays;     
 
         foreach (Ray ray in rays)
         {
-            if (Physics.Raycast(ray, rayLength, _groundLayer))
-            {
-                isGrounded = true;
-            }
-        }
+            if (Physics.Raycast(ray, out RaycastHit hit, rayLength, _groundLayer))
+            {              
+                GroundNormal = hit.normal;
 
-        return isGrounded;
-    }
+                return true;
+            }
+        }        
+
+        GroundNormal = Vector3.up;
+        return false;
+    }   
 
     private List<Ray> GetGroundCheckRays(Vector3 origin, int raysCount, int degreeOffset)
     {
         if (raysCount <= 0)
-        {
-            throw new NullReferenceException(nameof(raysCount));
-        }
-
-        Transform ownerTransform = _owner.Transform;
+            throw new ArgumentException(nameof(raysCount));
 
         List<Ray> rays = new List<Ray>();
 
-        Vector3 startDirection = _carDirection.DownDirection;
-        Vector3 rayDirection;
-        int positiveRotation = 1;
-        int negativeRotation = -1;
+        Vector3 up = _wheel.transform.up;
+        Vector3 forward = transform.TransformDirection( _drWheel.LookDirectionLocal).normalized;
+        Vector3 right = Vector3.Cross(up, forward).normalized;
+
+        Vector3 startDirection = -up;
 
         for (int i = 0; i <= raysCount; i++)
         {
-            rayDirection = Quaternion.AngleAxis(degreeOffset * i * positiveRotation, ownerTransform.right) * startDirection;
-            rays.Add(new Ray(origin, rayDirection));
+            float angle = degreeOffset * i;
+           
+            Vector3 dirForward = Quaternion.AngleAxis(angle, right) * startDirection;
+            rays.Add(new Ray(origin, dirForward));
 
             if (i != 0)
             {
-                rayDirection = Quaternion.AngleAxis(degreeOffset * i * negativeRotation, ownerTransform.right) * startDirection;
-                rays.Add(new Ray(origin, rayDirection));// ADD ROTATE RAY METHOD
+                Vector3 dirBackward = Quaternion.AngleAxis(-angle, right) * startDirection;
+                rays.Add(new Ray(origin, dirBackward));
             }
         }
 
@@ -75,14 +88,20 @@ public class GroundChecker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_rays != null)
-        {
-            Gizmos.color = Color.red;
+        if (_rays == null || _owner == null)
+            return;
 
-            foreach (Ray ray in _rays)
-            {
-                Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * (_rayLengthOffset + _owner.Radius));
-            }
+        Gizmos.color = Color.red;
+
+        float rayLength = _rayLengthOffset + _owner.Radius;
+
+        foreach (Ray ray in _rays)
+        {
+            Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * rayLength);
         }
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position + transform.TransformDirection(GroundNormal) * 20);
+
     }
 }

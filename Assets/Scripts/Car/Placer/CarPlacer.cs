@@ -27,7 +27,7 @@ public class CarPlacer : MonoBehaviour
     }
 
     private void Awake()
-    {  
+    {
         _defaultPosition = Vector3.zero + new Vector3(0, _yOffset, 0);
         _defaultRotation = Quaternion.identity;
     }
@@ -54,7 +54,7 @@ public class CarPlacer : MonoBehaviour
     private void OnSceneLoaded()
     {
         SetPosition();
-    }   
+    }
 
     private void SetPosition()
     {

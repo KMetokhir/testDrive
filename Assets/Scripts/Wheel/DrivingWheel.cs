@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(Rigidbody), typeof(WheelMover))]
-public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
+[RequireComponent(typeof(Rigidbody))]
+public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel, IWheelDirection
 {
-
     [SerializeField] private WheelView _wheelView;
     [SerializeField] private PhysicWheel _physicWheel;
 
@@ -16,34 +16,32 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
 
     private bool _isActivated;
 
+    [Inject]
+    private WheelMover.Factory _wheelMoverFactory;
+
     public float Radius => _physicWheel.Radius;
     public Transform Transform => transform;
-    protected Vector3 LookDirection { get; private set; }
+    public Vector3 LookDirectionLocal { get; private set; }
+    public Vector3 LookDirectionWorld => transform.TransformDirection(LookDirectionLocal);
 
     private void Awake()
     {
-        _isActivated = false;
-
         UseInAwake();
-
-        if (_directionChanger != null)
-        {
-            _directionChanger.DirectionChanged += OnDirectionChanged;
-        }
     }
 
     private void OnEnable()
     {
-        _wheelMover.RigidbodyMoving += MoveView;
+        UseInEneble();
     }
-
 
     private void OnDisable()
     {
-        if (_directionChanger != null)
-        {
-            _directionChanger.DirectionChanged -= OnDirectionChanged;
-        }
+        UseInDisable();
+    }
+
+    private void FixedUpdate()
+    {
+        UseInFixedUpdate();
     }
 
     public void Activate()
@@ -61,12 +59,12 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
 
     public void ForwardMove()
     {
-        _wheelMover.ForwardMove(_rigidbody, LookDirection);
+        _wheelMover.ForwardMove(_rigidbody);
     }
 
     public void BackwardMove()
     {
-        _wheelMover.BackwardMove(_rigidbody, LookDirection);
+        _wheelMover.BackwardMove(_rigidbody);
     }
 
     public void StopMoving()
@@ -74,33 +72,62 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel
         _wheelMover.StopMoving();
     }
 
+    protected virtual void UseInEneble()
+    {
+        _wheelMover.RigidbodyMoving += MoveView;
+        if (_directionChanger != null)
+        {
+            _directionChanger.DirectionChanged += OnDirectionChanged;
+        }
+    }
+
+    protected virtual void UseInDisable()
+    {
+        if (_directionChanger != null)
+        {
+            _directionChanger.DirectionChanged -= OnDirectionChanged;
+        }
+    }
+
     protected virtual void UseInAwake()
     {
+        _isActivated = false;
+
         _rigidbody = GetComponent<Rigidbody>();
-        _wheelMover = GetComponent<WheelMover>();
-        LookDirection = transform.forward;
+        LookDirectionLocal = transform.forward;
         _directionChanger = GetComponent<IDirectionChanger>();
         _suspension = GetComponent<Suspension>();
+
+        GroundChecker groundChecker = GetComponent<GroundChecker>();
+        _wheelMover = _wheelMoverFactory.Create(this, groundChecker);
+    }
+
+    protected virtual void UseInFixedUpdate()
+    {
+        _wheelMover?.FixedUpdate();
     }
 
     private void MoveView(float speed, int clockRotation, float deltaTime)
     {
-        _wheelView.Move(Mathf.Abs(speed), clockRotation, deltaTime, transform.TransformDirection(LookDirection));
+        _wheelView.Move(Mathf.Abs(speed), clockRotation, deltaTime, transform.TransformDirection(LookDirectionLocal));
     }
 
     private void OnDirectionChanged(Vector3 direction)
     {
-        LookDirection = direction;
+        LookDirectionLocal = direction;
 
-        _wheelMover.SetDirection(direction);
-
-        _wheelView.RotateTo(transform.TransformDirection(LookDirection));
+        _wheelView.RotateTo(transform.TransformDirection(LookDirectionLocal));
     }
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawLine(transform.position, transform.position + transform.TransformDirection(LookDirectionLocal) * 20);
+
         Gizmos.color = Color.red;
 
-        Gizmos.DrawLine(transform.position, transform.position + transform.TransformDirection(LookDirection) * 20);
+        Vector3 movedirection = _wheelMover?.MoveDirection ?? Vector3.zero;
+        Gizmos.DrawLine(transform.position, transform.position + movedirection * 20);
     }
 }

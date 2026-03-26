@@ -1,20 +1,52 @@
-﻿public abstract class RotaryWheel : DrivingWheel, IRotaryWheel
-{
-    private WheelRotator _rotator;
+﻿using System;
+using UnityEngine;
 
-    public void RotateWheel(float angle)
+public abstract class RotaryWheel<T> : RotaryWheel
+    where T : WheelRotator
+{
+    private T _rotator;
+
+    public override event Action<Vector3> DirectionChanged;
+
+    public override void RotateWheel(float angle)
     {
-        _rotator.Rotate(LookDirection, angle);
+        _rotator.Rotate(angle);
     }
 
-    public void StopRotation()
+    public override void StopRotation()
     {
         _rotator.StopRotating();
     }
 
+    protected override void UseInEneble()
+    {
+        base.UseInEneble();
+        _rotator.DirectionChanged += OnDirectionChanged;
+    }
+
     protected override void UseInAwake()
     {
-        _rotator = GetComponent<WheelRotator>();
+        _rotator = CreateRotator();
         base.UseInAwake();
+    }
+
+    protected abstract T CreateRotator();
+
+    protected override void UseInDisable()
+    {
+        base.UseInDisable();
+        _rotator.DirectionChanged -= OnDirectionChanged;
+    }
+
+    private void OnDirectionChanged(Vector3 vector)
+    {
+        DirectionChanged?.Invoke(vector);
+    }
+
+    protected override void UseInFixedUpdate()
+    {
+        _rotator?.FixedUpdate();
+
+        base.UseInFixedUpdate();
     }
 }

@@ -1,59 +1,55 @@
 ﻿using System;
 using UnityEngine;
-using Zenject;
 
-public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
+public abstract class WheelRotator
 {
     private ICarDirection _carDirection;
-
-    private IWheelRotationData _rotationData;
+    private IWheelRotationData _rotationData;   
 
     private bool _isRotating;
     private float _targetAngle;
-    private Vector3 _wheelDirection;
+    private Vector3 _currentDirection;
     private float _multiplier;
     private int _clockRotation;
 
+    private IWheelDirection _wheelDirection;
+
     public event Action<Vector3> DirectionChanged;
 
-    [Inject]
-    private void Construct(IWheelRotationData rotationData, ICarDirection carDirection)
+    public WheelRotator(IWheelDirection wheelDirection, ICarDirection carDirection, IWheelRotationData rotationData)
     {
-        _rotationData = rotationData;
+        _wheelDirection = wheelDirection;    
         _carDirection = carDirection;
-    }
+        _rotationData = rotationData;       
 
-    private void Awake()
-    {
+        _currentDirection = _wheelDirection.LookDirectionLocal;
         _isRotating = false;
-              
-        _wheelDirection = transform.forward;
         _targetAngle = 0;
-
-        DirectionChanged?.Invoke(_wheelDirection);
+        DirectionChanged?.Invoke(_currentDirection);
     }
 
-    private void FixedUpdate()
+    
+    public void FixedUpdate()
     {
         if (_isRotating)
         {
             RotateWheelDirection();
-            Rotate(_wheelDirection, _targetAngle);
+            Rotate(_targetAngle);
         }
-    }
+    }   
 
-    public void Rotate(Vector3 wheelDirection, float angle)
+    public void Rotate(float angle)
     {
-        Vector3 wheelWorldDirection = transform.TransformDirection(wheelDirection);
+       
         Vector3 carForwardDirection = _carDirection.ForwardDirection;
 
-        float currentRotationAngle = CalculateAngle(carForwardDirection, wheelWorldDirection, -_carDirection.DownDirection); 
+        float currentRotationAngle = CalculateAngle(carForwardDirection, _wheelDirection.LookDirectionWorld , -_carDirection.DownDirection);
 
         _multiplier = GetMultiplier(currentRotationAngle, _rotationData.AckermannMultiplier);
 
         _clockRotation = (int)Mathf.Sign(angle * _multiplier - currentRotationAngle);
 
-        _wheelDirection = wheelDirection;
+        _currentDirection = _wheelDirection.LookDirectionLocal; 
         _targetAngle = angle;
 
         if (Approximately(currentRotationAngle, angle * _multiplier, _rotationData.RotationSpeed * _multiplier))
@@ -94,8 +90,8 @@ public abstract class WheelRotator : MonoBehaviour, IDirectionChanger
 
     private void RotateWheelDirection()
     {
-        _wheelDirection = Quaternion.AngleAxis(_rotationData.RotationSpeed * _multiplier * _clockRotation, Vector3.up) * _wheelDirection;
-        DirectionChanged?.Invoke(_wheelDirection);
+        _currentDirection = Quaternion.AngleAxis(_rotationData.RotationSpeed * _multiplier * _clockRotation, Vector3.up) * _currentDirection;
+        DirectionChanged?.Invoke(_currentDirection);
     }
 
     private bool Approximately(float a, float b, float equalFactor)

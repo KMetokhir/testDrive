@@ -23,5 +23,10 @@ public class CarProjectlInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<MoneySaver>().AsSingle().WhenInjectedInto<Money>();
 
         Container.Bind<RuntimeCarFactory>().AsSingle().NonLazy();
+
+        Container.BindFactory<IWheelDirection, GroundChecker, WheelMover, WheelMover.Factory>();
+
+        Container.BindFactory<IWheelDirection, LeftWheelRotator, LeftWheelRotator.Factory>();
+        Container.BindFactory<IWheelDirection,  RightWheelRotator, RightWheelRotator.Factory>();       
     }
 }

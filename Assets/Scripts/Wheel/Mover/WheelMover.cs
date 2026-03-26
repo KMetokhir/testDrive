@@ -2,90 +2,101 @@
 using UnityEngine;
 using Zenject;
 
-public class WheelMover : MonoBehaviour // from ground checker get the normal to surface and rotate direction in 90 degree to normal
+public class WheelMover
 {
-    [SerializeField] private GroundChecker _groundChecker;
-    private const int ForwardDirection = 1;
-    private const int BackwardDirection = -1;
-    private const int StopDirection = 0;
+    private GroundChecker _groundChecker;
+
+    private const int ForwardWay = 1;
+    private const int BackwardWay = -1;
+    private const int StopWay = 0;
 
     private bool _isMoving;
-
-    private Vector3 _direction;
     private Rigidbody _rigidbody;
+    private int _lookWay;
 
-    [Inject]
+    private Vector3 _moveDirection;
+
+    private readonly IWheelDirection _whellDirection;
     private ISpeedData _speedData;
 
-    private int _lookDirection;
+    public Vector3 MoveDirection => _moveDirection; // test
 
     public event Action<float, int, float> RigidbodyMoving;
+    private Vector3 _lookDirectionWorld => _whellDirection.LookDirectionWorld * _lookWay;
 
-    public bool IsGrounded => _groundChecker.IsGrounded();
-
-    private void Awake()
+    public WheelMover(IWheelDirection whellDirection, GroundChecker groundChecker, ISpeedData speedData)
     {
+        _whellDirection = whellDirection;
+        _groundChecker = groundChecker;
+        _speedData = speedData;
         _isMoving = false;
+
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
+        if (_rigidbody == null)
+            return;
+
         if (_isMoving && _groundChecker.IsGrounded())
         {
-            Move(_speedData.Acceleration, _rigidbody, _direction);
+            Move(_speedData.Acceleration);
 
-            RigidbodyMoving?.Invoke(_rigidbody.velocity.magnitude, _lookDirection, Time.fixedDeltaTime);
+            RigidbodyMoving?.Invoke(
+                _rigidbody.velocity.magnitude,
+                _lookWay,
+                Time.fixedDeltaTime
+            );
         }
 
-        if (_isMoving && _rigidbody.velocity.z > _speedData.MaxSpeed)
+        if (_isMoving && _rigidbody.velocity.magnitude > _speedData.MaxSpeed)
         {
-            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, _speedData.MaxSpeed);
+            _rigidbody.velocity = _rigidbody.velocity.normalized * _speedData.MaxSpeed;
 
-            RigidbodyMoving?.Invoke(_rigidbody.velocity.magnitude, _lookDirection, Time.fixedDeltaTime);
+            RigidbodyMoving?.Invoke(
+                _rigidbody.velocity.magnitude,
+                _lookWay,
+                Time.fixedDeltaTime
+            );
         }
     }
 
-    public void SetDirection(Vector3 direction)
+    public void ForwardMove(Rigidbody rigidbody)
     {
-        if (direction == null)
-        {
-            throw new ArgumentNullException(nameof(direction));
-        }
-
-        _direction = direction * _lookDirection;
+        _lookWay = ForwardWay;
+        InitializeVariables(rigidbody);
     }
 
-    public void ForwardMove(Rigidbody rigidbody, Vector3 direction)
+    public void BackwardMove(Rigidbody rigidbody)
     {
-        _lookDirection = ForwardDirection;
-
-        InitializeVAriables(rigidbody, direction * _lookDirection);
-    }
-
-    public void BackwardMove(Rigidbody rigidbody, Vector3 direction
-        )
-    {
-        _lookDirection = BackwardDirection;
-
-        InitializeVAriables(rigidbody, direction * _lookDirection);
+        _lookWay = BackwardWay;
+        InitializeVariables(rigidbody);
     }
 
     public void StopMoving()
     {
-        _lookDirection = StopDirection;
-
+        _lookWay = StopWay;
         _isMoving = false;
     }
 
-    private void InitializeVAriables(Rigidbody rigidbody, Vector3 direction)
+    private void InitializeVariables(Rigidbody rigidbody)
     {
-        _direction = direction;
+        _rigidbody = rigidbody ?? throw new ArgumentNullException(nameof(rigidbody));
         _isMoving = true;
-        _rigidbody = rigidbody ?? throw new NullReferenceException(nameof(rigidbody));       
     }
 
-    private void Move(float force, Rigidbody rigidbody, Vector3 direction)
+    private void Move(float force)
     {
-        rigidbody.AddRelativeForce(direction * force);
+        Vector3 groundNormal = _groundChecker.GroundNormal;
+
+        _moveDirection = Vector3
+           .ProjectOnPlane(_lookDirectionWorld, groundNormal)
+           .normalized;
+
+        _rigidbody.AddForce(_moveDirection * force);
+    }
+
+    public class Factory : PlaceholderFactory<IWheelDirection, GroundChecker, WheelMover>
+    {
     }
 }
