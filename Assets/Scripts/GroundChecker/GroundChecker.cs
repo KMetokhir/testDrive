@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class GroundChecker : MonoBehaviour
 {
@@ -10,13 +9,8 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private int _rayDegreeOffset = 15;
     [SerializeField] private int _countOfPositiveRays = 2;
 
-    private PhysicWheel _wheel; // tmp
-    private DrivingWheel _drWheel; //tmp
-
-    [Inject]
-    private ICarDirection _carDirection;
-
-    private ISphereShape _owner;
+    private IWheelDirection _wheelDirection;
+    private ISphereShape _wheelOwner;
     private List<Ray> _rays;
 
     public Vector3 GroundNormal { get; private set; }
@@ -25,36 +19,35 @@ public class GroundChecker : MonoBehaviour
     {
         GroundNormal = Vector3.up;
 
-        _drWheel = GetComponent<DrivingWheel>();
-        _wheel = GetComponentInChildren<PhysicWheel>();
-        _owner = GetComponent<ISphereShape>();
+        _wheelDirection = GetComponent<IWheelDirection>();
+        _wheelOwner = GetComponent<ISphereShape>();
     }
 
     public bool IsGrounded()
     {
-        float rayLength = _owner.Radius + _rayLengthOffset;
+        float rayLength = _wheelOwner.Radius + _rayLengthOffset;
 
         List<Ray> rays = GetGroundCheckRays(
-            _owner.Transform.position,
+            _wheelOwner.Transform.position,
             _countOfPositiveRays,
             _rayDegreeOffset
         );
 
-        _rays = rays;     
+        _rays = rays;
 
         foreach (Ray ray in rays)
         {
             if (Physics.Raycast(ray, out RaycastHit hit, rayLength, _groundLayer))
-            {              
+            {
                 GroundNormal = hit.normal;
 
                 return true;
             }
-        }        
+        }
 
         GroundNormal = Vector3.up;
         return false;
-    }   
+    }
 
     private List<Ray> GetGroundCheckRays(Vector3 origin, int raysCount, int degreeOffset)
     {
@@ -63,8 +56,8 @@ public class GroundChecker : MonoBehaviour
 
         List<Ray> rays = new List<Ray>();
 
-        Vector3 up = _wheel.transform.up;
-        Vector3 forward = transform.TransformDirection( _drWheel.LookDirectionLocal).normalized;
+        Vector3 up = _wheelDirection.UpDirectionLocal;
+        Vector3 forward = transform.TransformDirection(_wheelDirection.LookDirectionLocal).normalized;
         Vector3 right = Vector3.Cross(up, forward).normalized;
 
         Vector3 startDirection = -up;
@@ -72,7 +65,7 @@ public class GroundChecker : MonoBehaviour
         for (int i = 0; i <= raysCount; i++)
         {
             float angle = degreeOffset * i;
-           
+
             Vector3 dirForward = Quaternion.AngleAxis(angle, right) * startDirection;
             rays.Add(new Ray(origin, dirForward));
 
@@ -88,12 +81,12 @@ public class GroundChecker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_rays == null || _owner == null)
+        if (_rays == null || _wheelOwner == null)
             return;
 
         Gizmos.color = Color.red;
 
-        float rayLength = _rayLengthOffset + _owner.Radius;
+        float rayLength = _rayLengthOffset + _wheelOwner.Radius;
 
         foreach (Ray ray in _rays)
         {

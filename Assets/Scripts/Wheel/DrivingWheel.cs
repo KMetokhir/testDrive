@@ -23,6 +23,7 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel, IWheelDirection
     public Transform Transform => transform;
     public Vector3 LookDirectionLocal { get; private set; }
     public Vector3 LookDirectionWorld => transform.TransformDirection(LookDirectionLocal);
+    public Vector3 UpDirectionLocal => transform.up;
 
     private void Awake()
     {
