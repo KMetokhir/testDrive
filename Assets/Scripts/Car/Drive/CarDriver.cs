@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class CarDriver : MonoBehaviour
+public class CarDriver : MonoBehaviour, IWheelsHandler
 {
     [SerializeField] private ScreenInput _screenInput;
     [SerializeField] private WheelBaseSpawner _wheelBaseSpawner;
@@ -13,9 +13,9 @@ public class CarDriver : MonoBehaviour
 
     [SerializeField] private float _moveForce;
 
-    private ICarBody _carBody;
-
     private IWheelRotationData _rotationData;
+
+    public IReadOnlyList<IWheel> Wheels => _drivingWheels;
 
     [Inject]
     private void Construct(ScreenInput screenInput, IWheelRotationData rotationData)
@@ -26,8 +26,6 @@ public class CarDriver : MonoBehaviour
 
     private void Awake()
     {
-        _carBody = GetComponent<ICarBody>();
-
         _rotaryWheels = new List<RotaryWheel>();
         _drivingWheels = new List<DrivingWheel>();
     }

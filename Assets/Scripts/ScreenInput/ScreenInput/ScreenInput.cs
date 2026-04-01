@@ -7,14 +7,18 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Vector2 _centrPoint;
     private bool _isPointerUnderPanel;
     private RectTransform _targetRectTransform;
-    private float _currentAngle;
+    private float _currentAngle;    
+
+    public bool IsDrivButtonPressed { get; private set; }
 
     public event Action<float> AngleChanged;
     public event Action MouseUp;
 
     private void Awake()
     {
-        _isPointerUnderPanel = false;
+        IsDrivButtonPressed = false;
+
+       _isPointerUnderPanel = false;
         _targetRectTransform = GetComponent<RectTransform>();
 
         _centrPoint = _targetRectTransform.localPosition;
@@ -28,6 +32,8 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             if (Input.GetMouseButton(0))
             {
+                IsDrivButtonPressed = true;
+
                 Vector2 mousePos = Input.mousePosition;
                 Vector2 localPoint;
 
@@ -54,6 +60,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if (Input.GetMouseButtonUp(0))
             {
                 MouseUp?.Invoke();
+                IsDrivButtonPressed = false;
             }
         }
     }

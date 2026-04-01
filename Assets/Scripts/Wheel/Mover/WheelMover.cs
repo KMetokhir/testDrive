@@ -38,7 +38,7 @@ public class WheelMover
         if (_rigidbody == null)
             return;
 
-        if (_isMoving && _groundChecker.IsGrounded())
+        if (_isMoving && _groundChecker.IsGrounded)
         {
             Move(_speedData.Acceleration);
 

@@ -1,4 +1,4 @@
-﻿public interface IWheel
+﻿public interface IWheel: IGroundChecker
 {
     public void Activate();
 }

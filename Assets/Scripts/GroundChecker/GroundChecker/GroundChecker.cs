@@ -13,6 +13,7 @@ public class GroundChecker : MonoBehaviour
     private ISphereShape _wheelOwner;
     private List<Ray> _rays;
 
+    public bool IsGrounded {  get; private set; }
     public Vector3 GroundNormal { get; private set; }
 
     private void Start()
@@ -23,7 +24,12 @@ public class GroundChecker : MonoBehaviour
         _wheelOwner = GetComponent<ISphereShape>();
     }
 
-    public bool IsGrounded()
+    private void FixedUpdate()
+    {
+        GroundeCheck();
+    }
+
+    public void  GroundeCheck()
     {
         float rayLength = _wheelOwner.Radius + _rayLengthOffset;
 
@@ -40,13 +46,14 @@ public class GroundChecker : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, rayLength, _groundLayer))
             {
                 GroundNormal = hit.normal;
+                IsGrounded =  true;
 
-                return true;
+                return;
             }
         }
 
         GroundNormal = Vector3.up;
-        return false;
+        IsGrounded = false;
     }
 
     private List<Ray> GetGroundCheckRays(Vector3 origin, int raysCount, int degreeOffset)

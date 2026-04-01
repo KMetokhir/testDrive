@@ -12,6 +12,8 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel, IWheelDirection
     private Rigidbody _rigidbody;
     private IDirectionChanger _directionChanger;
 
+    private GroundChecker _groundChecker;
+
     private Suspension _suspension;
 
     private bool _isActivated;
@@ -24,6 +26,8 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel, IWheelDirection
     public Vector3 LookDirectionLocal { get; private set; }
     public Vector3 LookDirectionWorld => transform.TransformDirection(LookDirectionLocal);
     public Vector3 UpDirectionLocal => transform.up;
+
+    public bool IsGrounded => _groundChecker?.IsGrounded ?? false;
 
     private void Awake()
     {
@@ -99,8 +103,8 @@ public class DrivingWheel : MonoBehaviour, ISphereShape, IWheel, IWheelDirection
         _directionChanger = GetComponent<IDirectionChanger>();
         _suspension = GetComponent<Suspension>();
 
-        GroundChecker groundChecker = GetComponent<GroundChecker>();
-        _wheelMover = _wheelMoverFactory.Create(this, groundChecker);
+        _groundChecker = GetComponent<GroundChecker>();
+        _wheelMover = _wheelMoverFactory.Create(this, _groundChecker);
     }
 
     protected virtual void UseInFixedUpdate()
