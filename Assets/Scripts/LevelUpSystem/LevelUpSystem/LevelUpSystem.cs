@@ -13,7 +13,7 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
     [SerializeField] private LevelUpVeiw _view;
     [SerializeField] private SceneLoadHandler _sceneLoadHandler;
 
-    private List<IUpgradable> _upgradables;
+    [SerializeField] private List<IUpgradeable> _upgradables;
 
     public event Action Changed;
 
@@ -30,7 +30,9 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
 
     private void Awake()
     {
-        _upgradables = GetComponents<IUpgradable>().ToList();
+        _upgradables = GetComponentsInChildren<IUpgradeable>().ToList();
+
+        Debug.LogError(_upgradables.Count);
 
         _view.ShowValue(_currentUpgradesLevel, _upgradesToLevelUp);
 
@@ -46,39 +48,13 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
 
     private void OnEnable()
     {
-        foreach (IUpgradable upgradable in _upgradables)
+        foreach (IUpgradeable upgradable in _upgradables)
         {
             upgradable.Upgraded += OnUpgraded;
         }
 
         _view.ButtonClicked += OnLevelUpButtonClicked;
         _sceneLoadHandler.SceneLoaded += OnSceneLoaded;
-    }
-
-    private void Start()
-    {
-        Changed?.Invoke();
-    }
-
-    private void OnDisable()
-    {
-        foreach (IUpgradable upgradable in _upgradables)
-        {
-            upgradable.Upgraded -= OnUpgraded;
-        }
-
-        _view.ButtonClicked -= OnLevelUpButtonClicked;
-        _sceneLoadHandler.SceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded()
-    {       
-        Changed?.Invoke();
-    }
-    
-    private void OnLevelUpButtonClicked()
-    {
-        Debug.Log("TO NEW LEVEL");
     }
 
     private void OnUpgraded()
@@ -89,5 +65,31 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
         {
             _view.ActivateButton();
         }
+    }
+
+    private void Start()
+    {
+        Changed?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        foreach (IUpgradeable upgradable in _upgradables)
+        {
+            upgradable.Upgraded -= OnUpgraded;
+        }
+
+        _view.ButtonClicked -= OnLevelUpButtonClicked;
+        _sceneLoadHandler.SceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded()
+    {
+        Changed?.Invoke();
+    }
+
+    private void OnLevelUpButtonClicked()
+    {
+        Debug.Log("TO NEW LEVEL");
     }
 }

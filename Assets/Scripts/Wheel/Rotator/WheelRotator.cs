@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class WheelRotator
 {
     private ICarDirection _carDirection;
-    private IWheelRotationData _rotationData;   
+    private IWheelRotationData _rotationData;
 
     private bool _isRotating;
     private float _targetAngle;
@@ -18,9 +18,9 @@ public abstract class WheelRotator
 
     public WheelRotator(IWheelDirection wheelDirection, ICarDirection carDirection, IWheelRotationData rotationData)
     {
-        _wheelDirection = wheelDirection;    
+        _wheelDirection = wheelDirection;
         _carDirection = carDirection;
-        _rotationData = rotationData;       
+        _rotationData = rotationData;
 
         _currentDirection = _wheelDirection.LookDirectionLocal;
         _isRotating = false;
@@ -28,7 +28,6 @@ public abstract class WheelRotator
         DirectionChanged?.Invoke(_currentDirection);
     }
 
-    
     public void FixedUpdate()
     {
         if (_isRotating)
@@ -36,20 +35,20 @@ public abstract class WheelRotator
             RotateWheelDirection();
             Rotate(_targetAngle);
         }
-    }   
+    }
 
     public void Rotate(float angle)
     {
-       
+
         Vector3 carForwardDirection = _carDirection.ForwardDirection;
 
-        float currentRotationAngle = CalculateAngle(carForwardDirection, _wheelDirection.LookDirectionWorld , -_carDirection.DownDirection);
+        float currentRotationAngle = AngleOnPlaneCalculator.CalculateAngle(carForwardDirection, _wheelDirection.LookDirectionWorld, -_carDirection.DownDirection);
 
         _multiplier = GetMultiplier(currentRotationAngle, _rotationData.AckermannMultiplier);
 
         _clockRotation = (int)Mathf.Sign(angle * _multiplier - currentRotationAngle);
 
-        _currentDirection = _wheelDirection.LookDirectionLocal; 
+        _currentDirection = _wheelDirection.LookDirectionLocal;
         _targetAngle = angle;
 
         if (Approximately(currentRotationAngle, angle * _multiplier, _rotationData.RotationSpeed * _multiplier))
@@ -97,16 +96,5 @@ public abstract class WheelRotator
     private bool Approximately(float a, float b, float equalFactor)
     {
         return Mathf.Abs(a - b) <= Mathf.Abs(equalFactor);
-    }
-
-    private float CalculateAngle(Vector3 vectorA, Vector3 vectorB, Vector3 normal)
-    {
-        float y = 0;
-        vectorA = new Vector3(vectorA.x, y, vectorA.z);
-        vectorB = new Vector3(vectorB.x, y, vectorB.z);
-
-        float sign = Mathf.Sign(Vector3.Dot(normal, Vector3.Cross(vectorA, vectorB)));
-
-        return Vector3.Angle(vectorA, vectorB) * sign;
     }
 }

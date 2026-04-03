@@ -1,6 +1,8 @@
 using System;
 
-public interface IUpgrader<T> where T : IUpgradeData
+public interface IUpgrader<T>
+    where T : IUpgradeData
 {
-    event Action<T> UpgradeExecuted;
+    public event Action<T> UpgradeExecuted;
 }
+

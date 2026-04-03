@@ -7,7 +7,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Vector2 _centrPoint;
     private bool _isPointerUnderPanel;
     private RectTransform _targetRectTransform;
-    private float _currentAngle;    
+    private float _currentAngle;
 
     public bool IsDrivButtonPressed { get; private set; }
 
@@ -18,7 +18,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         IsDrivButtonPressed = false;
 
-       _isPointerUnderPanel = false;
+        _isPointerUnderPanel = false;
         _targetRectTransform = GetComponent<RectTransform>();
 
         _centrPoint = _targetRectTransform.localPosition;
@@ -48,7 +48,7 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
                 Vector2 upDirection = Vector2.up;
 
-                float newAngle = CalculateAngle(upDirection, tapDirection, Vector3.back);
+                float newAngle = AngleOnPlaneCalculator.CalculateAngle(upDirection, tapDirection, Vector3.back);
 
                 if (newAngle != _currentAngle)
                 {
@@ -74,12 +74,5 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         _isPointerUnderPanel = false;
         MouseUp?.Invoke();
-    }
-
-    private float CalculateAngle(Vector3 vectorA, Vector3 vectorB, Vector3 normal) // same method in rotator
-    {
-        float sign = Mathf.Sign(Vector3.Dot(normal, Vector3.Cross(vectorA, vectorB)));
-
-        return Vector3.Angle(vectorA, vectorB) * sign;
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
+public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>, IUpgradeable
     where S : ButtonWithSliderView
     where M : IUpgradeData
     where T : Upgrade, M
@@ -24,13 +24,14 @@ public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
     private ICarLevel _carLevel;
     private ICarConfigSaver _configSaver;
 
-    private uint _currentUpgradeLevel;
-
     private DiContainer _container;
 
     private T _currentUpgrade;
 
+    public uint UpgradeLevel { get; private set; }
+
     public event Action<M> UpgradeExecuted;
+    public event Action Upgraded;
 
     [Inject]
     private void Construct(S view, ICarLevel carLevel, DiContainer container, ICarConfigSaver configSaver)
@@ -51,9 +52,9 @@ public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
         _compositePartSpawners = new List<UpgradePartSpawner>();
         _installedUpgradeParts = new List<UpgradePart>();
 
-        _currentUpgradeLevel = _configSaver.GetCarConfig(GetType().Name, _carLevel.Value);
+        UpgradeLevel = _configSaver.GetCarConfig(GetType().Name, _carLevel.Value);
 
-        LoadUpgradesInOrder(_currentUpgradeLevel);
+        LoadUpgradesInOrder(UpgradeLevel);
 
         if (_currentUpgrade != null)
         {
@@ -70,6 +71,12 @@ public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
         _view.UpgradeButtonClicked -= Upgrade;
     }
 
+    private void RaiseUpgradeEvent(M data)
+    {
+        UpgradeExecuted?.Invoke(data);
+        Upgraded?.Invoke();
+    }
+
     private void LoadUpgradesInOrder(uint currentUpgradeLevel)
     {
         List<T> upgrades = _upgrades;
@@ -81,11 +88,12 @@ public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
             ProcessUpgrade(upgrade);
         }
 
-        _currentUpgrade = FindUpgrade(_carLevel.Value, _currentUpgradeLevel);// tmp
+        _currentUpgrade = FindUpgrade(_carLevel.Value, UpgradeLevel);// tmp
 
         if (_currentUpgrade != null)
         {
-            UpgradeExecuted?.Invoke((M)_currentUpgrade);
+            RaiseUpgradeEvent((M)_currentUpgrade);
+            // UpgradeExecuted?.Invoke((M)_currentUpgrade);
         }
         else
         {
@@ -114,13 +122,14 @@ public class Upgrader<T, S, M> : MonoBehaviour, IUpgrader<M>
 
                 ProcessUpgrade(_currentUpgrade);
 
-                UpgradeExecuted?.Invoke((M)_currentUpgrade);
+                RaiseUpgradeEvent((M)_currentUpgrade);
+                // UpgradeExecuted?.Invoke((M)_currentUpgrade);
 
                 _view.ShowValue(_currentUpgrade.UpgradeLevel, GetMaxUpgradeLevel());
 
-                _currentUpgradeLevel = _currentUpgrade.UpgradeLevel;
+                UpgradeLevel = _currentUpgrade.UpgradeLevel;
 
-                _configSaver.SaveCarConfig(GetType().Name, _carLevel.Value, _currentUpgradeLevel);
+                _configSaver.SaveCarConfig(GetType().Name, _carLevel.Value, UpgradeLevel);
             }
         }
     }
