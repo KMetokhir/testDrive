@@ -6,6 +6,7 @@ public class Crane : CompositePart
 {
     [SerializeField] private MagnetSpawner _spawner;
     [SerializeField] private Rope _rope;
+    [SerializeField] private CraneArrow _arrow;
 
     [SerializeField] private Magnet _magnet; // magnetUpgrade not magnet
 
@@ -17,6 +18,7 @@ public class Crane : CompositePart
     private void Awake()
     {
         _fixedJoint = GetComponentInChildren<FixedJoint>();
+       _arrow = GetComponentInChildren<CraneArrow>();       
     }
 
     private void OnEnable()
@@ -27,6 +29,7 @@ public class Crane : CompositePart
     private void Start()
     {
         _spawner = GetComponentInChildren<MagnetSpawner>();
+        _arrow.ConnectTarget(_rope.GetComponent<Rigidbody>());
     }
 
     private void OnDisable()
@@ -71,7 +74,9 @@ public class Crane : CompositePart
     {
         Debug.Log("MagnetSpawned");
 
-        _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet.ConnectionPoint);
+        
+
+       _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet);
 
         MagnetSpawned?.Invoke(magnet);
         _magnet = magnet;

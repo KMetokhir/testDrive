@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magnet : ObservableUpgradePart
+public class Magnet : ObservableUpgradePart, IConnectable
 {
     [SerializeField] private MagnetAria _magnetAria;
     [SerializeField] private MagnetField _magnetField;
 
-    [SerializeField] private Transform _connectionPoint;
+    [SerializeField] private ConnectionPoint _connectionPoint;
 
     [SerializeField] private bool _isWork;  
 
     private List<IAttractable> _collectedObjects;
 
-    public event Action<ICollectable> ObjectInMagnetAria;
+    public event Action<ICollectable> ObjectInMagnetAria; 
 
-    public Transform ConnectionPoint => _connectionPoint;   
+    public Transform ConnectionTransform => _connectionPoint.ConnectionTransform;
 
     private void Awake()
     {
