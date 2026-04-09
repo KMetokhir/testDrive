@@ -29,7 +29,7 @@ public class Crane : CompositePart
     private void Start()
     {
         _spawner = GetComponentInChildren<MagnetSpawner>();
-        _arrow.ConnectTarget(_rope.GetComponent<Rigidbody>());
+        _arrow.ConnectTarget(_rope, true);
     }
 
     private void OnDisable()
@@ -74,11 +74,9 @@ public class Crane : CompositePart
     {
         Debug.Log("MagnetSpawned");
 
-        
+        _rope.ConnectTarget(magnet, false);      
 
-       _rope.ConnectTarget(magnet.GetComponent<Rigidbody>(), magnet);
-
-        MagnetSpawned?.Invoke(magnet);
+       MagnetSpawned?.Invoke(magnet);
         _magnet = magnet;
         _magnet.Destroied += OnMagnetDestoied;
     }

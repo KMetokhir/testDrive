@@ -1,24 +1,9 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(HingeJoint))]
-public class CraneArrow : MonoBehaviour
+public class CraneArrow : ConnectableBase
 {
-    [SerializeField] private ConnectionPoint _connectionPoint;
-
-    private HingeJoint _joint;
-
-    public Transform ConnectionTransform => _connectionPoint.ConnectionTransform;
-
-    private void Awake()
+    protected override Vector3 GetConnectedAnchor(Transform target, Vector3 position)
     {
-        _joint = GetComponent<HingeJoint>();
-    }
-
-    public void ConnectTarget(Rigidbody target)
-    {
-        _joint.autoConfigureConnectedAnchor = true;
-        _joint.connectedBody = target;
-
-        _joint.anchor = transform.InverseTransformPoint(_connectionPoint.ConnectionTransform.position);
+        throw new System.NotImplementedException($"{GetType()}  autoConfig joint only");
     }
 }

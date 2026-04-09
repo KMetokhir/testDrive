@@ -32,8 +32,6 @@ public class LevelUpSystem : MonoBehaviour, ICarLevel
     {
         _upgradables = GetComponentsInChildren<IUpgradeable>().ToList();
 
-        Debug.LogError(_upgradables.Count);
-
         _view.ShowValue(_currentUpgradesLevel, _upgradesToLevelUp);
 
         if (_currentUpgradesLevel >= _upgradesToLevelUp)

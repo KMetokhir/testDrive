@@ -1,3 +1,3 @@
-﻿public class WheelBaseSpawner : GenericObservableSpawner<WheelBase>
+﻿public class WheelBaseSpawner : GenericObservableSpawner<WheelPlatform>
 {
 }

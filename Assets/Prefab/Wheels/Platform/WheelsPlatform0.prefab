@@ -103,10 +103,10 @@ GameObject:
   - component: {fileID: 7911550344947824636}
   - component: {fileID: 4996053096420455749}
   - component: {fileID: 2131384321180873446}
-  - component: {fileID: 3940836406512695771}
   - component: {fileID: 3179665229125497421}
+  - component: {fileID: 4747491215061720379}
   m_Layer: 0
-  m_Name: WheelsBase0
+  m_Name: WheelsPlatform0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,20 +163,6 @@ MonoBehaviour:
   _parent: {fileID: 7911550344947824636}
   _wheelSpawners:
   - {fileID: 283567436356239659}
---- !u!114 &3940836406512695771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4538723801654801537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965edc5990b41814798cb86e6c9f3ac0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnLocalPosition: {x: 0, y: -2, z: 0}
-  _count: 1
 --- !u!114 &3179665229125497421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +180,20 @@ MonoBehaviour:
   _wheelSpawners:
   - {fileID: 5208396643045939751}
   - {fileID: 6615766380262643954}
+--- !u!114 &4747491215061720379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4538723801654801537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e47bc3be7c3db438320135a45920d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnLocalPosition: {x: 0, y: -2.5, z: 0}
+  _count: 1
 --- !u!1 &5199691280105790040
 GameObject:
   m_ObjectHideFlags: 0

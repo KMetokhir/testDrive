@@ -63,7 +63,7 @@ public class CarPlacer : MonoBehaviour
 
     private void OnDisable()
     {
-        SavePosition();
+        SavePosition();       
 
         _sceneLoadHandler.SceneLoaded -= OnSceneLoaded;
         _sceneLoadHandler.SceneUnloaded -= SavePosition;

@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 9137016344288981060}
   - component: {fileID: 5657930416842052005}
   m_Layer: 7
-  m_Name: MAgnetSpawnpoint
+  m_Name: MagnetConnectionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 3067173829365312003}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalPosition: {x: 0, y: -9.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -238,7 +238,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.49999997, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 13.3869095, z: 7.5375404}
+  m_ConnectedAnchor: {x: 0, y: 13.3869095, z: 4.7175407}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -553,7 +553,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 6.5299993, z: 8.4}
+  m_ConnectedAnchor: {x: 0, y: 6.5299993, z: 5.58}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -570,7 +570,7 @@ HingeJoint:
   m_UseAcceleration: 0
   m_Limits:
     min: 0
-    max: 30
+    max: 40
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -592,11 +592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e569d8328a2c3fd45a7f52193448573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _magnetConnectionPoint: {fileID: 5657930416842052005}
+  _connectionPoint: {fileID: 7749486630981799871}
   _ropeStartPoint: {fileID: 7999703075655827325}
-  _ropeEndConnectionPoint: {fileID: 7749486630981799871}
+  _ropeEndPoint: {fileID: 7749486630981799871}
   segments: 20
   sagAmount: 2
+  width: 0.2
 --- !u!120 &7807268142465239335
 LineRenderer:
   serializedVersion: 2

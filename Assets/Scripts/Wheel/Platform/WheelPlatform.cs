@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WheelBase : CompositePart
+public class WheelPlatform : CompositePart
 {
     [SerializeField] private List<IWheelSpawnersContainer> _spawners;
 

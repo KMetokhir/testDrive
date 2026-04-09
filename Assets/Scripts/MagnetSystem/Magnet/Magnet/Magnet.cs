@@ -15,10 +15,12 @@ public class Magnet : ObservableUpgradePart, IConnectable
 
     public event Action<ICollectable> ObjectInMagnetAria; 
 
-    public Transform ConnectionTransform => _connectionPoint.ConnectionTransform;
+    public ConnectionPoint Point => _connectionPoint;
+    public Rigidbody ConnectionRigidbody {get; private set;}
 
     private void Awake()
     {
+        ConnectionRigidbody = GetComponent<Rigidbody>();
         _collectedObjects = new List<IAttractable>();
     }
 

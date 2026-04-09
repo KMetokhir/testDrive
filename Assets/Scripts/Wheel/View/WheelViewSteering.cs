@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WheeelViewSteering : MonoBehaviour
+public class WheelViewSteering : MonoBehaviour
 {
     public void RotateTo(Vector3 targetDirection)
     {

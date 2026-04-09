@@ -124,7 +124,7 @@ public class CarDriver : MonoBehaviour, IWheelsHandler
         _screenInput.MouseUp -= OnMouseEventUp;
     }
 
-    private void SubcribeToBase(WheelBase wheelBase)
+    private void SubcribeToBase(WheelPlatform wheelBase)
     {
         wheelBase.WheelSpawned += SetWheel;
         wheelBase.WheelDestroied += RemoveWheel;
@@ -133,7 +133,7 @@ public class CarDriver : MonoBehaviour, IWheelsHandler
         SubscribeInput();
     }
 
-    private void UnsubscribeFrombase(WheelBase wheelBase)
+    private void UnsubscribeFrombase(WheelPlatform wheelBase)
     {
         wheelBase.WheelSpawned -= SetWheel;
         wheelBase.WheelDestroied -= RemoveWheel;
@@ -157,7 +157,7 @@ public class CarDriver : MonoBehaviour, IWheelsHandler
     {
         UnsubscribeInput();
 
-        WheelBase wheelBase = (WheelBase)part;
+        WheelPlatform wheelBase = (WheelPlatform)part;
 
         if (wheelBase == null)
         {
