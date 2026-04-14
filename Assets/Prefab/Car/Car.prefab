@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 897940703446055283}
   - component: {fileID: 8648509503419172317}
   - component: {fileID: 7938407665048670369}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 7065773051948983595}
   - component: {fileID: 8469753785666459839}
   - component: {fileID: 1615539089757137125}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: view
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5551963133857338318}
   - component: {fileID: 1037121065284625193}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WheelBaseSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8414148466243517221}
   - component: {fileID: 7939075979764286457}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CraneSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -700,7 +700,7 @@ GameObject:
   - component: {fileID: 1819564603378850088}
   - component: {fileID: 4379915390209025701}
   - component: {fileID: 7625726672653032970}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: carBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

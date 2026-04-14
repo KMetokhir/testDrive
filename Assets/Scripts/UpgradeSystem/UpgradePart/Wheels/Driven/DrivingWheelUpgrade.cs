@@ -1,3 +1,3 @@
-﻿public class DrivingWheelUpgrade : WheelUpgradePart
+﻿public abstract class DrivingWheelUpgrade : WheelUpgradePart
 {
 }
