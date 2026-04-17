@@ -34,34 +34,18 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 IsDrivButtonPressed = true;
 
-                Vector2 mousePos = Input.mousePosition;
-                Vector2 localPoint;
-
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    _targetRectTransform.parent as RectTransform,
-                    mousePos,
-                    null,
-                    out localPoint
-                );
-
-                Vector2 tapDirection = localPoint - _centrPoint;
-
-                Vector2 upDirection = Vector2.up;
-
-                float newAngle = AngleOnPlaneCalculator.CalculateAngle(upDirection, tapDirection, Vector3.back);
-
-                if (newAngle != _currentAngle)
-                {
-                    _currentAngle = newAngle;
-                    AngleChanged?.Invoke(newAngle);
-                }
+                ProcessAngle();
             }
+        }
+        else if (IsDrivButtonPressed)
+        {
+            ProcessAngle();
+        }
 
-            if (Input.GetMouseButtonUp(0))
-            {
-                MouseUp?.Invoke();
-                IsDrivButtonPressed = false;
-            }
+        if (Input.GetMouseButtonUp(0))
+        {
+            MouseUp?.Invoke();
+            IsDrivButtonPressed = false;
         }
     }
 
@@ -73,6 +57,30 @@ public class ScreenInput : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         _isPointerUnderPanel = false;
-        MouseUp?.Invoke();
+    }
+
+    private void ProcessAngle()
+    {
+        Vector2 mousePos = Input.mousePosition;
+        Vector2 localPoint;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _targetRectTransform.parent as RectTransform,
+            mousePos,
+            null,
+            out localPoint
+        );
+
+        Vector2 tapDirection = localPoint - _centrPoint;
+
+        Vector2 upDirection = Vector2.up;
+
+        float newAngle = AngleOnPlaneCalculator.CalculateAngle(upDirection, tapDirection, Vector3.back);
+
+        if (newAngle != _currentAngle)
+        {
+            _currentAngle = newAngle;
+            AngleChanged?.Invoke(newAngle);
+        }
     }
 }

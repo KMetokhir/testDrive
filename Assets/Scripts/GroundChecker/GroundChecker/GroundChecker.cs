@@ -24,7 +24,7 @@ public class GroundChecker : MonoBehaviour
         _wheelOwner = GetComponent<ISphereShape>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         GroundeCheck();
     }

@@ -4,6 +4,8 @@ using Zenject;
 
 public class WheelMover
 {
+    private const float StopVelocity = 0.01f;
+
     private GroundChecker _groundChecker;
 
     private const int ForwardWay = 1;
@@ -15,6 +17,7 @@ public class WheelMover
     private int _lookWay;
 
     private Vector3 _moveDirection;
+    private bool _isDirectionChanged;
 
     private readonly IWheelDirection _whellDirection;
     private ISpeedData _speedData;
@@ -40,7 +43,17 @@ public class WheelMover
 
         if (_isMoving && _groundChecker.IsGrounded)
         {
-            Move(_speedData.Acceleration);
+            if (_isDirectionChanged)
+            {
+                if (TryStop(_speedData.ChangeDirectionSpeed))
+                {
+                    _isDirectionChanged = false;
+                }
+            }
+            else
+            {
+                Move(_speedData.Acceleration);
+            }
 
             RigidbodyMoving?.Invoke(
                 _rigidbody.velocity.magnitude,
@@ -59,17 +72,37 @@ public class WheelMover
                 Time.fixedDeltaTime
             );
         }
+
+        if (_isMoving == false)
+        {
+            TryStop(StopVelocity);
+        }
     }
 
     public void ForwardMove(Rigidbody rigidbody)
     {
+        if (_lookWay == ForwardWay)
+        {
+            return;
+        }
+        else if (_lookWay != StopWay)
+        {
+            _isDirectionChanged = true;
+        }
+
         _lookWay = ForwardWay;
         InitializeVariables(rigidbody);
     }
 
     public void BackwardMove(Rigidbody rigidbody)
     {
+        if (_lookWay == BackwardWay)
+        {
+            return;
+        }
+
         _lookWay = BackwardWay;
+        _isDirectionChanged = true;
         InitializeVariables(rigidbody);
     }
 
@@ -83,6 +116,23 @@ public class WheelMover
     {
         _rigidbody = rigidbody ?? throw new ArgumentNullException(nameof(rigidbody));
         _isMoving = true;
+    }
+
+    private bool TryStop(float stopVelocity)
+    {
+        bool isStoped = false;
+
+        if (_rigidbody.velocity.magnitude > stopVelocity)
+        {
+            _rigidbody.velocity = Vector3.MoveTowards(_rigidbody.velocity, Vector3.zero, _speedData.StopSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            _rigidbody.velocity = Vector3.zero;
+            isStoped = true;
+        }
+
+        return isStoped;
     }
 
     private void Move(float force)

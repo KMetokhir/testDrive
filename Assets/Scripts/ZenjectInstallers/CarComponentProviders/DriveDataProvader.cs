@@ -14,5 +14,9 @@ public class DriveDataProvader : CarComponentProvider<IDriveData>, IDriveData
 
     public float AckermannMultiplier => Component.AckermannMultiplier;
 
+    public uint StopSpeed => Component.StopSpeed;
+
+    public uint ChangeDirectionSpeed => Component.ChangeDirectionSpeed;
+
     public DriveDataProvader(SignalBus signalBus) : base(signalBus) { }
 }
